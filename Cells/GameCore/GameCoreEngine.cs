@@ -29,8 +29,8 @@ namespace Cells.GameCore
         /// </summary>
         public void StartGame()
         {
-            this._world = new World();
-            this._world.Initialize();
+            _world = new World();
+            _world.Initialize();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Cells.GameCore
         /// </summary>
         public void StopGame()
         {
-            this._world = null;
+            _world = null;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Cells.GameCore
         /// </summary>
         public void Loop()
         {
-            this.Tick();
+            Tick();
         }
 
         /// <summary>
@@ -60,13 +60,13 @@ namespace Cells.GameCore
             if (null == _world)
                 return;
 
-            this._world.ResetMovementsList();
+            _world.ResetMovementsList();
 
-            IEnumerable<Cell> allCells = this._world.GetCells();
+            IEnumerable<Cell> allCells = _world.GetCells();
 
             if (null != allCells)
             {
-                foreach (Cell currentCell in this._world.GetCells())
+                foreach (Cell currentCell in _world.GetCells())
                 {
                     CellAction action = currentCell.Think();
                     currentCell.Do(action);
@@ -80,10 +80,10 @@ namespace Cells.GameCore
         /// <returns>A list of coordinates and the team it belongs to</returns>
         public IEnumerable<KeyValuePair<Coordinates, Color>> GetUpdatedElements()
         {
-            if (null == this._world)
+            if (null == _world)
                 return null;
             
-            return this._world.GetUpdatedElements();
+            return _world.GetUpdatedElements();
         }
     }
 }

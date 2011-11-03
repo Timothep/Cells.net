@@ -23,8 +23,8 @@ namespace Cells.GameEngine
         public CellsCanvas()
         {
             InitializeComponent();
-            this._canvas = this.DrawBox.CreateGraphics();
-            this._canvas.Clear(DefaultBackgroundColor);
+            _canvas = DrawBox.CreateGraphics();
+            _canvas.Clear(DefaultBackgroundColor);
         }
 
         #region CanvasPainting
@@ -60,13 +60,13 @@ namespace Cells.GameEngine
 
         private void BStartEngineClick(object sender, EventArgs e)
         {
-            this._gameEngine.StartGame();   
+            _gameEngine.StartGame();   
         }
 
         private void BStopEngineClick(object sender, EventArgs e)
         {
-            this._gameEngine.StopGame();
-            this._canvas.Clear(DefaultBackgroundColor);
+            _gameEngine.StopGame();
+            _canvas.Clear(DefaultBackgroundColor);
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace Cells.GameEngine
         /// </summary>
         internal void GameLoop()
         {
-            while (this.Created)
+            while (Created)
             {
                 _timer.Reset();
                 GameLogic();
@@ -91,7 +91,7 @@ namespace Cells.GameEngine
         /// </summary>
         private void GameLogic()
         {
-            this._gameEngine.Loop();
+            _gameEngine.Loop();
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Cells.GameEngine
         /// </summary>
         private void RenderGame()
         {
-            this.PaintPixels(this._gameEngine.GetUpdatedElements());
+            PaintPixels(_gameEngine.GetUpdatedElements());
         }
     }
 }

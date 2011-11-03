@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
-using Cells.GameCore.Mapping.Tiles;
 using Cells.Utils;
 
 namespace Cells.GameCore
 {
+    /// <summary>
+    /// Class representing the world, holding the maps and all the cells together
+    /// </summary>
     public class World
     {
         private const short WorldWidth = 100;
         private const short WorldHeight = 100;
-        private const short InitialPopulation = 10;
 
         private readonly Map _ressourcesMap;
         private readonly Map _plantMap;
         private readonly Map _cellsMap;
 
-        private List<Cell> _cells = new List<Cell>();
-        private IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
+        private readonly List<Cell> _cells = new List<Cell>();
+        private readonly IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
 
         /// <summary>
         /// Constructor
@@ -42,7 +42,6 @@ namespace Cells.GameCore
         /// </summary>
         internal void Initialize()
         {
-            CreateMaps();
             CreateInitialCellPopulation();
         }
 
@@ -72,23 +71,8 @@ namespace Cells.GameCore
         /// <param name="team">Team Color of the cell</param>
         internal void RegisterCellMovement(Coordinates oldCoordinates, Coordinates newCoordinates, Color team)
         {
-            this._updatedElements.Add(oldCoordinates, Color.Black);
-            this._updatedElements.Add(newCoordinates, team);
-        }
-
-        /// <summary>
-        /// Create the different maps
-        /// </summary>
-        private void CreateMaps()
-        {
-            // Create plant map
-            // -> none for now
-
-            // Create ressource map
-            // -> none for now
-
-            // Create height map
-            // -> none for now
+            _updatedElements.Add(oldCoordinates, Color.Black);
+            _updatedElements.Add(newCoordinates, team);
         }
 
         /// <summary>
@@ -101,7 +85,7 @@ namespace Cells.GameCore
                 for (int j = 100; j < 120 ; j++)
                 {
                     Color color = i % 2 == 0 ? Color.Yellow : Color.Red;
-                    this._cells.Add(new Cell(i, j, 10, this, color));
+                    _cells.Add(new Cell(i, j, 10, this, color));
                 }
             }
         }
@@ -111,13 +95,12 @@ namespace Cells.GameCore
         /// </summary>
         internal void ResetMovementsList()
         {
-            this._updatedElements.Clear();
+            _updatedElements.Clear();
         }
 
         /// <summary>
-        /// Function creating a MapView of the surroundings of the cell and returning it
-        /// For anti-cheating purpose, the world gets the cells position himself 
-        /// instead of getting them as parameters
+        /// Function creating a view of the surroundings of the cell and returning it
+        /// For anti-cheating purpose, the world gets the cells position himself instead of getting them as parameters
         /// </summary>
         /// <param name="cell">The cell asking</param>
         /// <returns>A MapView of the place</returns>
@@ -126,9 +109,9 @@ namespace Cells.GameCore
             IDictionary<string, MapView> lMV = new Dictionary<String, MapView>();
             Coordinates cellCoordinates = cell.Position;
 
-            lMV.Add("Ressources", this._ressourcesMap.CreateMapView(cellCoordinates));
-            lMV.Add("Plants", this._plantMap.CreateMapView(cellCoordinates));
-            lMV.Add("Cells", this._cellsMap.CreateMapView(cellCoordinates));
+            lMV.Add("Ressources", _ressourcesMap.CreateMapView(cellCoordinates));
+            lMV.Add("Plants", _plantMap.CreateMapView(cellCoordinates));
+            lMV.Add("Cells", _cellsMap.CreateMapView(cellCoordinates));
 
             return lMV;
         }

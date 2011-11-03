@@ -18,7 +18,7 @@ namespace Cells.Brains
         /// <param name="theCell">The cell that the brain should control</param>
         public Brain(ICell theCell)
         {
-            this._cell = theCell;
+            _cell = theCell;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Cells.Brains
         public CellAction ChooseNextAction()
         {
             CellAction action = CellAction.NONE;
-            IDictionary<String, MapView> surroundings = this._cell.Sense();
+            IDictionary<String, MapView> surroundings = _cell.Sense();
 
             
 

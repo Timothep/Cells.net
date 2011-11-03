@@ -31,11 +31,11 @@ namespace Cells.GameCore.Cells
         /// <param name="thisWorld">A reference to the world the cell lives in</param>
         public Cell(int x, int y, Int32 initialLife, World thisWorld, Color teamColor)
         {
-            this.Position = new Coordinates(x, y);
-            this._brain = new Brain(this as ICell);
-            this._life = initialLife;
-            this._world = thisWorld;
-            this._team = teamColor;
+            Position = new Coordinates(x, y);
+            _brain = new Brain(this as ICell);
+            _life = initialLife;
+            _world = thisWorld;
+            _team = teamColor;
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Cells.GameCore.Cells
         /// <returns>The last CellAction the cell did</returns>
         public CellAction GetPreviousAction()
         {
-            return this.CellPreviousAction;
+            return CellPreviousAction;
         }
 
         /// <summary>
@@ -90,9 +90,9 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void MoveLeft()
         {
-            Coordinates oldPosition = this.Position.Clone();
-            this.Position.X--;
-            NotifyMovement(oldPosition, this.Position, this._team);
+            Coordinates oldPosition = Position.Clone();
+            Position.X--;
+            NotifyMovement(oldPosition, Position, _team);
         }
 
         /// <summary>
@@ -100,9 +100,9 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void MoveRight()
         {
-            Coordinates oldPosition = this.Position.Clone();
-            this.Position.X++;
-            NotifyMovement(oldPosition, this.Position, this._team);
+            Coordinates oldPosition = Position.Clone();
+            Position.X++;
+            NotifyMovement(oldPosition, Position, _team);
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void MoveUp()
         {
-            Coordinates oldPosition = this.Position.Clone();
-            this.Position.Y++;
-            NotifyMovement(oldPosition, this.Position, this._team);
+            Coordinates oldPosition = Position.Clone();
+            Position.Y++;
+            NotifyMovement(oldPosition, Position, _team);
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void MoveDown()
         {
-            Coordinates oldPosition = this.Position.Clone();
-            this.Position.Y--;
-            NotifyMovement(oldPosition, this.Position, this._team);
+            Coordinates oldPosition = Position.Clone();
+            Position.Y--;
+            NotifyMovement(oldPosition, Position, _team);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Cells.GameCore.Cells
         /// <param name="team">The color the team is on</param>
         private void NotifyMovement(Coordinates oldCoordinates, Coordinates newCoordinates, Color team)
         {
-            this._world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
+            _world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
             return;
         }
 

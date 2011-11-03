@@ -1,15 +1,20 @@
 ﻿namespace Cells.Utils
 {
+    /// <summary>
+    /// Class representing a vector of coordinates X and Y
+    /// </summary>
     public class Coordinates
     {
         public int X { get; set; }
-
         public int Y { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Coordinates(int inX, int inY)
         {
-            this.X = inX;
-            this.Y = inY;
+            X = inX;
+            Y = inY;
         }
 
         /// <summary>
@@ -18,7 +23,7 @@
         /// <returns>A new Coordinates object cloned</returns>
         public Coordinates Clone()
         {
-            return new Coordinates(this.X, this.Y);
+            return new Coordinates(X, Y);
         }
     }
 }
