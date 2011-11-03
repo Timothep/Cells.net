@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="a49ca61f-0d16-4050-95a6-f0a2c2decf72" name="CellsClassDiagram" linkedPackageId="1c614137-b907-4a0d-8519-45e2d4b3117d" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a5a61f2e-0af4-4167-8451-f9e7fdcab8cb" name="Cell" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c28d5842-41ad-400e-8312-0eae688ddf1e" />
+        <targetEnds>
+          <association Id="c5079eb2-fc23-41a5-9a63-d2779b2774bc" isDerived="false" sourceEndRoleName="Cell" targetEndRoleName="CellAction" isLeaf="false" name="Can do" isAbstract="false">
+            <enumerationMoniker Id="4f5e92a5-1e28-4e71-b794-1c6c699de624" LastKnownName="CellAction" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="d6078858-6662-4258-a5ed-4f8b98b78ed4" name="Cell" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="19b1667e-a724-4376-82f0-007ae2085219" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8cd057e2-973d-417e-a6d9-3713c32f126a" name="CellAction" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="3ddd1df7-8872-4574-b9b6-d686a63f55d5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="4d7949d7-4686-453b-bf39-ea9cedd686af" />
+          </association>
+          <association Id="405f31f7-79b3-40d6-9dba-e3109547d0a9" isDerived="false" sourceEndRoleName="Cell" targetEndRoleName="Brain" isLeaf="false" name="Is controlled by" isAbstract="false">
+            <classMoniker Id="eb6b73e9-84de-486b-b018-887f68ad240f" LastKnownName="Brain" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b21e8bad-6713-4ad1-b670-72e425cf3d27" name="Cell" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="87dee7c0-a95a-419e-acf7-9c23e8430bc8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="45f8e295-aba9-4699-bc69-349df43dc394" name="Brain" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="f077b15e-9f49-4fdd-ba7d-10ec7adfbc70" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c4ded12e-ab93-408f-b77c-a5616eaa78c3" />
+          </association>
+          <association Id="5aa23dad-cd92-4262-ac9a-b3b01b344b4c" isDerived="false" sourceEndRoleName="Cell" targetEndRoleName="World" isLeaf="false" name="Refers to" isAbstract="false">
+            <classMoniker Id="a2ef70bb-b669-46db-a8d8-7e198166724d" LastKnownName="World" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="3f309f88-f749-4a13-b700-ee3afafdd4fe" name="Cell" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="64fb1c83-a7d0-4c77-bfaf-171d8c5acc1b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="d9082545-efab-4a3d-9933-4a955435e26a" name="World" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="74493d18-c17b-4e37-8979-051dafaebb38" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c886a99b-b9a7-4d0c-bd71-5b7f4a5e88d7" />
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="00a3ea8f-d042-4d63-8112-91d99e9703c4" name="Position" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="c6c6f6f0-ac7e-4f77-85a1-9874ea29a03e" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="0cfdadce-4510-4eb6-88ed-edf82dc1ce6f" LastKnownName="Coordinates" />
+            </type_NamedElement>
+          </property>
+          <property Id="99688ee1-2083-4085-b405-1c995e2c3db2" name="Affinity" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="f3b46c2c-e0d9-4f0e-98ba-4cd89d6f6f91" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e49416db-a495-4c04-97f2-f1b687d33e93" LastKnownName="Int32" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="fafaad51-7243-4523-8bd2-5276585fe89b" name="Do" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="417d1fc3-5ca2-4b74-8582-56746ec13800" />
+          </operation>
+          <operation Id="86ec4a37-5570-4a67-9f63-21d69c81305a" name="GetAction" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a1344e99-6008-4325-a13b-a22a3c19c821" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="aacf1f46-187d-4a8c-939d-5ccdc656f0b5" direction="Return">
+                  <elementDefinition Id="6c54a7cc-65f3-486c-9740-2963eb37e716" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bbdf438d-ac13-479e-9b68-8b5b180b40ff" LastKnownName="CellAction" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="5fb3265b-be37-430f-bb49-a01704272f0d" name="Sense" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="3c190bf5-8a30-4fe4-a1cb-65becb3a7001" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="031d3f2d-9351-42ee-b645-238872b2b101" direction="Return">
+                  <elementDefinition Id="a73adb04-cae1-4528-9c3c-1b5e73703a20" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e5a24854-d8fb-4c07-88e1-d274995a9101" LastKnownName="MapView" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="eb6b73e9-84de-486b-b018-887f68ad240f" name="Brain" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="722a56d0-5ca0-43f5-b704-fc5fddd5583e" />
+        <suppliersInternal>
+          <interfaceRealization Id="6b518d29-5692-48af-8be9-6750e3043646">
+            <interfaceMoniker Id="377ce36f-ddc1-435e-ac19-a100a4da9647" LastKnownName="IBrain" />
+            <elementDefinition Id="c707c36e-6212-4b46-b3f2-e68771ed5978" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <targetEnds>
+          <association Id="7653223f-60f3-4bf7-8c5f-292885d9347c" isDerived="false" sourceEndRoleName="Brain" targetEndRoleName="View" isLeaf="false" name="Uses" isAbstract="false">
+            <classMoniker Id="570f57a2-7114-47ff-b2f5-89dfd3294586" LastKnownName="View" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8264a916-7d0e-4be8-ac61-95074fa25470" name="Brain" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="023c200b-6a9b-45d5-ab05-f03d1e4fbfb5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b02c4ff7-125f-43d9-8f89-ea9ad91bba39" name="View" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="d28db206-43b8-4e54-b971-04190224b1cc" name="Lower" value="*">
+                      <elementDefinition Id="f44686e4-22eb-4ad4-82c6-903f25ae2025" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="d057f231-be38-47af-8a36-e94cdfa01caf" name="Upper" value="*">
+                      <elementDefinition Id="dfeaf331-d1ce-4418-a158-43315b55374e" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="3e187b73-88b7-4f05-8020-93fbab2844e9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ed14a934-5438-4c12-a2d1-1adff268b317" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a0009e99-f1b1-428b-a3c5-e8f150ac7c52" name="Map" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="809d9a36-651a-4acc-814f-6d344abe6e1f" />
+        <targetEnds>
+          <association Id="255eaae9-567d-412f-8039-36fffc33fc8f" isDerived="false" sourceEndRoleName="Map" targetEndRoleName="MapCell" isLeaf="false" name="Is composed of" isAbstract="false">
+            <classMoniker Id="73a75839-e660-45cb-9135-39c627cd20b4" LastKnownName="MapTile" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="03f2aa5b-e4f7-44f8-9079-8409a5814c1e" name="Map" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="6913a486-0daa-45b8-ae2c-18bc1da027bc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f242abc6-a959-43c2-b8f9-be4f0c307a0c" name="MapCell" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                  <lowerValueInternal>
+                    <literalString Id="e04de539-2f03-479f-a475-1a9bf253d9e6" name="Lower" value="*">
+                      <elementDefinition Id="ea177503-016b-415e-9022-6eee368c5cfd" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="ad329f9b-88e7-4e83-babb-dd8c87c79e54" name="Upper" value="*">
+                      <elementDefinition Id="1f1d9030-e502-441d-8fb3-24c005a07f8f" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="dbd21ad8-b45b-4370-88fb-48aa51a302a6" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="f02a9017-1901-47a6-8d83-f1085dde8115" />
+          </association>
+          <association Id="8daf48b7-2f53-4ca0-9bae-69fdbdd35d2d" isDerived="false" sourceEndRoleName="Map" targetEndRoleName="View" isLeaf="false" name="Creates" isAbstract="false">
+            <classMoniker Id="570f57a2-7114-47ff-b2f5-89dfd3294586" LastKnownName="View" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="737c64ce-6dcd-40ed-8114-20e9be3df0c3" name="Map" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0c60d0f0-10dc-4347-9b56-d6f858194a5f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="212c7a11-9bbb-4bdd-955b-c00bbe1574e3" name="View" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="77032c29-15ab-4262-8087-180bbf57dac6" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ad3a0e1c-b299-47f0-992f-b0c5234b6485" />
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation Id="f7b47234-bcc3-4e3c-944c-70d9369457a5" name="CreateView" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a7e63006-8af7-4b18-a74b-952619e2b0e4" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d9316a56-4167-4483-9836-6a87485ce48d" name="X" direction="In" isUnique="false">
+                  <elementDefinition Id="6776e0c6-3c86-4bff-90a6-c3c7209ac6bd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c90f938e-9f46-408e-9286-c3a435bcd3a6" LastKnownName="Int32" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="caeb0d83-9c12-4d0c-bbaa-0dbfb3ec77ca" name="Y" direction="In" isUnique="false">
+                  <elementDefinition Id="fef4914b-7ddb-42e8-8cdd-60d8a691717f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c90f938e-9f46-408e-9286-c3a435bcd3a6" LastKnownName="Int32" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="73a75839-e660-45cb-9135-39c627cd20b4" name="MapTile" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="bcc2be2d-b5af-4a8d-b6ae-5ea82e86f9af" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="3f5030e8-24ac-4d11-8ab2-65767f53da8e" name="GameCoreEngine" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="200823d8-066c-4bc3-a2a6-9821058e7df9" />
+        <targetEnds>
+          <association Id="047351c8-98bc-4145-b7ad-65974668f13d" isDerived="false" sourceEndRoleName="GameCoreEngine" targetEndRoleName="World" isLeaf="false" name="Instanciates" isAbstract="false">
+            <classMoniker Id="a2ef70bb-b669-46db-a8d8-7e198166724d" LastKnownName="World" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="169c6e91-a0bd-4f42-b6c9-ed2c55039af2" name="GameCoreEngine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="9369c025-109e-46ca-a1a5-c3c991a793bb" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="3ac52201-ebdc-46c1-83d0-617abf395f09" name="World" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="1c056393-03cb-4deb-904a-7c153d399e60" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="1a80759a-d8ab-403f-aa9e-af5a8486d8a1" />
+          </association>
+          <association Id="e40fd5e1-d7c2-48dd-b88c-87dadd38f552" isDerived="false" sourceEndRoleName="GameCoreEngine" targetEndRoleName="CellsCanvas" isLeaf="false" name="Displays on" isAbstract="false">
+            <classMoniker Id="d253a120-2f10-4db0-a413-33da2ddeaf4d" LastKnownName="CellsCanvas" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="85588817-2f73-4165-8959-fe7a064c96b3" name="GameCoreEngine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="7535b73a-9088-4fb5-99ed-ada2303d22b3" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b73b6970-d1a1-44a8-8a20-66a99fc535bc" name="CellsCanvas" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="7114a464-9648-43d0-abc0-cbec88857f97" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="708574b4-d24d-4199-a65e-122bf64d264f" />
+          </association>
+          <association Id="3b18e2f3-40cc-42a1-9c67-e6507ce4f7a3" isDerived="false" sourceEndRoleName="GameCoreEngine" targetEndRoleName="Timer" isLeaf="false" name="Ticks with" isAbstract="false">
+            <classMoniker Id="a7a4bd0d-dd66-4bde-912c-03ed0bf9d75b" LastKnownName="Timer" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="135e40f7-903d-4cc7-bdc3-eed4d71d7317" name="GameCoreEngine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="78cfe2e1-baa6-4f27-8a91-40b86ba9c94d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b3ed4217-25ec-400f-b35f-0f27c66d0d24" name="Timer" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="fa489f45-d86b-4642-9bc6-3a73d27697fd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="bcfad8f7-26a0-4e7e-912e-720a28437588" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="6e19f0c9-1559-4a0a-89b9-66d7aa153027" name="RessourceMap" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="571ffcb0-b562-49c9-9e7c-ca767cbca0cf" />
+        <generalsInternal>
+          <generalization Id="c17a1f22-080a-4b15-9062-0822da5bd685" isSubstitutable="false">
+            <classMoniker Id="a0009e99-f1b1-428b-a3c5-e8f150ac7c52" LastKnownName="Map" />
+            <elementDefinition Id="cde04d54-e83b-426a-a7f1-d079504cda57" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association Id="147ae168-2369-4543-a673-4560fcae74a6" isDerived="false" sourceEndRoleName="RessourceMap" targetEndRoleName="World" isLeaf="false" isAbstract="false">
+            <classMoniker Id="a2ef70bb-b669-46db-a8d8-7e198166724d" LastKnownName="World" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="54e2270f-fbab-4fc1-af22-a18af61ea373" name="RessourceMap" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="89548743-9f7a-457a-8e2f-e25912f3ec2f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0b932a37-8ef2-49e8-9268-e2b95ab9cfd1" name="World" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="8ac95a9e-3309-4422-9bc6-f947ccf2df9f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="d106a848-ba59-4b83-a62b-c91e5da2605d" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="10b79f6a-5ed3-49b4-995a-e271e4e864af" name="CellMap" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3" />
+        <generalsInternal>
+          <generalization Id="770561b7-b2e4-4bff-893f-6620c6ebdba3" isSubstitutable="false">
+            <classMoniker Id="a0009e99-f1b1-428b-a3c5-e8f150ac7c52" LastKnownName="Map" />
+            <elementDefinition Id="4b02cff5-cdd5-4210-a2c5-6162dc744064" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association Id="ac513b06-c27c-48b2-af92-9c0ae370c424" isDerived="false" sourceEndRoleName="CellsMap" targetEndRoleName="World" isLeaf="false" isAbstract="false">
+            <classMoniker Id="a2ef70bb-b669-46db-a8d8-7e198166724d" LastKnownName="World" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e69ffb7d-5ff1-43fd-a6a4-b4f49bbf03ef" name="CellsMap" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="cf427b48-1587-467b-afac-344938794587" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7c2b8543-5b62-47b7-9dc4-a420ab199bbe" name="World" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="e4313f59-7335-465d-be71-4b9f9e6fcd71" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="4ac7eda5-f84f-4145-9a20-3c5e43eeb3ad" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="570f57a2-7114-47ff-b2f5-89dfd3294586" name="View" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c0e70abc-3987-4e60-b29c-0d8bc07a4254" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="377ce36f-ddc1-435e-ac19-a100a4da9647" name="IBrain" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7bda66f4-ea44-4d0f-a93f-183d693b0768" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a7a4bd0d-dd66-4bde-912c-03ed0bf9d75b" name="Timer" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="165bef28-2d33-4c3d-bbeb-a41f80abc68f" />
+        <ownedAttributesInternal>
+          <property Id="fb1560c2-d7ea-461c-8f0e-f8b9039b8b42" name="StartTick" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="2865c3dc-8262-4435-8fb2-aeb7b7ccf677" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="88d8fada-1010-4b9f-bbb8-f738d351c167" LastKnownName="long" />
+            </type_NamedElement>
+          </property>
+          <property Id="f1498907-0334-4ee2-b33f-f4d3944cb150" name="GetTickCount" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="6521509c-0b29-40e8-9219-6b1eb49cb8df" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="360cde3c-c3d3-4c3e-af05-314a91d8f374" LastKnownName="long" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="756aced6-08f8-49a2-ab20-c159dcc5e261" name="GetTicks" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="375b8117-6bd2-4d1f-adc0-adf3b2690467" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d6b09de7-d294-4e35-87eb-5dece07d2791" direction="Return">
+                  <elementDefinition Id="1b263323-5cc6-46c1-a3f8-31f6fd9e0f01" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="526cb2fc-703d-486a-b0bb-26a45cc22263" LastKnownName="long" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="ef5d2af6-e70a-4871-be58-61838c96497a" name="Reset" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8d3ea5cf-640e-4a29-a6a3-0acac8dda183" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d253a120-2f10-4db0-a413-33da2ddeaf4d" name="CellsCanvas" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="d4bd7475-b33d-4b9c-aadd-f72ccdf5da75" />
+        <ownedAttributesInternal>
+          <property Id="0f4ecab1-34b6-43bb-ad27-7f5e517645aa" name="_timer" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="true" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="e1aa1e51-e1b0-40e8-94cf-b94f97cd57b1" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="0024ced4-8ddd-4664-b979-4003ad695aa5" LastKnownName="Timer" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="360cde3c-c3d3-4c3e-af05-314a91d8f374" name="long" isAbstract="false" isLeaf="false" cachedFullName="long">
+        <elementDefinition Id="167bb60a-c44b-4fee-9636-d0603ee81030" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="88d8fada-1010-4b9f-bbb8-f738d351c167" name="long" isAbstract="false" isLeaf="false" cachedFullName="long">
+        <elementDefinition Id="167bb60a-c44b-4fee-9636-d0603ee81030" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="526cb2fc-703d-486a-b0bb-26a45cc22263" name="long" isAbstract="false" isLeaf="false" cachedFullName="long">
+        <elementDefinition Id="167bb60a-c44b-4fee-9636-d0603ee81030" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="0024ced4-8ddd-4664-b979-4003ad695aa5" name="Timer" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::Timer">
+        <elementDefinition Id="165bef28-2d33-4c3d-bbeb-a41f80abc68f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c71b2ec1-82c6-408a-98c6-969eedcf1c62" name="Coordinates" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1b918181-81f6-4874-ab4c-36703e6540a3" />
+        <targetEnds>
+          <association Id="113efab3-a8bb-47af-9749-da82de7f89b2" isDerived="false" sourceEndRoleName="Coordinates" targetEndRoleName="Cell" isLeaf="false" isAbstract="false">
+            <classMoniker Id="a5a61f2e-0af4-4167-8451-f9e7fdcab8cb" LastKnownName="Cell" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b347a981-154e-4ca1-9d50-2eb1221312ec" name="Coordinates" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="e07d9815-7db1-488c-9949-6da19c416602" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="30c781f2-2260-4780-b2e3-8be597f5b212" name="Cell" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5de4b249-82f2-459e-90f8-46aa6f2a3023" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="fb622d6f-556b-4317-ae96-20ba224eb3e4" />
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="c9cffd86-b8e5-47a9-84ff-6ad27da674f1" name="X" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="d9d03d08-6963-4fec-905d-3ed11ce11ec9" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="776bf07e-7133-4274-9d65-3b4bfd7c74be" LastKnownName="int" />
+            </type_NamedElement>
+          </property>
+          <property Id="91945c59-e7e0-4042-b24f-e1a3cb60cf4d" name="Y" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="c43afa37-0907-4afa-9c17-5bcba7ae5a8f" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6d00eb9f-315c-4fd7-9c40-ad4bfd8fe67b" LastKnownName="int" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4930939e-0d21-4418-9705-3e00e7e2c2d5" name="RandomGenerator" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="98c32483-ab67-46b9-ae64-fa91f4c8f237" />
+        <ownedAttributesInternal>
+          <property Id="fa06ce16-fa9b-456d-b6e6-20a9c3069a1d" name="Rand" visibility="Private" isLeaf="false" isStatic="true" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="5dd3b67b-aca9-4769-93a2-f181e43f9652" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="2e09d504-a605-4753-acf6-fc7bb6327868" LastKnownName="Random" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="8cd9fefa-5020-4c54-8031-229b669f9e21" name="GetRandomInteger" isLeaf="false" isStatic="true" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7719dde1-0b74-4300-9fad-639a905e38ba" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="39ca7f15-c0eb-4d81-b87c-12419a8e37f1" name="max" direction="In" isUnique="false">
+                  <elementDefinition Id="06835b81-6de6-4a91-a152-2963dfde2a04" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c90f938e-9f46-408e-9286-c3a435bcd3a6" LastKnownName="Int32" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="eaaaa528-2c5a-4e24-80d3-812c5ad504bd" direction="Return">
+                  <elementDefinition Id="c90deecb-5b05-4b48-92b8-4c43871cf936" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c90f938e-9f46-408e-9286-c3a435bcd3a6" LastKnownName="Int32" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="776bf07e-7133-4274-9d65-3b4bfd7c74be" name="int" isAbstract="false" isLeaf="false" cachedFullName="int">
+        <elementDefinition Id="7a4667cf-0f61-4552-9ace-48dd633b92c7" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="6d00eb9f-315c-4fd7-9c40-ad4bfd8fe67b" name="int" isAbstract="false" isLeaf="false" cachedFullName="int">
+        <elementDefinition Id="7a4667cf-0f61-4552-9ace-48dd633b92c7" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="2e09d504-a605-4753-acf6-fc7bb6327868" name="Random" isAbstract="false" isLeaf="false" cachedFullName="Random">
+        <elementDefinition Id="00ffe016-64a5-4349-ab7a-b865cec51352" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="c90f938e-9f46-408e-9286-c3a435bcd3a6" name="Int32" isAbstract="false" isLeaf="false" cachedFullName="Int32">
+        <elementDefinition Id="01507572-bb5a-4ae1-9e0c-650e1737670e" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="0cfdadce-4510-4eb6-88ed-edf82dc1ce6f" name="Coordinates" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::Coordinates">
+        <elementDefinition Id="1b918181-81f6-4874-ab4c-36703e6540a3" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="bbdf438d-ac13-479e-9b68-8b5b180b40ff" name="CellAction" isAbstract="false" isLeaf="false" cachedFullName="CellAction">
+        <elementDefinition Id="85bcef68-bd29-4f91-b388-b4f684606362" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <enumeration Id="4f5e92a5-1e28-4e71-b794-1c6c699de624" name="CellAction" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="35cefc27-88e4-4c29-b21f-0591830493b7" />
+        <ownedLiterals>
+          <enumerationLiteral Id="a62c3a9f-7fa9-45d7-9a63-7ce1e4eea0c2" name="MOVERIGHT">
+            <elementDefinition Id="5161b124-231f-40c4-880d-e70536905f90" />
+            <specification>
+              <literalInteger Id="f81f8db6-48ba-4a11-9928-75b05ddabcb7" name="Integer" value="0">
+                <elementDefinition Id="f0572da1-be6c-4e1e-a0c3-a7a13fc7a63d" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="a014272d-a4d4-4455-8491-c97c6514ef12" name="MOVEDOWN">
+            <elementDefinition Id="062bcd9d-c9af-4999-adc9-d668203bd67a" />
+            <specification>
+              <literalInteger Id="8d6fdf44-6217-47af-9a84-bd3de905b530" name="Integer" value="3">
+                <elementDefinition Id="7c371b87-b84a-414c-a6d7-3b11f8349f3c" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="c9652796-96d1-4a1e-b48a-d26d04a271ae" name="MOVELEFT">
+            <elementDefinition Id="061f013c-9ac9-4ee3-a866-c7bb86117397" />
+            <specification>
+              <literalInteger Id="5e3bc317-2625-4843-ba0d-c3ab170b71ab" name="Integer" value="1">
+                <elementDefinition Id="fb7688f7-9b4d-456d-a967-bb16d439aa6a" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="0fe51415-ca49-4ce1-9ebd-359fc035b911" name="MOVEUP">
+            <elementDefinition Id="744d8c15-5202-44b4-a38d-a289963215ee" />
+            <specification>
+              <literalInteger Id="2ad7e5ae-27fe-4971-bd3e-fc16689c008a" name="Integer" value="2">
+                <elementDefinition Id="b6130a35-d9cd-4396-bba7-28d32dc7f0b4" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="e5a24854-d8fb-4c07-88e1-d274995a9101" name="MapView" isAbstract="false" isLeaf="false" cachedFullName="MapView">
+        <elementDefinition Id="eddc4ba0-fb3c-4673-832d-0ea252716df4" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="e49416db-a495-4c04-97f2-f1b687d33e93" name="Int32" isAbstract="false" isLeaf="false" cachedFullName="Int32">
+        <elementDefinition Id="01507572-bb5a-4ae1-9e0c-650e1737670e" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a2ef70bb-b669-46db-a8d8-7e198166724d" name="World" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="058804d4-1d5b-490f-a435-53dc7d65e295" />
+        <ownedAttributesInternal>
+          <property Id="9b16ddfa-5c1f-46f4-ba4f-7b61029b016d" name="_ressourceMap" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="3983475e-3107-4c05-bfc6-de7685d03837" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="722d9f88-bc60-45a6-b469-2244c8ace6bc" LastKnownName="RessourceMap" />
+            </type_NamedElement>
+          </property>
+          <property Id="5b0cae5c-b6c4-499d-a1bb-36770be6e92e" name="_cellMap" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="51063b0f-5656-46b6-b66e-a0772cbe8b34" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6ed7929e-50b5-4977-b51a-5f51672585b7" LastKnownName="CellMap" />
+            </type_NamedElement>
+          </property>
+          <property Id="988748d2-0568-4d3e-baa0-1c6af039da6a" name="_plantMap" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="cec5cba4-801a-4257-9568-0a9fe850a16e" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="fc4a7cb1-8dec-4dc4-8f01-23ac8cfc6a71" LastKnownName="PlantMap" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="05181d18-d530-4e9a-b500-dea9cd6dbc91" name="GetMapView" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="de6ed95a-af45-4ec0-aca0-ee02c77534a7" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4bb62ab1-28dc-4175-b67b-de9e33139b88" name="PlantMap" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="e35740a5-14ca-46ad-8fb3-f8c8c43ca18b" />
+        <generalsInternal>
+          <generalization Id="706cc731-52fb-417a-b659-02821e55f21b" isSubstitutable="false">
+            <classMoniker Id="a0009e99-f1b1-428b-a3c5-e8f150ac7c52" LastKnownName="Map" />
+            <elementDefinition Id="99499e9f-fc11-48e6-b54e-3bf4d7d1e463" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association Id="9c3c0431-88ea-488c-a439-41f2380c1ac5" isDerived="false" sourceEndRoleName="PlantMap" targetEndRoleName="World" isLeaf="false" isAbstract="false">
+            <classMoniker Id="a2ef70bb-b669-46db-a8d8-7e198166724d" LastKnownName="World" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2c91c79a-3ddc-4c6b-96b7-1f8cdf3bd996" name="PlantMap" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f6ac8353-1399-47a8-a492-ed6f81ac7abf" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2a8e9112-7bc3-48b9-829b-fd502a2e260e" name="World" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="9611681c-8e73-4e0e-af12-28188c2f5aca" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="5d1c1d18-042e-459b-b301-d07d869c6bf4" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="722d9f88-bc60-45a6-b469-2244c8ace6bc" name="RessourceMap" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::RessourceMap">
+        <elementDefinition Id="571ffcb0-b562-49c9-9e7c-ca767cbca0cf" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="6ed7929e-50b5-4977-b51a-5f51672585b7" name="CellMap" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::CellMap">
+        <elementDefinition Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="fc4a7cb1-8dec-4dc4-8f01-23ac8cfc6a71" name="PlantMap" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::PlantMap">
+        <elementDefinition Id="e35740a5-14ca-46ad-8fb3-f8c8c43ca18b" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="1c614137-b907-4a0d-8519-45e2d4b3117d" name="CellsModel">
+    <elementDefinition Id="c348698a-eba3-40c2-82f6-e6e955e35bbb" />
+    <profileInstances>
+      <packageHasProfileInstances Id="82006411-bed8-4f6c-b992-45517bd6f3ca">
+        <profileInstance Id="292aa284-b288-455b-8abf-0124cb011c7d" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="2d89203b-e42f-4d62-9f12-4ca8bb77a025">
+        <profileInstance Id="218d681d-0063-4a8d-b140-7175bae130a6" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>
