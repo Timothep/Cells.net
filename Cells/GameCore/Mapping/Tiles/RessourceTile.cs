@@ -9,7 +9,7 @@
         /// </summary>
         /// <param name="x">x coordinate of the element</param>
         /// <param name="y">y coordinate of the element</param>
-        public RessourceTile(int x, int y)
+        public RessourceTile(short x, short y)
             : base (x, y)
         {
 

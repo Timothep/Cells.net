@@ -11,7 +11,7 @@ namespace Cells.GameCore.Mapping.Tiles
         /// </summary>
         /// <param name="x">x coordinate of the element</param>
         /// <param name="y">y coordinate of the element</param>
-        public CellTile(int x, int y)
+        public CellTile(short x, short y)
             : base(x, y)
         {
 
@@ -22,7 +22,7 @@ namespace Cells.GameCore.Mapping.Tiles
         /// </summary>
         public void SetOccupied()
         {
-            this._occupancy = true;
+            _occupancy = true;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Cells.GameCore.Mapping.Tiles
         /// </summary>
         public void SetFree()
         {
-            this._occupancy = false;
+            _occupancy = false;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Cells.GameCore.Mapping.Tiles
         /// <returns>True if the cell is occupied, false otherwise</returns>
         public bool IsOccupied()
         {
-            return this._occupancy ? true : false;
+            return _occupancy;
         }
     }
 }

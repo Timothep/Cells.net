@@ -28,10 +28,10 @@ namespace Cells.GameCore.Mapping
         private void CreateEmptyGrid()
         {
             // Create a square map of MapWidth / MapHeight size
-            for (int col = 0; col < _width; col++)
+            for (short col = 0; col < _width; col++)
             {
-                List<MapTile> newColumn = new List<MapTile>();
-                for (int row = 0; row < _height; row++)
+                var newColumn = new List<MapTile>();
+                for (short row = 0; row < _height; row++)
                 {
                     newColumn.Add(new MapTile(col, row));
                 }
