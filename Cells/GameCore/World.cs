@@ -30,11 +30,11 @@ namespace Cells.GameCore
         public World()
         {
             // Create the empty maps of the world
-            this._ressourcesMap = new Map(WorldWidth, WorldHeight);
-            this._plantMap = new Map(WorldWidth, WorldHeight);
-            this._cellsMap = new Map(WorldWidth, WorldHeight);
+            _ressourcesMap = new Map(WorldWidth, WorldHeight);
+            _plantMap = new Map(WorldWidth, WorldHeight);
+            _cellsMap = new Map(WorldWidth, WorldHeight);
 
-            this._cells = new List<Cell>();
+            _cells = new List<Cell>();
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Cells.GameCore
         /// <returns></returns>
         public IEnumerable<Cell> GetCells()
         {
-            return this._cells;
+            return _cells;
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Cells.Brains
             CellAction action = CellAction.NONE;
             IDictionary<String, MapView> surroundings = this._cell.Sense();
 
-            GatherAllCells(surroundings["Cells"]);
+            
 
             switch (RandomGenerator.GetRandomInteger(4))
             {

@@ -9,8 +9,9 @@ namespace Cells.GameCore.Mapping
     {
         protected const short DefaultMapViewSquare = 3;
 
-        protected List<List<MapTile>> _grid = new List<List<MapTile>>();
-        private int _width, _height;
+        protected List<List<MapTile>> Grid = new List<List<MapTile>>();
+        private readonly int _width;
+        private readonly int _height;
 
         /// <summary>
         /// Creates an empty map structure
@@ -19,29 +20,28 @@ namespace Cells.GameCore.Mapping
         /// <param name="height"></param>
         public Map(short width, short height)
         {
-            this._height = height;
-            this._width = width;
-
-            this.CreateEmptyGrid();
+            _height = height;
+            _width = width;
+            CreateEmptyGrid();
         }
 
         private void CreateEmptyGrid()
         {
             // Create a square map of MapWidth / MapHeight size
-            for (int col = 0; col < this._width; col++)
+            for (int col = 0; col < _width; col++)
             {
                 List<MapTile> newColumn = new List<MapTile>();
-                for (int row = 0; row < this._height; row++)
+                for (int row = 0; row < _height; row++)
                 {
-                    newColumn.Add(new MapTile((int)col, (int)row));
+                    newColumn.Add(new MapTile(col, row));
                 }
-                this._grid.Add(newColumn);
+                Grid.Add(newColumn);
             }
         }
 
         public MapView CreateMapView(Coordinates cellCoordinates)
         {
-            List<List<MapTile>> extract = this.GetMapExtract(cellCoordinates);
+            List<List<MapTile>> extract = GetMapExtract(cellCoordinates);
             return new MapView(extract);
         }
 
@@ -68,118 +68,21 @@ namespace Cells.GameCore.Mapping
             short smallGridMinX = centerPoint.X - numberOfSideColumns > 0 ? Convert.ToInt16(centerPoint.X - numberOfSideColumns) : (Int16)0;
             short smallGridMinY = centerPoint.Y - numberOfSideRows > 0 ? Convert.ToInt16(centerPoint.Y - numberOfSideRows) : (Int16)0;
 
-            short smallGridMaxX = smallGridMinX + width > _grid.Count ? Convert.ToInt16(_grid.Count): Convert.ToInt16(smallGridMinX + width);
-            short smallGridMaxY = smallGridMinY + height > _grid[0].Count ? Convert.ToInt16(_grid[0].Count) : Convert.ToInt16(smallGridMinY + height);
+            short smallGridMaxX = smallGridMinX + width > Grid.Count ? Convert.ToInt16(Grid.Count): Convert.ToInt16(smallGridMinX + width);
+            short smallGridMaxY = smallGridMinY + height > Grid[0].Count ? Convert.ToInt16(Grid[0].Count) : Convert.ToInt16(smallGridMinY + height);
 
             // Extract the elements from the original grid
-            List<List<MapTile>> extract = new List<List<MapTile>>();
+            var extract = new List<List<MapTile>>();
             for (int i = smallGridMinX; i < smallGridMaxX ; i++)
             {
                 extract.Add(new List<MapTile>());
                 for (int j = smallGridMinY; j < smallGridMaxY ; j++)
                 {
-                    extract[i - smallGridMinX].Add(this._grid[i][j]);
+                    extract[i - smallGridMinX].Add(Grid[i][j]);
                 }
             }
 
             return extract;
         }
-
-        ///// <summary>
-        ///// Get the width of the created map
-        ///// </summary>
-        //public int GetGridWidth()
-        //{
-        //    if (this._grid == null)
-        //        throw new NullReferenceException();
-        //    return this._grid.Count;
-        //}
-
-        ///// <summary>
-        ///// Get the height of the created map
-        ///// </summary>
-        //public int GetGridHeight()
-        //{
-        //    if (this._grid == null)
-        //        throw new NullReferenceException();
-        //    return this._grid[0].Count;
-        //}
-
-        ///// <summary>
-        ///// Retrieves one element of the Map
-        ///// </summary>
-        ///// <param name="x">x coordinate of the element to retrieve</param>
-        ///// <param name="y">y coordinate of the element to retrieve</param>
-        ///// <returns>The MapCell element</returns>
-        //public MapTile GetElement(int x, int y)
-        //{
-        //    if (this._grid == null || x >= this._grid.Count)
-        //        return null;
-        //    else
-        //    {
-        //        List<MapTile> column = this._grid.ElementAt(x);
-
-        //        if (column == null || y >= column.Count)
-        //            return null;
-
-        //        return column.ElementAt(y);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Function finding a random free spot on the map
-        ///// </summary>
-        ///// <returns>The coordinates of the spot</returns>
-        //public Coordinates GetFreeSpot()
-        //{
-        //    int x, y = 0;
-        //    MapTile spot = null;
-        //    List<MapTile> possibilities = GetAllMapTiles();
-
-        //    do
-        //    {
-        //        if (possibilities.Count == 0)
-        //            return null;
-
-        //        spot = possibilities[GetRandomInt(possibilities.Count)];
-
-        //        if (!this.GetElement(spot.GetPosition().X, spot.GetPosition().Y).IsOccupied())
-        //            break;
-        //        else
-        //        {
-        //            possibilities.Remove(spot);
-        //            spot = null;
-        //        }
-        //    } while (possibilities.Count > 0);
-            
-        //    return spot == null ? null : spot.GetPosition();
-        //}
-
-        ///// <summary>
-        ///// Returns a list of all the coordinates of the map concatenated like "x y"
-        ///// </summary>
-        //public List<MapTile> GetAllMapTiles()
-        //{
-        //    List<MapTile> allCells = new List<MapTile>();
-
-        //    for (int col = 0; col < this._width; col++)
-        //    {
-        //        for (int row = 0; row < this._height; row++)
-        //        {
-        //            allCells.Add(new MapTile(col,row));
-        //        }
-        //    }
-        //    return allCells;
-        //}
-
-        ///// <summary>
-        ///// Function generating a new random number (integer)
-        ///// </summary>
-        ///// <param name="maxValue">(Optional) Maximum value of the integer (default MaxInt)</param>
-        ///// <returns>A random integer</returns>
-        //private int GetRandomInt(int maxValue = Int32.MaxValue)
-        //{
-        //    return _randomGen.Next(maxValue);
-        //}
     }
 }
