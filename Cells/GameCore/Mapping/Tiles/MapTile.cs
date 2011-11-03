@@ -4,14 +4,15 @@ namespace Cells.GameCore.Mapping.Tiles
 {
     public class MapTile
     {
-        private readonly Coordinates _position;
+        private Coordinates _position;
 
         /// <summary>
-        /// Constructor
+        /// Sets the position of the current element
         /// </summary>
         /// <param name="x">x coordinate of the element</param>
         /// <param name="y">y coordinate of the element</param>
-        public MapTile(short x, short y)
+        /// <returns></returns>
+        public void SetPositions(short x, short y)
         {
             _position = new Coordinates(x, y);
         }

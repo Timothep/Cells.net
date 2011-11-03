@@ -13,22 +13,25 @@ namespace CellsTest.TestClasses
         public void TestGetMapExtractNotNull()
         {
             Map testMap = new Map(10, 10);
-            Assert.IsNotNull(testMap.GetMapExtract(new Coordinates(1, 1), 5, 5));
+            testMap.InitializeGrid();
+            Assert.IsNotNull(testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 5, 5));
         }
 
         [TestMethod]
         public void TestGetMapExtractColumnsNumberOk()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), 3, 3);
-            Assert.IsTrue(extract.Count == 3 && extract[0].Count == 3);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 3);
+            Assert.IsTrue(extract.GetMapWidth() == 3);
         }
 
         [TestMethod]
         public void TestNullParameterReturnsNull()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(null, 3, 3);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(null, 3, 3);
             Assert.IsNull(extract);
         }
 
@@ -36,7 +39,8 @@ namespace CellsTest.TestClasses
         public void TestEvenParameterWidthReturnsNull()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), 2, 3);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 2, 3);
             Assert.IsNull(extract);
         }
 
@@ -44,7 +48,8 @@ namespace CellsTest.TestClasses
         public void TestEvenParameterHeightReturnsNull()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), 3, 2);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 2);
             Assert.IsNull(extract);
         }
 
@@ -52,7 +57,8 @@ namespace CellsTest.TestClasses
         public void TestNegativeParameterWidthReturnsNull()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), -1, 3);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), -1, 3);
             Assert.IsNull(extract);
         }
 
@@ -60,7 +66,8 @@ namespace CellsTest.TestClasses
         public void TestNegativeParameterHeightReturnsNull()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), 3, -1);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, -1);
             Assert.IsNull(extract);
         }
 
@@ -68,7 +75,8 @@ namespace CellsTest.TestClasses
         public void TestTooBigParameterWidthReturnsNull()
         {
             Map testMap = new Map(3, 3);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), 5, 5);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 5, 5);
             Assert.IsNull(extract);
         }
 
@@ -76,39 +84,35 @@ namespace CellsTest.TestClasses
         public void TestTooBigParameterHeightReturnsNull()
         {
             Map testMap = new Map(3, 3);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), 5, 5);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 5, 5);
             Assert.IsNull(extract);
         }
         
-        //[TestMethod]
-        //public void TestGeneral()
-        //{
-        //    Map testMap = new Map(10, 10);
-        //    List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(2, 2), 3, 3);
-        //    Assert.IsNotNull(extract);
-        //}
-
         [TestMethod]
         public void TestGetMapExtractHasOneItem()
         {
             Map testMap = new Map(10, 10);
-            Assert.IsTrue(testMap.GetMapExtract(new Coordinates(1, 1), 3, 3).Count > 0);
+            testMap.InitializeGrid();
+            Assert.IsTrue(testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 3).GetMapWidth() > 0);
         }
 
         [TestMethod]
         public void TestGetMapExtractRowsNumberOk()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(1, 1), 3, 3);
-            Assert.IsTrue(extract.Count >= 1);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 3);
+            Assert.IsTrue(extract.GetMapHeight() >= 1);
         }
 
         [TestMethod]
         public void TestGetMapExtractOutterBound()
         {
             Map testMap = new Map(10, 10);
-            List<List<MapTile>> extract = testMap.GetMapExtract(new Coordinates(9, 9), 3, 3);
-            Assert.IsTrue(extract.Count == 2);
+            testMap.InitializeGrid();
+            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(9, 9), 3, 3);
+            Assert.IsTrue(extract.GetMapWidth() == 2);
         }
 
     }

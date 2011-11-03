@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
+using Cells.GameCore.Mapping.Tiles;
 using Cells.Utils;
 
 namespace Cells.GameCore
@@ -17,9 +18,9 @@ namespace Cells.GameCore
         private const short WorldWidth = 100;
         private const short WorldHeight = 100;
 
-        private readonly Map _ressourcesMap;
-        private readonly Map _plantMap;
-        private readonly Map _cellsMap;
+        //private readonly RessourceMap _ressourcesMap;
+        //private readonly PlantMap _plantMap;
+        private readonly CellsMap _cellsMap;
 
         private readonly List<Cell> _cells = new List<Cell>();
         private readonly IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
@@ -30,9 +31,9 @@ namespace Cells.GameCore
         public World()
         {
             // Create the empty maps of the world
-            _ressourcesMap = new Map(WorldWidth, WorldHeight);
-            _plantMap = new Map(WorldWidth, WorldHeight);
-            _cellsMap = new Map(WorldWidth, WorldHeight);
+            //_ressourcesMap = new RessourcesMap(WorldWidth, WorldHeight);
+            //_plantMap = new PlantsMap(WorldWidth, WorldHeight);
+            _cellsMap = new CellsMap(WorldWidth, WorldHeight);
 
             _cells = new List<Cell>();
         }
@@ -108,9 +109,9 @@ namespace Cells.GameCore
         {
             var surroundingView = new SurroundingView();
             surroundingView.SetCenterCoordinates(cell.Position);
-            surroundingView.SetCellView(this._cellsMap.GetMapExtract(cell.Position));
-            surroundingView.SetPlantView(this._plantMap.GetMapExtract(cell.Position));
-            surroundingView.SetRessourceView(this._ressourcesMap.GetMapExtract(cell.Position));
+            //surroundingView.SetCellView(this._cellsMap.GetSubsetOfThisMap(cell.Position));
+            //surroundingView.SetPlantView(this._plantMap.GetSubsetOfThisMap(cell.Position));
+            //surroundingView.SetRessourceView(this._ressourcesMap.GetSubsetOfThisMap(cell.Position));
 
             return surroundingView;
         }

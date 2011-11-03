@@ -30,19 +30,19 @@ namespace Cells.GameCore.Mapping
             _centerOfView = coordinates;
         }
 
-        internal void SetCellView(Map surroundingCellMap)
-        {
-            throw new NotImplementedException();
-        }
+        //internal void SetCellView(Map surroundingCellMap)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        internal void SetPlantView(Map surroundingPlantMap)
-        {
-            throw new NotImplementedException();
-        }
+        //internal void SetPlantView(Map surroundingPlantMap)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        internal void SetRessourceView(Map surroundingRessourceMap)
-        {
-            throw new NotImplementedException();
-        }
+        //internal void SetRessourceView(Map surroundingRessourceMap)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

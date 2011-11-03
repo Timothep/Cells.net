@@ -58,6 +58,7 @@
     <Compile Include="Brains\Brain.cs" />
     <Compile Include="GameCore\Cells\Cell.cs" />
     <Compile Include="GameCore\GameCoreEngine.cs" />
+    <Compile Include="GameCore\Mapping\CellsMap.cs" />
     <Compile Include="GameCore\Mapping\SurroundingView.cs" />
     <Compile Include="GameCore\Mapping\Tiles\CellTile.cs" />
     <Compile Include="GameCore\Mapping\Tiles\RessourceTile.cs" />
