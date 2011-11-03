@@ -58,12 +58,12 @@
     <Compile Include="Brains\Brain.cs" />
     <Compile Include="GameCore\Cells\Cell.cs" />
     <Compile Include="GameCore\GameCoreEngine.cs" />
+    <Compile Include="GameCore\Mapping\SurroundingView.cs" />
     <Compile Include="GameCore\Mapping\Tiles\CellTile.cs" />
     <Compile Include="GameCore\Mapping\Tiles\RessourceTile.cs" />
     <Compile Include="GameCore\Mapping\Tiles\PlantTile.cs" />
     <Compile Include="GameCore\Mapping\Map.cs" />
     <Compile Include="GameCore\Mapping\Tiles\MapTile.cs" />
-    <Compile Include="GameCore\Mapping\MapView.cs" />
     <Compile Include="GameCore\World.cs" />
     <Compile Include="GameEngine\CellsCanvas.cs">
       <SubType>Form</SubType>

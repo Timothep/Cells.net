@@ -104,16 +104,15 @@ namespace Cells.GameCore
         /// </summary>
         /// <param name="cell">The cell asking</param>
         /// <returns>A MapView of the place</returns>
-        internal IDictionary<string, MapView> GetMapView(Cell cell)
+        internal SurroundingView GetSurroundingsView(Cell cell)
         {
-            IDictionary<string, MapView> lMV = new Dictionary<String, MapView>();
-            Coordinates cellCoordinates = cell.Position;
+            var surroundingView = new SurroundingView();
+            surroundingView.SetCenterCoordinates(cell.Position);
+            surroundingView.SetCellView(this._cellsMap.GetMapExtract(cell.Position));
+            surroundingView.SetPlantView(this._plantMap.GetMapExtract(cell.Position));
+            surroundingView.SetRessourceView(this._ressourcesMap.GetMapExtract(cell.Position));
 
-            lMV.Add("Ressources", _ressourcesMap.CreateMapView(cellCoordinates));
-            lMV.Add("Plants", _plantMap.CreateMapView(cellCoordinates));
-            lMV.Add("Cells", _cellsMap.CreateMapView(cellCoordinates));
-
-            return lMV;
+            return surroundingView;
         }
     }
 }

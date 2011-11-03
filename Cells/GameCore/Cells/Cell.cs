@@ -142,9 +142,9 @@ namespace Cells.GameCore.Cells
         /// When it senses its surroundings, it can see at most a square around itself
         /// </summary>
         /// <returns>A MapView describing its immediate surroundings</returns>
-        public IDictionary<String, MapView> Sense()
+        public SurroundingView Sense()
         {
-            return _world.GetMapView(this) as IDictionary<string, MapView>;
+            return _world.GetSurroundingsView(this);
         }
     }
 }

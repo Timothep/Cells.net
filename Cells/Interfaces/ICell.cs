@@ -14,7 +14,7 @@ namespace Cells.Interfaces
 
         void Do(CellAction action);
 
-        IDictionary<String, MapView> Sense();
+        SurroundingView Sense();
 
         CellAction GetPreviousAction();
     }

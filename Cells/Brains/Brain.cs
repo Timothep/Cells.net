@@ -28,7 +28,7 @@ namespace Cells.Brains
         public CellAction ChooseNextAction()
         {
             CellAction action = CellAction.NONE;
-            IDictionary<String, MapView> surroundings = _cell.Sense();
+            SurroundingView surroundings = _cell.Sense();
 
             
 
@@ -51,11 +51,6 @@ namespace Cells.Brains
             }
 
             return action;
-        }
-
-        private List<ICell> GatherAllCells(MapView surroundings)
-        {
-            return null;
         }
     }
 }
