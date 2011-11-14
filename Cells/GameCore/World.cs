@@ -17,6 +17,7 @@ namespace Cells.GameCore
     {
         private const short WorldWidth = 500;
         private const short WorldHeight = 500;
+        private const short SubViewSize = 3;
 
         private readonly Map MasterMap;
 
@@ -113,8 +114,8 @@ namespace Cells.GameCore
         /// <param name="cell">The cell asking</param>
         /// <returns>A SurroundingView of the location where the cell resides</returns>
         internal SurroundingView GetSurroundingsView(Cell cell)
-        {            
-            return new SurroundingView(cell.Position);
+        {
+            return new SurroundingView(cell.Position, this.MasterMap.GetSubset(cell.Position, SubViewSize, SubViewSize));
         }
     }
 }

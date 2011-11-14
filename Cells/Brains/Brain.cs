@@ -29,23 +29,28 @@ namespace Cells.Brains
         {
             CellAction action = CellAction.NONE;
             SurroundingView surroundings = _cell.Sense();
+            List<Cell> neighbors = surroundings.GetAllCells();
 
-            switch (RandomGenerator.GetRandomInteger(4))
+            int rand = RandomGenerator.GetRandomInteger(neighbors.Count + 4);
+            switch (rand)
             {
+                case 0:
+                    action = CellAction.MOVERIGHT;
+                    break;
                 case 1:
-                    action = CellAction.MOVELEFT;
+                    //action = CellAction.MOVELEFT;
+                    action = CellAction.MOVERIGHT;
                     break;
                 case 2:
                     action = CellAction.MOVEDOWN;
                     break;
                 case 3:
-                    action = CellAction.MOVEUP;
-                    break;
-                case 0:
-                    action = CellAction.MOVERIGHT;
+                    //action = CellAction.MOVEUP;
+                    action = CellAction.MOVEDOWN;
                     break;
                 default:
-                    throw new NotImplementedException();
+                    action = neighbors[rand - 4 ].GetPreviousAction();
+                    break;
             }
 
             return action;

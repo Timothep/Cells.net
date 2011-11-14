@@ -70,6 +70,8 @@ namespace Cells.GameCore.Cells
                 case CellAction.MOVEDOWN:
                     MoveDown();
                     break;
+                case CellAction.NONE:
+                    break;
                 default:
                     throw new NotImplementedException();
             }

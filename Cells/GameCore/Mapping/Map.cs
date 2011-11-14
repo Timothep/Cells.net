@@ -13,7 +13,7 @@ namespace Cells.GameCore.Mapping
         private readonly short Width;
         private readonly short Height;
 
-        private readonly MapTile[,] Grid;
+        public MapTile[,] Grid;
         
         /// <summary>
         /// Creates an empty map structure
@@ -31,7 +31,7 @@ namespace Cells.GameCore.Mapping
         /// <summary>
         /// Populates the grid with MapTiles
         /// </summary>
-        private void InitializeGrid()
+        public void InitializeGrid()
         {
             // Create a square map of MapWidth / MapHeight size
             for (short col = 0; col < Width; col++)
@@ -43,6 +43,11 @@ namespace Cells.GameCore.Mapping
                     Grid[col, row] = tile;
                 }
             }
+        }
+
+        public void InitializeGrid(MapTile[,] view)
+        {
+            this.Grid = view;
         }
 
         /// <summary>
@@ -87,7 +92,7 @@ namespace Cells.GameCore.Mapping
             var newMap = new MapTile[(Int16)(xMax - xMin), (Int16)(yMax - yMin)];
             for (int i = xMin; i < xMax; i++)
                 for (int j = yMin; j < yMax; j++)
-                    newMap[i,j] = Grid[i,j];
+                    newMap[i - xMin ,j - yMin] = Grid[i,j];
 
             return newMap;
         }

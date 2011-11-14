@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping.Tiles;
 using Cells.Utils;
 
@@ -17,45 +18,30 @@ namespace Cells.GameCore.Mapping
         // The view is a square centered on the cell
         private const short ViewSize = 3;
 
-        private Map _cellsView = new Map(ViewSize, ViewSize);
+        private Map _view = new Map(ViewSize, ViewSize);
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="coordinates"></param>
-        public SurroundingView(Coordinates coordinates)
+        public SurroundingView(Coordinates coordinates, MapTile[,] view)
         {
             // Set the center coordinate
-            this.SetCenterCoordinates(coordinates);
-        }
-
-        // The various map extracts
-        //CellsMapView
-        //RessourcesMapView
-        //PlantsMapView
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="coordinates"></param>
-        private void SetCenterCoordinates(Coordinates coordinates)
-        {
             _centerOfView = coordinates;
+            _view = new Map(Convert.ToInt16(view.GetUpperBound(0)), Convert.ToInt16(view.GetUpperBound(1)));
+            _view.InitializeGrid(view);
         }
 
-        //internal void SetCellView(Map surroundingCellMap)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public List<Cell> GetAllCells()
+        {
+            List<Cell> newList = new List<Cell>();
 
-        //internal void SetPlantView(Map surroundingPlantMap)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            for (int i = 0; i < ViewSize; i++)
+                for (int j = 0; j < ViewSize; j++)
+                    if (_view.Grid[i,j].CellReference != null)
+                        newList.Add(_view.Grid[i, j].CellReference);
 
-        //internal void SetRessourceView(Map surroundingRessourceMap)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            return newList;
+        }
     }
 }
