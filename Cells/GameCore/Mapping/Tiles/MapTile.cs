@@ -1,8 +1,9 @@
-﻿using Cells.Utils;
+﻿using Cells.Interfaces;
+using Cells.Utils;
 
 namespace Cells.GameCore.Mapping.Tiles
 {
-    public class MapTile
+    public class MapTile: ICellTile, IRessourceTile
     {
         private Coordinates _position;
 

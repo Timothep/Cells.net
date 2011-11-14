@@ -59,11 +59,7 @@
     <Compile Include="GameCore\Cells\Cell.cs" />
     <Compile Include="GameCore\GameCoreEngine.cs" />
     <Compile Include="GameCore\Mapping\CellsMap.cs" />
-    <Compile Include="GameCore\Mapping\MapGrid.cs" />
     <Compile Include="GameCore\Mapping\SurroundingView.cs" />
-    <Compile Include="GameCore\Mapping\Tiles\CellTile.cs" />
-    <Compile Include="GameCore\Mapping\Tiles\RessourceTile.cs" />
-    <Compile Include="GameCore\Mapping\Tiles\PlantTile.cs" />
     <Compile Include="GameCore\Mapping\Map.cs" />
     <Compile Include="GameCore\Mapping\Tiles\MapTile.cs" />
     <Compile Include="GameCore\World.cs" />
@@ -76,6 +72,8 @@
     <Compile Include="GameEngine\Program.cs" />
     <Compile Include="Interfaces\IBrain.cs" />
     <Compile Include="Interfaces\ICell.cs" />
+    <Compile Include="Interfaces\ICellTile.cs" />
+    <Compile Include="Interfaces\IRessourceTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameEngine\Timer.cs" />
     <Compile Include="Settings.cs" />

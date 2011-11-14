@@ -160,32 +160,39 @@
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="ad3a0e1c-b299-47f0-992f-b0c5234b6485" />
           </association>
-          <association Id="e2df1e4d-5ca7-46a1-86b3-2f20115cb622" isDerived="false" sourceEndRoleName="Map" targetEndRoleName="MapGrid" isLeaf="false" isAbstract="false">
-            <classMoniker Id="8b103edd-5940-4836-b321-d144e9cba1d6" LastKnownName="MapGrid" />
+          <association Id="1ad0e74e-842b-4760-af94-5d0b47ad7533" isDerived="false" sourceEndRoleName="Map" targetEndRoleName="MapTile" isLeaf="false" isAbstract="false">
+            <classMoniker Id="73a75839-e660-45cb-9135-39c627cd20b4" LastKnownName="MapTile" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="b11999d8-9b32-4450-8cdf-a32c993220f2" name="Map" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="6af58013-e2eb-4cdd-b7d2-6e8e8ed35f40" />
+                <memberEnd Id="09da66cb-b498-489c-8095-ded95f7e2634" name="Map" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="ceee1b7d-fd8f-44c2-a3df-bcacb48d77d2" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="125bcac4-d7ff-4c20-94d3-795134ffd7a3" name="MapGrid" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <elementDefinition Id="19eda471-1ff1-49bc-9fda-488ad2022cf4" />
+                <memberEnd Id="ed8c2e55-3f2e-4bb6-a611-44dd929764bc" name="MapTile" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="cb9643cf-0221-4bd5-941b-6699e3afac78" />
                 </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
-            <elementDefinition Id="4fb8a43b-4617-4694-9878-11718d225962" />
+            <elementDefinition Id="df96eb32-d1fa-4653-aaf3-57a127115bb8" />
           </association>
         </targetEnds>
         <ownedAttributesInternal>
-          <property Id="1f3b97b8-375b-4f10-8be1-80c95b5cfea7" name="Grid&lt;MapGrid&gt;" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="1f3b97b8-375b-4f10-8be1-80c95b5cfea7" name="Grid" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <lowerValueInternal>
+              <literalString Id="4a8316d5-a78b-41f0-a878-87b80e8544d4" name="Lower" value=",">
+                <elementDefinition Id="9d920239-4d62-40e2-b311-fb80f063e07b" />
+              </literalString>
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString Id="cfe73ac2-592b-4606-a995-e1507c5a198d" name="Upper" value=",">
+                <elementDefinition Id="404438a7-05ec-4daf-be54-d5e3a1509bb4" />
+              </literalString>
+            </upperValueInternal>
             <elementDefinition Id="768a8f7e-0284-45fd-ad3d-6a299610256a" />
-          </property>
-          <property Id="587e187c-380e-423c-9a66-3c30b7a6f088" name="height" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="7833e6e2-0d76-4808-bace-44745fa83651" />
-          </property>
-          <property Id="9589b8fb-5591-4fca-a256-abab3d8529d7" name="width" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="e4e206d4-bd13-4984-9966-6c8af7a743aa" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="5b305efb-73ad-4ba1-acc5-c221ec51839c" LastKnownName="MapTile[,]" />
+            </type_NamedElement>
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
@@ -216,6 +223,44 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="73a75839-e660-45cb-9135-39c627cd20b4" name="MapTile" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="bcc2be2d-b5af-4a8d-b6ae-5ea82e86f9af" />
+        <suppliersInternal>
+          <interfaceRealization Id="924c9c2b-bd2b-4120-8ecc-bcfe41733abe">
+            <interfaceMoniker Id="b908be9a-2ee7-4371-9820-d942289e6798" LastKnownName="IRessourceTile" />
+            <elementDefinition Id="56a546a5-9fba-465f-b093-e2e36fc6a5d9" />
+          </interfaceRealization>
+          <interfaceRealization Id="92e3a1d3-356c-42ad-a66a-dd319840429e">
+            <interfaceMoniker Id="b097b741-43ea-40b0-b656-837a89500637" LastKnownName="ICellTile" />
+            <elementDefinition Id="f02961fa-5ec0-42a4-a40e-2f3e223c1729" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property Id="95561f5b-5401-439e-bdb7-fe1523c35eb3" name="CellReference" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="7335df2b-f556-418b-abc5-e968034d1988" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="4d39db0a-51d4-4e47-a984-d075195286c0" LastKnownName="Cell" />
+            </type_NamedElement>
+          </property>
+          <property Id="9287df64-6b84-4305-ba4c-c5d762f6bdb3" name="GrowthRate" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="ae4c84d0-6d5a-4d68-a053-a402e7a11958" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="dab6a75e-00e6-4dfe-938f-c496fc92fe62" LastKnownName="Int16" />
+            </type_NamedElement>
+          </property>
+          <property Id="aac04e2d-9e17-495f-ae14-e6377ca99ab9" name="RessourceLevel" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="743455f5-7eee-4585-bb51-ab4808ec4c51" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b4674991-5fda-4c13-8ac9-2fbd7897562f" LastKnownName="Int16" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="d48fef1d-44e8-469f-9ad0-422db89ebc51" name="GetCell" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="db68a374-fe91-4302-a41f-5ee57a5d07c5" />
+          </operation>
+          <operation Id="358c06ed-2618-401e-81a9-12109101ec93" name="GetRessourceLevel" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="728a9f6d-efae-4fbb-9fb6-811d34f12467" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -271,41 +316,6 @@
             <elementDefinition Id="bcfad8f7-26a0-4e7e-912e-720a28437588" />
           </association>
         </targetEnds>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="6e19f0c9-1559-4a0a-89b9-66d7aa153027" name="RessourceTile" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="571ffcb0-b562-49c9-9e7c-ca767cbca0cf" />
-        <generalsInternal>
-          <generalization Id="bce5baf2-b62c-4748-8298-38782d3581d1" isSubstitutable="false">
-            <classMoniker Id="73a75839-e660-45cb-9135-39c627cd20b4" LastKnownName="MapTile" />
-            <elementDefinition Id="19e6fc1a-4d3a-4273-ad84-64149d395415" />
-          </generalization>
-        </generalsInternal>
-        <ownedAttributesInternal>
-          <property Id="f41c252c-7fc1-4f5f-801a-b2ed0249df13" name="RessourceLevel" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="f3e8e48b-abf2-4b58-b3a0-ee13a263ca55" />
-          </property>
-          <property Id="58dbdd5a-8113-4d83-a2ce-01acbea3944d" name="GrowthRate" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="c8131136-0b8a-4e6a-8701-e374291faff7" />
-          </property>
-        </ownedAttributesInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="10b79f6a-5ed3-49b4-995a-e271e4e864af" name="CellTile" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3" />
-        <generalsInternal>
-          <generalization Id="beb25317-abaa-46bb-91a6-7420a8139407" isSubstitutable="false">
-            <classMoniker Id="73a75839-e660-45cb-9135-39c627cd20b4" LastKnownName="MapTile" />
-            <elementDefinition Id="d86b2f84-56a0-49cd-b389-671c4ac06c76" />
-          </generalization>
-        </generalsInternal>
-        <ownedAttributesInternal>
-          <property Id="da71193a-6fbf-493c-ba5e-05faa7b6d01d" name="CellReference" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="7721e15e-2510-4ae5-b760-1ef85845c1b2" />
-          </property>
-        </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -553,7 +563,7 @@
           <property Id="5b0cae5c-b6c4-499d-a1bb-36770be6e92e" name="_cellMap" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="51063b0f-5656-46b6-b66e-a0772cbe8b34" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="6ed7929e-50b5-4977-b51a-5f51672585b7" LastKnownName="CellTile" />
+              <referencedTypeMoniker Id="6ed7929e-50b5-4977-b51a-5f51672585b7" LastKnownName="ICellTile" />
             </type_NamedElement>
           </property>
           <property Id="988748d2-0568-4d3e-baa0-1c6af039da6a" name="_plantMap" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -576,7 +586,7 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="6ed7929e-50b5-4977-b51a-5f51672585b7" name="CellTile" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::CellTile">
+      <referencedType Id="6ed7929e-50b5-4977-b51a-5f51672585b7" name="ICellTile" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::ICellTile">
         <elementDefinition Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3" />
       </referencedType>
     </packageHasNamedElement>
@@ -585,28 +595,45 @@
         <elementDefinition Id="e35740a5-14ca-46ad-8fb3-f8c8c43ca18b" />
       </referencedType>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="5b305efb-73ad-4ba1-acc5-c221ec51839c" name="MapTile[,]" isAbstract="false" isLeaf="false" cachedFullName="MapTile[,]">
+        <elementDefinition Id="1b942072-abf0-4440-8e89-7b9015a70ae3" />
+      </referencedType>
+    </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="8b103edd-5940-4836-b321-d144e9cba1d6" name="MapGrid" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="0fa76fd1-a36f-4067-aea1-f553939ab539" />
-        <targetEnds>
-          <association Id="65ed0bf2-365d-418d-867e-6b4f5da2df83" isDerived="false" sourceEndRoleName="MapGrid" targetEndRoleName="MapTile" isLeaf="false" isAbstract="false">
-            <classMoniker Id="73a75839-e660-45cb-9135-39c627cd20b4" LastKnownName="MapTile" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="47bb7d53-1e5b-41e7-b378-818131be48e5" name="MapGrid" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="feca6191-b2b5-4f51-9dfb-68fbd52a785e" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="e6135e43-0fa2-4bbb-87d2-fe904fcce5ac" name="MapTile" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
-                  <elementDefinition Id="dd23edfd-061d-40b5-8d49-0ba149a51e5a" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="e273ebfd-db39-488a-9e2b-68ed2f8c61fa" />
-          </association>
-        </targetEnds>
-      </class>
+      <Interface Id="b097b741-43ea-40b0-b656-837a89500637" name="ICellTile" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="48e247f3-5176-4b01-93cf-0bbfd6a2bfc6" />
+        <ownedOperations>
+          <operation Id="7ea4642d-ce0d-4981-ad4b-7bb5ba0f4dc0" name="GetCell" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0634935a-898c-461b-a7b4-da6bee2a9021" />
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="dab6a75e-00e6-4dfe-938f-c496fc92fe62" name="Int16" isAbstract="false" isLeaf="false" cachedFullName="Int16">
+        <elementDefinition Id="6163fa79-e955-484e-ab78-ccfdae4c8745" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="4d39db0a-51d4-4e47-a984-d075195286c0" name="Cell" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::Cell">
+        <elementDefinition Id="c28d5842-41ad-400e-8312-0eae688ddf1e" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="b4674991-5fda-4c13-8ac9-2fbd7897562f" name="Int16" isAbstract="false" isLeaf="false" cachedFullName="Int16">
+        <elementDefinition Id="6163fa79-e955-484e-ab78-ccfdae4c8745" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="b908be9a-2ee7-4371-9820-d942289e6798" name="IRessourceTile" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="aeed843d-14e4-4744-8bd9-9ce8dc6aa6a4" />
+        <ownedOperations>
+          <operation Id="1557375c-6b6a-48b4-af63-6d5acaa9fe47" name="GetRessourceLevel" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d271ed92-6333-4968-aaee-cc7e9d555700" />
+          </operation>
+        </ownedOperations>
+      </Interface>
     </logicalClassDesignerModelHasTypes>
   </packagedElements>
   <package Id="1c614137-b907-4a0d-8519-45e2d4b3117d" name="CellsModel">

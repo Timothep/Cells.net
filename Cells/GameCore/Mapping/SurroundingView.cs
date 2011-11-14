@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Cells.GameCore.Mapping.Tiles;
 using Cells.Utils;
 
 namespace Cells.GameCore.Mapping
@@ -16,7 +17,7 @@ namespace Cells.GameCore.Mapping
         // The view is a square centered on the cell
         private const short ViewSize = 3;
 
-        private Map _terrainView = new Map(ViewSize, ViewSize);
+        private Map _cellsView = new Map(ViewSize, ViewSize);
 
         /// <summary>
         /// Constructor
