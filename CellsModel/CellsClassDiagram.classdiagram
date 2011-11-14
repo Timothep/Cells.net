@@ -217,6 +217,9 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="f28729e9-f9b7-4cd7-8891-855c6c3b65e3" name="InitializeGrid" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bf2b1d6c-a84d-427c-8bbc-d029a2f89568" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>

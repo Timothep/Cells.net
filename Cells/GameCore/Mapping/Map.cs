@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cells.GameCore.Mapping.Tiles;
+using Cells.Interfaces;
 using Cells.Utils;
 
 namespace Cells.GameCore.Mapping
@@ -24,12 +25,13 @@ namespace Cells.GameCore.Mapping
             this.Height = height;
             this.Width = width;
             this.Grid = new MapTile[Width, Height];
+            InitializeGrid();
         }
 
         /// <summary>
         /// Populates the grid with MapTiles
         /// </summary>
-        public void InitializeGrid()
+        private void InitializeGrid()
         {
             // Create a square map of MapWidth / MapHeight size
             for (short col = 0; col < Width; col++)
@@ -112,6 +114,22 @@ namespace Cells.GameCore.Mapping
                 return Convert.ToInt16(Grid.GetUpperBound(0));
             else
                 return 0;
+        }
+
+        internal void ImplantCell(Cells.Cell newCell)
+        {
+            if (newCell != null)
+                this.Grid[newCell.Position.X, newCell.Position.Y].CellReference = newCell;
+            else
+                throw new Exception("Cannot implant a non existing cell");
+        }
+
+        internal void MoveCell(Coordinates oldCoordinates, Coordinates newCoordinates)
+        {
+            this.Grid[newCoordinates.X, newCoordinates.Y].CellReference =
+                this.Grid[oldCoordinates.X, oldCoordinates.Y].CellReference;
+
+            this.Grid[oldCoordinates.X, oldCoordinates.Y].CellReference = null;
         }
     }
 }

@@ -15,12 +15,10 @@ namespace Cells.GameCore
     /// </summary>
     public class World
     {
-        private const short WorldWidth = 100;
-        private const short WorldHeight = 100;
+        private const short WorldWidth = 500;
+        private const short WorldHeight = 500;
 
-        //private readonly RessourceMap _ressourcesMap;
-        //private readonly PlantMap _plantMap;
-        private readonly Map _cellsMap;
+        private readonly Map MasterMap;
 
         private readonly List<Cell> _cells = new List<Cell>();
         private readonly IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
@@ -30,10 +28,8 @@ namespace Cells.GameCore
         /// </summary>
         public World()
         {
-            // Create the empty maps of the world
-            //_ressourcesMap = new RessourcesMap(WorldWidth, WorldHeight);
-            //_plantMap = new PlantsMap(WorldWidth, WorldHeight);
-            _cellsMap = new Map(WorldWidth, WorldHeight);
+            // Create the empty map of the world
+            MasterMap = new Map(WorldWidth, WorldHeight);
 
             _cells = new List<Cell>();
         }
@@ -72,8 +68,12 @@ namespace Cells.GameCore
         /// <param name="team">Team Color of the cell</param>
         internal void RegisterCellMovement(Coordinates oldCoordinates, Coordinates newCoordinates, Color team)
         {
+            // Add the cell movements to the logs
             _updatedElements.Add(oldCoordinates, Color.Black);
             _updatedElements.Add(newCoordinates, team);
+
+            // Update the map
+            this.MasterMap.MoveCell(oldCoordinates, newCoordinates);
         }
 
         /// <summary>
@@ -85,8 +85,15 @@ namespace Cells.GameCore
             {
                 for (int j = 100; j < 120 ; j++)
                 {
+                    // Create a brand new cell
                     Color color = i % 2 == 0 ? Color.Yellow : Color.Red;
-                    _cells.Add(new Cell(i, j, 10, this, color));
+                    Cell newCell = new Cell(i, j, 10, this, color);
+                    
+                    // Add the cell to the cell list
+                    _cells.Add(newCell);
+
+                    // Implant the cell on the map
+                    MasterMap.ImplantCell(newCell);
                 }
             }
         }
