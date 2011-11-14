@@ -10,7 +10,7 @@ namespace Cells.Brains
 {
     class Brain
     {
-        private ICell _cell;
+        private readonly ICell _cell;
 
         /// <summary>
         /// Constructor
@@ -29,8 +29,6 @@ namespace Cells.Brains
         {
             CellAction action = CellAction.NONE;
             SurroundingView surroundings = _cell.Sense();
-
-            
 
             switch (RandomGenerator.GetRandomInteger(4))
             {

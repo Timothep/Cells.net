@@ -16,6 +16,18 @@ namespace Cells.GameCore.Mapping
         // The view is a square centered on the cell
         private const short ViewSize = 3;
 
+        private Map _terrainView = new Map(ViewSize, ViewSize);
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="coordinates"></param>
+        public SurroundingView(Coordinates coordinates)
+        {
+            // Set the center coordinate
+            this.SetCenterCoordinates(coordinates);
+        }
+
         // The various map extracts
         //CellsMapView
         //RessourcesMapView
@@ -25,7 +37,7 @@ namespace Cells.GameCore.Mapping
         /// 
         /// </summary>
         /// <param name="coordinates"></param>
-        internal void SetCenterCoordinates(Coordinates coordinates)
+        private void SetCenterCoordinates(Coordinates coordinates)
         {
             _centerOfView = coordinates;
         }

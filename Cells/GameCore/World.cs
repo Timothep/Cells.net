@@ -20,7 +20,7 @@ namespace Cells.GameCore
 
         //private readonly RessourceMap _ressourcesMap;
         //private readonly PlantMap _plantMap;
-        private readonly CellsMap _cellsMap;
+        private readonly Map _cellsMap;
 
         private readonly List<Cell> _cells = new List<Cell>();
         private readonly IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
@@ -33,7 +33,7 @@ namespace Cells.GameCore
             // Create the empty maps of the world
             //_ressourcesMap = new RessourcesMap(WorldWidth, WorldHeight);
             //_plantMap = new PlantsMap(WorldWidth, WorldHeight);
-            _cellsMap = new CellsMap(WorldWidth, WorldHeight);
+            _cellsMap = new Map(WorldWidth, WorldHeight);
 
             _cells = new List<Cell>();
         }
@@ -104,16 +104,10 @@ namespace Cells.GameCore
         /// For anti-cheating purpose, the world gets the cells position himself instead of getting them as parameters
         /// </summary>
         /// <param name="cell">The cell asking</param>
-        /// <returns>A MapView of the place</returns>
+        /// <returns>A SurroundingView of the location where the cell resides</returns>
         internal SurroundingView GetSurroundingsView(Cell cell)
-        {
-            var surroundingView = new SurroundingView();
-            surroundingView.SetCenterCoordinates(cell.Position);
-            //surroundingView.SetCellView(this._cellsMap.GetSubsetOfThisMap(cell.Position));
-            //surroundingView.SetPlantView(this._plantMap.GetSubsetOfThisMap(cell.Position));
-            //surroundingView.SetRessourceView(this._ressourcesMap.GetSubsetOfThisMap(cell.Position));
-
-            return surroundingView;
+        {            
+            return new SurroundingView(cell.Position);
         }
     }
 }

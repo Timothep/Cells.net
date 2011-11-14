@@ -325,59 +325,6 @@
         isActiveClass="false">
         <targetEnds>
           <association
-            Id="f02a9017-1901-47a6-8d83-f1085dde8115"
-            isDerived="false"
-            sourceEndRoleName="Map"
-            targetEndRoleName="MapCell"
-            isLeaf="false"
-            name="Is composed of"
-            isAbstract="false">
-            <classMoniker
-              Id="bcc2be2d-b5af-4a8d-b6ae-5ea82e86f9af"
-              LastKnownName="MapTile"
-              LastKnownLocation="CellsModel.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="6913a486-0daa-45b8-ae2c-18bc1da027bc"
-                  name="Map"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Composite"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="dbd21ad8-b45b-4370-88fb-48aa51a302a6"
-                  name="MapCell"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="true">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="ea177503-016b-415e-9022-6eee368c5cfd"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="1f1d9030-e502-441d-8fb3-24c005a07f8f"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
             Id="ad3a0e1c-b299-47f0-992f-b0c5234b6485"
             isDerived="false"
             sourceEndRoleName="Map"
@@ -417,7 +364,81 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="4fb8a43b-4617-4694-9878-11718d225962"
+            isDerived="false"
+            sourceEndRoleName="Map"
+            targetEndRoleName="MapGrid"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="0fa76fd1-a36f-4067-aea1-f553939ab539"
+              LastKnownName="MapGrid"
+              LastKnownLocation="CellsModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6af58013-e2eb-4cdd-b7d2-6e8e8ed35f40"
+                  name="Map"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="19eda471-1ff1-49bc-9fda-488ad2022cf4"
+                  name="MapGrid"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="768a8f7e-0284-45fd-ad3d-6a299610256a"
+            name="Grid&lt;MapGrid&gt;"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="7833e6e2-0d76-4808-bace-44745fa83651"
+            name="height"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="e4e206d4-bd13-4984-9966-6c8af7a743aa"
+            name="width"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="a7e63006-8af7-4b18-a74b-952619e2b0e4"
@@ -611,121 +632,76 @@
     <packageHasNamedElement>
       <class
         Id="571ffcb0-b562-49c9-9e7c-ca767cbca0cf"
-        name="RessourceMap"
+        name="RessourceTile"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <generalsInternal>
           <generalization
-            Id="cde04d54-e83b-426a-a7f1-d079504cda57"
+            Id="19e6fc1a-4d3a-4273-ad84-64149d395415"
             isSubstitutable="false">
             <classMoniker
-              Id="809d9a36-651a-4acc-814f-6d344abe6e1f"
-              LastKnownName="Map"
+              Id="bcc2be2d-b5af-4a8d-b6ae-5ea82e86f9af"
+              LastKnownName="MapTile"
               LastKnownLocation="CellsModel.uml" />
           </generalization>
         </generalsInternal>
-        <targetEnds>
-          <association
-            Id="d106a848-ba59-4b83-a62b-c91e5da2605d"
-            isDerived="false"
-            sourceEndRoleName="RessourceMap"
-            targetEndRoleName="World"
+        <ownedAttributesInternal>
+          <property
+            Id="f3e8e48b-abf2-4b58-b3a0-ee13a263ca55"
+            name="RessourceLevel"
             isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="058804d4-1d5b-490f-a435-53dc7d65e295"
-              LastKnownName="World"
-              LastKnownLocation="CellsModel.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="89548743-9f7a-457a-8e2f-e25912f3ec2f"
-                  name="RessourceMap"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Shared"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="8ac95a9e-3309-4422-9bc6-f947ccf2df9f"
-                  name="World"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-        </targetEnds>
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="c8131136-0b8a-4e6a-8701-e374291faff7"
+            name="GrowthRate"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
         Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3"
-        name="CellMap"
+        name="CellTile"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <generalsInternal>
           <generalization
-            Id="4b02cff5-cdd5-4210-a2c5-6162dc744064"
+            Id="d86b2f84-56a0-49cd-b389-671c4ac06c76"
             isSubstitutable="false">
             <classMoniker
-              Id="809d9a36-651a-4acc-814f-6d344abe6e1f"
-              LastKnownName="Map"
+              Id="bcc2be2d-b5af-4a8d-b6ae-5ea82e86f9af"
+              LastKnownName="MapTile"
               LastKnownLocation="CellsModel.uml" />
           </generalization>
         </generalsInternal>
-        <targetEnds>
-          <association
-            Id="4ac7eda5-f84f-4145-9a20-3c5e43eeb3ad"
-            isDerived="false"
-            sourceEndRoleName="CellsMap"
-            targetEndRoleName="World"
+        <ownedAttributesInternal>
+          <property
+            Id="7721e15e-2510-4ae5-b760-1ef85845c1b2"
+            name="CellReference"
             isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="058804d4-1d5b-490f-a435-53dc7d65e295"
-              LastKnownName="World"
-              LastKnownLocation="CellsModel.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="cf427b48-1587-467b-afac-344938794587"
-                  name="CellsMap"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="Shared"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="e4313f59-7335-465d-be71-4b9f9e6fcd71"
-                  name="World"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-        </targetEnds>
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -1121,7 +1097,7 @@
             <type_NamedElement>
               <classMoniker
                 Id="571ffcb0-b562-49c9-9e7c-ca767cbca0cf"
-                LastKnownName="RessourceMap"
+                LastKnownName="RessourceTile"
                 LastKnownLocation="CellsModel.uml" />
             </type_NamedElement>
           </property>
@@ -1140,7 +1116,7 @@
             <type_NamedElement>
               <classMoniker
                 Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3"
-                LastKnownName="CellMap"
+                LastKnownName="CellTile"
                 LastKnownLocation="CellsModel.uml" />
             </type_NamedElement>
           </property>
@@ -1159,7 +1135,7 @@
             <type_NamedElement>
               <classMoniker
                 Id="e35740a5-14ca-46ad-8fb3-f8c8c43ca18b"
-                LastKnownName="PlantMap"
+                LastKnownName="PlanTile"
                 LastKnownLocation="CellsModel.uml" />
             </type_NamedElement>
           </property>
@@ -1179,57 +1155,90 @@
     <packageHasNamedElement>
       <class
         Id="e35740a5-14ca-46ad-8fb3-f8c8c43ca18b"
-        name="PlantMap"
+        name="PlanTile"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <generalsInternal>
           <generalization
-            Id="99499e9f-fc11-48e6-b54e-3bf4d7d1e463"
+            Id="debe43c2-60d9-4767-9f97-9fedfa3db1c1"
             isSubstitutable="false">
             <classMoniker
-              Id="809d9a36-651a-4acc-814f-6d344abe6e1f"
-              LastKnownName="Map"
+              Id="bcc2be2d-b5af-4a8d-b6ae-5ea82e86f9af"
+              LastKnownName="MapTile"
               LastKnownLocation="CellsModel.uml" />
           </generalization>
         </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="a6d1fb50-e7d8-48cb-aeb1-357212bfd86f"
+            name="RessourceLevel"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="fb13206e-0b19-41dc-a2eb-688a190e790e"
+            name="GrowthRate"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="0fa76fd1-a36f-4067-aea1-f553939ab539"
+        name="MapGrid"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
         <targetEnds>
           <association
-            Id="5d1c1d18-042e-459b-b301-d07d869c6bf4"
+            Id="e273ebfd-db39-488a-9e2b-68ed2f8c61fa"
             isDerived="false"
-            sourceEndRoleName="PlantMap"
-            targetEndRoleName="World"
+            sourceEndRoleName="MapGrid"
+            targetEndRoleName="MapTile"
             isLeaf="false"
             isAbstract="false">
             <classMoniker
-              Id="058804d4-1d5b-490f-a435-53dc7d65e295"
-              LastKnownName="World"
+              Id="bcc2be2d-b5af-4a8d-b6ae-5ea82e86f9af"
+              LastKnownName="MapTile"
               LastKnownLocation="CellsModel.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="f6ac8353-1399-47a8-a492-ed6f81ac7abf"
-                  name="PlantMap"
+                  Id="feca6191-b2b5-4f51-9dfb-68fbd52a785e"
+                  name="MapGrid"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
                   isDerived="false"
                   isDerivedUnion="false"
-                  aggregation="Shared"
+                  aggregation="Composite"
                   isComposite="false"
                   isNavigableOwned="false" />
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="9611681c-8e73-4e0e-af12-28188c2f5aca"
-                  name="World"
+                  Id="dd23edfd-061d-40b5-8d49-0ba149a51e5a"
+                  name="MapTile"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
                   isDerived="false"
                   isDerivedUnion="false"
                   aggregation="None"
-                  isComposite="false" />
+                  isComposite="true" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
