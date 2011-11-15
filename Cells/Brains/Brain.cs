@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using Cells.GameCore.Mapping;
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping.Tiles;
@@ -8,7 +9,8 @@ using Cells.Interfaces;
 
 namespace Cells.Brains
 {
-    class Brain
+    [Export]
+    class Brain: IBrain
     {
         private readonly ICell _cell;
 
@@ -28,32 +30,53 @@ namespace Cells.Brains
         public CellAction ChooseNextAction()
         {
             CellAction action = CellAction.NONE;
-            SurroundingView surroundings = _cell.Sense();
-            List<Cell> neighbors = surroundings.GetAllCells();
 
-            int rand = RandomGenerator.GetRandomInteger(neighbors.Count + 4);
-            switch (rand)
+            // The cell has 25% chance to continue as it was going before
+            if (0 == RandomGenerator.GetRandomInteger(4))
+                action = this._cell.GetPreviousAction();
+            else
             {
-                case 0:
-                    action = CellAction.MOVERIGHT;
-                    break;
-                case 1:
-                    //action = CellAction.MOVELEFT;
-                    action = CellAction.MOVERIGHT;
-                    break;
-                case 2:
-                    action = CellAction.MOVEDOWN;
-                    break;
-                case 3:
-                    //action = CellAction.MOVEUP;
-                    action = CellAction.MOVEDOWN;
-                    break;
-                default:
-                    action = neighbors[rand - 4 ].GetPreviousAction();
-                    break;
+                // Pick one of its neighbors direction
+                SurroundingView surroundings = _cell.Sense();
+                List<Cell> neighbors = surroundings.GetAllCells();
+
+                // If the cell has no neighbours or in 25% of the cases it goes random
+                if (neighbors.Count == 0 || RandomGenerator.GetRandomInteger(4) == 0)
+                    action = GetRandomAction();
+                else
+                {
+                    // Else the cell follows a neighbour
+                    action = neighbors[RandomGenerator.GetRandomInteger(neighbors.Count)].GetPreviousAction();
+                }
             }
 
             return action;
+        }
+
+
+        /// <summary>
+        /// Function randomly choosing among all the possible actions
+        /// </summary>
+        /// <returns>One of the possible action</returns>
+        private CellAction GetRandomAction()
+        {
+            var randomNumber = (Int16)RandomGenerator.GetRandomInteger(5);
+
+            switch (randomNumber)
+            {
+                case 0:
+                    return CellAction.MOVERIGHT;
+                case 1:
+                    return CellAction.MOVELEFT;
+                case 2:
+                    return CellAction.MOVEDOWN;
+                case 3:
+                    return CellAction.MOVEUP;
+                case 4:
+                    return CellAction.NONE;
+                default:
+                    throw new Exception("Something went wrong with the random numbers");
+            }
         }
     }
 }
