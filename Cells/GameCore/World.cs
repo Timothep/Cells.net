@@ -24,14 +24,14 @@ namespace Cells.GameCore
         private readonly Map MasterMap;
 
         private readonly List<Cell> _cells = new List<Cell>();
-        private List<Cell> _deadCellsToRemove = new List<Cell>();
+        private readonly List<Cell> _deadCellsToRemove = new List<Cell>();
         
         private readonly IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public World()
+        internal World()
         {
             // Create the empty map of the world
             MasterMap = new Map(WorldWidth, WorldHeight);
@@ -55,7 +55,7 @@ namespace Cells.GameCore
         /// Returns a list of all the cells present in the game
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Cell> GetCells()
+        internal IEnumerable<Cell> GetCells()
         {
             return _cells;
         }
@@ -86,28 +86,6 @@ namespace Cells.GameCore
         }
 
         /// <summary>
-        /// Creates a population of cells
-        /// </summary>
-        private void CreateInitialCellPopulation()
-        {
-            for (int i = 100 ; i < 120 ; i++)
-            {
-                for (int j = 100; j < 120 ; j++)
-                {
-                    // Create a brand new cell
-                    Color color = i % 2 == 0 ? Color.Yellow : Color.Red;
-                    Cell newCell = new Cell(i, j, Convert.ToInt16(RandomGenerator.GetRandomInteger(50)), this, color);
-                    
-                    // Add the cell to the cell list
-                    _cells.Add(newCell);
-
-                    // Implant the cell on the map
-                    MasterMap.ImplantCell(newCell);
-                }
-            }
-        }
-
-        /// <summary>
         /// Clears the list caching the movement list
         /// </summary>
         internal void ResetMovementsList()
@@ -121,9 +99,100 @@ namespace Cells.GameCore
         /// </summary>
         /// <param name="cell">The cell asking</param>
         /// <returns>A SurroundingView of the location where the cell resides</returns>
-        public SurroundingView GetSurroundingsView(Cell cell)
+        internal SurroundingView GetSurroundingsView(Cell cell)
         {
             return new SurroundingView(cell.Position, this.MasterMap.GetSubset(cell.Position, SubViewSize, SubViewSize));
+        }
+
+        /// <summary>
+        /// Increases the landscape height at the given position
+        /// </summary>
+        /// <param name="position">The coordinates where to raise the landscape</param>
+        /// <remarks>The function throws an InvalidOperationException in case the operation cannot be performed</remarks>
+        internal void RaiseLandscape(Coordinates position)
+        {
+            if (MasterMap.GetLandscapeHeight(position) >= MaxLandscapeHeight)
+                MasterMap.RaiseLandscape(position);
+            else
+                throw new InvalidOperationException("Landscape is already at its maximum at this location");
+        }
+
+        /// <summary>
+        /// Lowers the landscape height at the given position
+        /// </summary>
+        /// <param name="position">The coordinates where to lower the landscape</param>
+        /// <remarks>The function throws an InvalidOperationException in case the operation cannot be performed</remarks>
+        internal void LowerLandscape(Coordinates position)
+        {
+            if (MasterMap.GetLandscapeHeight(position) <= MinLandscapeHeight)
+                MasterMap.LowerLandscape(position);
+            else
+                throw new InvalidOperationException("Landscape is already at its minimum at this location");
+        }
+
+        /// <summary>
+        /// Increase the amount of ressources of the given amount at the given position
+        /// </summary>
+        /// <param name="position">The position where to perform the drop</param>
+        /// <param name="life">The amount of ressources to drop</param>
+        internal void DropRessources(Coordinates position, Int16 life)
+        {
+            MasterMap.IncreaseRessources(position, life);
+        }
+
+        /// <summary>
+        /// Flags the cell as "can be removed"
+        /// </summary>
+        /// <param name="cell">The cell to remove</param>
+        /// <remarks>
+        /// We do not remove the cell right away
+        /// The cells are effectively removed at the end of the game loop
+        /// </remarks>
+        internal void UnregisterCell(Cell cell)
+        {
+            _deadCellsToRemove.Add(cell);
+        }
+
+        /// <summary>
+        /// Cleans the internal structures of all potentially remaining dead cells
+        /// </summary>
+        internal void RemoveDeadCells()
+        {
+            foreach(Cell deadCell in _deadCellsToRemove)
+            {
+                _cells.Remove(deadCell);
+                MasterMap.RemoveCell(deadCell);
+
+                if(_updatedElements.ContainsKey(deadCell.Position))
+                {
+                    _updatedElements.Remove(deadCell.Position);
+                }
+                _updatedElements.Add(deadCell.Position, Color.Black);
+            }
+
+            _deadCellsToRemove.Clear();
+        }
+
+        /// <summary>
+        /// Creates a population of cells
+        /// </summary>
+        private void CreateInitialCellPopulation()
+        {
+            for (int i = 100; i < 120; i++)
+            {
+                for (int j = 100; j < 120; j++)
+                {
+                    // Create a brand new cell
+                    Color color = i % 2 == 0 ? Color.Yellow : Color.Red;
+                    Cell newCell = new Cell(i, j, Convert.ToInt16(RandomGenerator.GetRandomInteger(50)), this, color);
+
+                    // Add the cell to the cell list
+                    _cells.Add(newCell);
+
+                    // Implant the cell on the map
+                    MasterMap.ImplantCell(newCell);
+                }
+            }
         }
 
         private void CreateRessourcesMap()
@@ -142,57 +211,6 @@ namespace Cells.GameCore
             MasterMap.ImplantRessources(new Coordinates(99, 115), 50, 5);
             MasterMap.ImplantRessources(new Coordinates(99, 120), 50, 5);
             MasterMap.ImplantRessources(new Coordinates(123, 100), 50, 5);
-        }
-
-        /// <summary>
-        /// Increases the landscape height at the given position
-        /// </summary>
-        /// <param name="position"></param>
-        internal void RaiseLandscape(Coordinates position)
-        {
-            if (MasterMap.GetLandscapeHeight(position) >= MaxLandscapeHeight)
-                MasterMap.RaiseLandscape(position);
-            else
-                throw new InvalidOperationException("Landscape is already at its maximum at this location");
-        }
-
-        /// <summary>
-        /// Lowers the landscape height at the given position
-        /// </summary>
-        /// <param name="position"></param>
-        internal void LowerLandscape(Coordinates position)
-        {
-            if (MasterMap.GetLandscapeHeight(position) <= MinLandscapeHeight)
-                MasterMap.LowerLandscape(position);
-            else
-                throw new InvalidOperationException("Landscape is already at its minimum at this location");
-        }
-
-        internal void DropRessources(Coordinates position, Int16 life)
-        {
-            MasterMap.IncreaseRessources(position, life);
-        }
-
-        internal void UnregisterCell(Cell cell)
-        {
-            _deadCellsToRemove.Add(cell);
-        }
-
-        internal void RemoveDeadCells()
-        {
-            foreach(Cell deadCell in _deadCellsToRemove)
-            {
-                _cells.Remove(deadCell);
-                MasterMap.RemoveCell(deadCell);
-
-                if(_updatedElements.ContainsKey(deadCell.Position))
-                {
-                    _updatedElements.Remove(deadCell.Position);
-                }
-                _updatedElements.Add(deadCell.Position, Color.Black);
-            }
-
-            _deadCellsToRemove.Clear();
         }
     }
 }
