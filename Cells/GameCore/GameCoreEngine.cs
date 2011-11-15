@@ -68,6 +68,15 @@ namespace Cells.GameCore
             {
                 foreach (Cell currentCell in _world.GetCells())
                 {
+                    //// Death comes first
+                    //currentCell.DecreaseLife();
+                    //if (currentCell.GetLife() <= 0)
+                    //{
+                    //    currentCell.Die();
+                    //    return;
+                    //}
+
+                    // Alive cells get to do something
                     CellAction action = currentCell.Think();
                     currentCell.Do(action);
                 }

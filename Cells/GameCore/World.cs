@@ -6,6 +6,7 @@ using System.Drawing;
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
 using Cells.GameCore.Mapping.Tiles;
+using Cells.Properties;
 using Cells.Utils;
 
 namespace Cells.GameCore
@@ -15,18 +16,18 @@ namespace Cells.GameCore
     /// </summary>
     public class World
     {
-        private const short WorldWidth = 500;
-        private const short WorldHeight = 500;
-        private const short SubViewSize = 3;
-        private const Int16 MinLandscapeHeight = 0;
-        private const Int16 MaxLandscapeHeight = 10;
-        
-        private readonly Map MasterMap;
+        private readonly Int16 _worldWidth = Settings.Default.WorldWidth;
+        private readonly Int16 _worldHeight = Settings.Default.WorldHeight;
+        private readonly Int16 _subViewSize = Settings.Default.SubViewSize;
+        private readonly Int16 _minLandscapeHeight = Settings.Default.MinLandscapeHeight;
+        private readonly Int16 _maxLandscapeHeight = Settings.Default.MaxLandscapeHeight;
 
+        private readonly Map _masterMap;
         private readonly List<Cell> _cells = new List<Cell>();
         private readonly List<Cell> _deadCellsToRemove = new List<Cell>();
-        
-        private readonly IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
+
+        private readonly IDictionary<Coordinates, Color> _updatedElements =
+            new ConcurrentDictionary<Coordinates, Color>();
 
         /// <summary>
         /// Constructor
@@ -34,7 +35,7 @@ namespace Cells.GameCore
         internal World()
         {
             // Create the empty map of the world
-            MasterMap = new Map(WorldWidth, WorldHeight);
+            _masterMap = new Map(_worldWidth, _worldHeight);
 
             _cells = new List<Cell>();
         }
@@ -82,7 +83,7 @@ namespace Cells.GameCore
             _updatedElements.Add(newCoordinates, team);
 
             // Update the map
-            this.MasterMap.MoveCell(oldCoordinates, newCoordinates);
+            this._masterMap.MoveCell(oldCoordinates, newCoordinates);
         }
 
         /// <summary>
@@ -101,7 +102,8 @@ namespace Cells.GameCore
         /// <returns>A SurroundingView of the location where the cell resides</returns>
         internal SurroundingView GetSurroundingsView(Cell cell)
         {
-            return new SurroundingView(cell.Position, this.MasterMap.GetSubset(cell.Position, SubViewSize, SubViewSize));
+            return new SurroundingView(cell.Position,
+                                       this._masterMap.GetSubset(cell.Position, _subViewSize, _subViewSize));
         }
 
         /// <summary>
@@ -111,8 +113,8 @@ namespace Cells.GameCore
         /// <remarks>The function throws an InvalidOperationException in case the operation cannot be performed</remarks>
         internal void RaiseLandscape(Coordinates position)
         {
-            if (MasterMap.GetLandscapeHeight(position) >= MaxLandscapeHeight)
-                MasterMap.RaiseLandscape(position);
+            if (_masterMap.GetLandscapeHeight(position) >= _maxLandscapeHeight)
+                _masterMap.RaiseLandscape(position);
             else
                 throw new InvalidOperationException("Landscape is already at its maximum at this location");
         }
@@ -124,8 +126,8 @@ namespace Cells.GameCore
         /// <remarks>The function throws an InvalidOperationException in case the operation cannot be performed</remarks>
         internal void LowerLandscape(Coordinates position)
         {
-            if (MasterMap.GetLandscapeHeight(position) <= MinLandscapeHeight)
-                MasterMap.LowerLandscape(position);
+            if (_masterMap.GetLandscapeHeight(position) <= _minLandscapeHeight)
+                _masterMap.LowerLandscape(position);
             else
                 throw new InvalidOperationException("Landscape is already at its minimum at this location");
         }
@@ -137,7 +139,7 @@ namespace Cells.GameCore
         /// <param name="life">The amount of ressources to drop</param>
         internal void DropRessources(Coordinates position, Int16 life)
         {
-            MasterMap.IncreaseRessources(position, life);
+            _masterMap.IncreaseRessources(position, life);
         }
 
         /// <summary>
@@ -158,12 +160,12 @@ namespace Cells.GameCore
         /// </summary>
         internal void RemoveDeadCells()
         {
-            foreach(Cell deadCell in _deadCellsToRemove)
+            foreach (Cell deadCell in _deadCellsToRemove)
             {
                 _cells.Remove(deadCell);
-                MasterMap.RemoveCell(deadCell);
+                _masterMap.RemoveCell(deadCell);
 
-                if(_updatedElements.ContainsKey(deadCell.Position))
+                if (_updatedElements.ContainsKey(deadCell.Position))
                 {
                     _updatedElements.Remove(deadCell.Position);
                 }
@@ -183,34 +185,49 @@ namespace Cells.GameCore
                 for (int j = 100; j < 120; j++)
                 {
                     // Create a brand new cell
-                    Color color = i % 2 == 0 ? Color.Yellow : Color.Red;
-                    Cell newCell = new Cell(i, j, Convert.ToInt16(RandomGenerator.GetRandomInteger(50)), this, color);
+                    Color color = i%2 == 0 ? Color.Yellow : Color.Red;
+                    var newCell = new Cell(i, j, Convert.ToInt16(RandomGenerator.GetRandomInteger(50)), this, color);
 
-                    // Add the cell to the cell list
-                    _cells.Add(newCell);
-
-                    // Implant the cell on the map
-                    MasterMap.ImplantCell(newCell);
+                    InjectCell(newCell);
                 }
             }
         }
 
+        /// <summary>
+        /// Injects the cell into the game
+        /// </summary>
+        /// <param name="newCell">The cell</param>
+        private void InjectCell(Cell newCell)
+        {
+            // Add the cell to the cell list
+            _cells.Add(newCell);
+
+            // Implant the cell on the map
+            _masterMap.ImplantCell(newCell);
+        }
+
         private void CreateRessourcesMap()
         {
-            MasterMap.ImplantRessources(new Coordinates(97, 97), 500, 0);
-            MasterMap.ImplantRessources(new Coordinates(125, 125), 100, 0);
-            MasterMap.ImplantRessources(new Coordinates(97, 117), 50, 0);
-            MasterMap.ImplantRessources(new Coordinates(97, 125), 5, 0);
-            MasterMap.ImplantRessources(new Coordinates(125, 100), 500, 0);
+            _masterMap.ImplantRessources(new Coordinates(97, 97), 500, 0);
+            _masterMap.ImplantRessources(new Coordinates(125, 125), 100, 0);
+            _masterMap.ImplantRessources(new Coordinates(97, 117), 50, 0);
+            _masterMap.ImplantRessources(new Coordinates(97, 125), 5, 0);
+            _masterMap.ImplantRessources(new Coordinates(125, 100), 500, 0);
         }
 
         private void CreatePlantMap()
         {
-            MasterMap.ImplantRessources(new Coordinates(99, 99), 50, 5);
-            MasterMap.ImplantRessources(new Coordinates(123, 123), 50, 5);
-            MasterMap.ImplantRessources(new Coordinates(99, 115), 50, 5);
-            MasterMap.ImplantRessources(new Coordinates(99, 120), 50, 5);
-            MasterMap.ImplantRessources(new Coordinates(123, 100), 50, 5);
+            _masterMap.ImplantRessources(new Coordinates(99, 99), 50, 5);
+            _masterMap.ImplantRessources(new Coordinates(123, 123), 50, 5);
+            _masterMap.ImplantRessources(new Coordinates(99, 115), 50, 5);
+            _masterMap.ImplantRessources(new Coordinates(99, 120), 50, 5);
+            _masterMap.ImplantRessources(new Coordinates(123, 100), 50, 5);
+        }
+
+        internal void CreateSpawns(short spawnLife, Cell cell)
+        {
+            this.InjectCell(new Cell(cell.Position.X, cell.Position.Y, spawnLife, this, cell.GetTeamColor()));
+            this.InjectCell(new Cell(cell.Position.X, cell.Position.Y, spawnLife, this, cell.GetTeamColor()));
         }
     }
 }

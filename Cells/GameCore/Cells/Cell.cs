@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Cells.GameCore.Mapping.Tiles;
+using Cells.Properties;
 using Cells.Utils;
 using Cells.GameCore.Mapping;
 using Cells.Brains;
@@ -14,10 +15,10 @@ namespace Cells.GameCore.Cells
     public class Cell: ICell
     {
         public Coordinates Position { get; private set; }
-        private Brain _brain;
+        private readonly Brain _brain;
         private Int16 _life;
-        private Color _team;
-        private CellAction CellPreviousAction = CellAction.NONE;
+        private readonly Color _team;
+        private CellAction _cellPreviousAction = CellAction.NONE;
         private Boolean _carryingWeight = false;
 
         // Hold reference to the World
@@ -46,9 +47,12 @@ namespace Cells.GameCore.Cells
         public CellAction Think()
         {
             // Death comes first
-            _life--;
+            DecreaseLife();
             if (_life <= 0)
+            {
                 Die();
+                return CellAction.NONE;
+            }
 
             return _brain.ChooseNextAction();
         }
@@ -60,7 +64,7 @@ namespace Cells.GameCore.Cells
         /// <param name="action">The action to apply</param>
         public void Do(CellAction action)
         {
-            CellPreviousAction = action;
+            _cellPreviousAction = action;
 
             switch (action)
             {
@@ -76,9 +80,9 @@ namespace Cells.GameCore.Cells
                 case CellAction.MOVEDOWN:
                     MoveDown();
                     break;
-                case CellAction.ATTACK:
-                    Attack();
-                    break;
+                //case CellAction.ATTACK:
+                //    Attack();
+                //    break;
                 case CellAction.DROP:
                     Drop();
                     break;
@@ -102,7 +106,7 @@ namespace Cells.GameCore.Cells
         /// <summary>
         /// Kills the cell
         /// </summary>
-        private void Die()
+        public void Die()
         {
             DropAllRessources();
             DropEarth();
@@ -171,24 +175,36 @@ namespace Cells.GameCore.Cells
             }
         }
 
+        /// <summary>
+        /// Divide the cell
+        /// </summary>
         private void Split()
         {
-            throw new NotImplementedException();
+            if (_life > Settings.Default.CostOfCellDivision + 2 * Settings.Default.SpawnLifeThreshold)
+            {
+                Int16 spawnLife = (Int16)Math.Truncate((float)(_life - Settings.Default.CostOfCellDivision) / 2);
+                
+                // Create the first spawn
+                _world.CreateSpawns(spawnLife, this);
+
+                this.Die();
+            }
         }
 
+        /// <summary>
+        /// Lifts earth from the ground
+        /// </summary>
         private void Lift()
         {
             LiftEarth();
         }
 
+        /// <summary>
+        /// Drops carried earth on the ground
+        /// </summary>
         private void Drop()
         {
             DropEarth();
-        }
-
-        private void Attack()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -197,7 +213,7 @@ namespace Cells.GameCore.Cells
         /// <returns>The last CellAction the cell did</returns>
         public CellAction GetPreviousAction()
         {
-            return CellPreviousAction;
+            return _cellPreviousAction;
         }
 
         /// <summary>
@@ -260,6 +276,33 @@ namespace Cells.GameCore.Cells
         public SurroundingView Sense()
         {
             return _world.GetSurroundingsView(this);
+        }
+
+        /// <summary>
+        /// Gets the color of the team the cell belongs to
+        /// </summary>
+        /// <returns>The color of the team</returns>
+        internal Color GetTeamColor()
+        {
+            return this._team;
+        }
+
+        ///// <summary>
+        ///// Attack a cell
+        ///// </summary>
+        //private void Attack()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        internal void DecreaseLife()
+        {
+            _life--;
+        }
+
+        internal Int16 GetLife()
+        {
+            return _life;
         }
     }
 }
