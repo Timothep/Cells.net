@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping.Tiles;
 using Cells.Interfaces;
 using Cells.Utils;
@@ -152,6 +153,38 @@ namespace Cells.GameCore.Mapping
         {
             Grid[coordinates.X, coordinates.Y].GrowthRate = growthRate;
             Grid[coordinates.X, coordinates.Y].RessourceLevel = ressourceLevel;
+        }
+
+        internal void RaiseLandscape(Coordinates position)
+        {
+            Grid[position.X, position.Y].Height++;
+        }
+
+        internal void LowerLandscape(Coordinates position)
+        {
+            Grid[position.X, position.Y].Height--;
+        }
+
+        internal Int16 GetLandscapeHeight(Coordinates position)
+        {
+            return Grid[position.X, position.Y].Height;
+        }
+
+        internal void IncreaseRessources(Coordinates position, short ressources)
+        {
+            Grid[position.X, position.Y].RessourceLevel += ressources;
+        }
+
+        /// <summary>
+        /// Removes a cell from the grid
+        /// </summary>
+        /// <param name="cellToRemove"></param>
+        internal void RemoveCell(Cell cellToRemove)
+        {
+            if (cellToRemove != null)
+                Grid[cellToRemove.Position.X, cellToRemove.Position.Y].CellReference = null;
+            else
+                throw new Exception("Cannot remove a non existing cell");
         }
     }
 }

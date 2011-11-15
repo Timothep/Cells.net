@@ -18,10 +18,14 @@ namespace Cells.GameCore
         private const short WorldWidth = 500;
         private const short WorldHeight = 500;
         private const short SubViewSize = 3;
-
+        private const Int16 MinLandscapeHeight = 0;
+        private const Int16 MaxLandscapeHeight = 10;
+        
         private readonly Map MasterMap;
 
         private readonly List<Cell> _cells = new List<Cell>();
+        private List<Cell> _deadCellsToRemove = new List<Cell>();
+        
         private readonly IDictionary<Coordinates, Color> _updatedElements = new ConcurrentDictionary<Coordinates, Color>();
 
         /// <summary>
@@ -92,7 +96,7 @@ namespace Cells.GameCore
                 {
                     // Create a brand new cell
                     Color color = i % 2 == 0 ? Color.Yellow : Color.Red;
-                    Cell newCell = new Cell(i, j, 10, this, color);
+                    Cell newCell = new Cell(i, j, Convert.ToInt16(RandomGenerator.GetRandomInteger(50)), this, color);
                     
                     // Add the cell to the cell list
                     _cells.Add(newCell);
@@ -138,6 +142,57 @@ namespace Cells.GameCore
             MasterMap.ImplantRessources(new Coordinates(99, 115), 50, 5);
             MasterMap.ImplantRessources(new Coordinates(99, 120), 50, 5);
             MasterMap.ImplantRessources(new Coordinates(123, 100), 50, 5);
+        }
+
+        /// <summary>
+        /// Increases the landscape height at the given position
+        /// </summary>
+        /// <param name="position"></param>
+        internal void RaiseLandscape(Coordinates position)
+        {
+            if (MasterMap.GetLandscapeHeight(position) >= MaxLandscapeHeight)
+                MasterMap.RaiseLandscape(position);
+            else
+                throw new InvalidOperationException("Landscape is already at its maximum at this location");
+        }
+
+        /// <summary>
+        /// Lowers the landscape height at the given position
+        /// </summary>
+        /// <param name="position"></param>
+        internal void LowerLandscape(Coordinates position)
+        {
+            if (MasterMap.GetLandscapeHeight(position) <= MinLandscapeHeight)
+                MasterMap.LowerLandscape(position);
+            else
+                throw new InvalidOperationException("Landscape is already at its minimum at this location");
+        }
+
+        internal void DropRessources(Coordinates position, Int16 life)
+        {
+            MasterMap.IncreaseRessources(position, life);
+        }
+
+        internal void UnregisterCell(Cell cell)
+        {
+            _deadCellsToRemove.Add(cell);
+        }
+
+        internal void RemoveDeadCells()
+        {
+            foreach(Cell deadCell in _deadCellsToRemove)
+            {
+                _cells.Remove(deadCell);
+                MasterMap.RemoveCell(deadCell);
+
+                if(_updatedElements.ContainsKey(deadCell.Position))
+                {
+                    _updatedElements.Remove(deadCell.Position);
+                }
+                _updatedElements.Add(deadCell.Position, Color.Black);
+            }
+
+            _deadCellsToRemove.Clear();
         }
     }
 }

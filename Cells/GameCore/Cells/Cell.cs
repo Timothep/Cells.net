@@ -15,7 +15,7 @@ namespace Cells.GameCore.Cells
     {
         public Coordinates Position { get; private set; }
         private Brain _brain;
-        private Int32 _life;
+        private Int16 _life;
         private Color _team;
         private CellAction CellPreviousAction = CellAction.NONE;
         private Boolean _carryingWeight = false;
@@ -30,7 +30,7 @@ namespace Cells.GameCore.Cells
         /// <param name="y">The y position where the cell is spawned</param>
         /// <param name="initialLife">life the cell is going to spawn with</param>
         /// <param name="thisWorld">A reference to the world the cell lives in</param>
-        public Cell(int x, int y, Int32 initialLife, World thisWorld, Color teamColor)
+        public Cell(int x, int y, Int16 initialLife, World thisWorld, Color teamColor)
         {
             Position = new Coordinates(x, y);
             _brain = new Brain(this as ICell);
@@ -45,6 +45,11 @@ namespace Cells.GameCore.Cells
         /// <returns>The chose action</returns>
         public CellAction Think()
         {
+            // Death comes first
+            _life--;
+            if (_life <= 0)
+                Die();
+
             return _brain.ChooseNextAction();
         }
 
@@ -72,14 +77,19 @@ namespace Cells.GameCore.Cells
                     MoveDown();
                     break;
                 case CellAction.ATTACK:
+                    Attack();
                     break;
                 case CellAction.DROP:
+                    Drop();
                     break;
                 case CellAction.LIFT:
+                    Lift();
                     break;
                 case CellAction.SPLIT:
+                    Split();
                     break;
                 case CellAction.DIE:
+                    Die();
                     break;
                 case CellAction.NONE:
                     break;
@@ -87,6 +97,98 @@ namespace Cells.GameCore.Cells
                     throw new NotImplementedException();
             }
             return;
+        }
+
+        /// <summary>
+        /// Kills the cell
+        /// </summary>
+        private void Die()
+        {
+            DropAllRessources();
+            DropEarth();
+            UnregisterCell();
+        }
+        
+        /// <summary>
+        /// Drops all contained ressources at the current position
+        /// </summary>
+        private void DropAllRessources()
+        {
+            if (_life > 0)
+            {
+                try
+                {
+                    _world.DropRessources(Position, _life);
+                }
+                catch (InvalidOperationException e)
+                {
+                    return;
+                }
+                _life = 0;
+            }
+        }
+
+        private void UnregisterCell()
+        {
+            this._world.UnregisterCell(this);
+        }
+
+        /// <summary>
+        /// Drops one unit of weight at the current position
+        /// </summary>
+        private void DropEarth()
+        {
+            if (_carryingWeight)
+            {
+                try
+                {
+                    _world.RaiseLandscape(Position);
+                }
+                catch (InvalidOperationException e)
+                {
+                    return;
+                }
+                _carryingWeight = false;
+            }
+        }
+
+        /// <summary>
+        /// Lift one unit of weight from the current position
+        /// </summary>
+        private void LiftEarth()
+        {
+            if (_carryingWeight)
+            {
+                try
+                {
+                    _world.LowerLandscape(Position);
+                }
+                catch (InvalidOperationException e)
+                {
+                    return;
+                }
+                _carryingWeight = true;
+            }
+        }
+
+        private void Split()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Lift()
+        {
+            LiftEarth();
+        }
+
+        private void Drop()
+        {
+            DropEarth();
+        }
+
+        private void Attack()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

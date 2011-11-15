@@ -72,6 +72,8 @@ namespace Cells.GameCore
                     currentCell.Do(action);
                 }
             }
+
+            _world.RemoveDeadCells();
         }
 
         /// <summary>

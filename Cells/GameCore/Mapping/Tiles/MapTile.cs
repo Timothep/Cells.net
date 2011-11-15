@@ -11,6 +11,7 @@ namespace Cells.GameCore.Mapping.Tiles
         public Cell CellReference = null;
         public Int16 GrowthRate = 0;
         public Int16 RessourceLevel = 0;
+        public Int16 Height = 0;
 
         /// <summary>
         /// Sets the position of the current element
