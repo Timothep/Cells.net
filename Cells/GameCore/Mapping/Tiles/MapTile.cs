@@ -1,4 +1,5 @@
-﻿using Cells.GameCore.Cells;
+﻿using System;
+using Cells.GameCore.Cells;
 using Cells.Interfaces;
 using Cells.Utils;
 
@@ -6,8 +7,10 @@ namespace Cells.GameCore.Mapping.Tiles
 {
     public class MapTile: ICellTile, IRessourceTile
     {
-        private Coordinates _position;
-        public Cell CellReference;
+        private Coordinates _position = null;
+        public Cell CellReference = null;
+        public Int16 GrowthRate = 0;
+        public Int16 RessourceLevel = 0;
 
         /// <summary>
         /// Sets the position of the current element

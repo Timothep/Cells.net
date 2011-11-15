@@ -9,7 +9,6 @@ using Cells.Interfaces;
 
 namespace Cells.Brains
 {
-    [Export]
     class Brain: IBrain
     {
         private readonly ICell _cell;
@@ -29,11 +28,11 @@ namespace Cells.Brains
         /// <returns></returns>
         public CellAction ChooseNextAction()
         {
-            CellAction action = CellAction.NONE;
+            CellAction action;
 
             // The cell has 25% chance to continue as it was going before
             if (0 == RandomGenerator.GetRandomInteger(4))
-                action = this._cell.GetPreviousAction();
+                action = _cell.GetPreviousAction();
             else
             {
                 // Pick one of its neighbors direction

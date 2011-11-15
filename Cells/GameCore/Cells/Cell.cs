@@ -9,7 +9,7 @@ using Cells.Interfaces;
 
 namespace Cells.GameCore.Cells
 {
-    public enum CellAction { NONE, MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN }
+    public enum CellAction { NONE, MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, ATTACK, SPLIT, LIFT, DROP, DIE }
     
     public class Cell: ICell
     {
@@ -18,6 +18,7 @@ namespace Cells.GameCore.Cells
         private Int32 _life;
         private Color _team;
         private CellAction CellPreviousAction = CellAction.NONE;
+        private Boolean _carryingWeight = false;
 
         // Hold reference to the World
         private readonly World _world;
@@ -69,6 +70,16 @@ namespace Cells.GameCore.Cells
                     break;
                 case CellAction.MOVEDOWN:
                     MoveDown();
+                    break;
+                case CellAction.ATTACK:
+                    break;
+                case CellAction.DROP:
+                    break;
+                case CellAction.LIFT:
+                    break;
+                case CellAction.SPLIT:
+                    break;
+                case CellAction.DIE:
                     break;
                 case CellAction.NONE:
                     break;

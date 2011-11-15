@@ -45,9 +45,13 @@ namespace Cells.GameCore.Mapping
             }
         }
 
+        /// <summary>
+        /// Initializes the grid of the map with the grid passed as a reference
+        /// </summary>
+        /// <param name="view">The grid that is to become this map's grid</param>
         public void InitializeGrid(MapTile[,] view)
         {
-            this.Grid = view;
+            Grid = view;
         }
 
         /// <summary>
@@ -103,10 +107,7 @@ namespace Cells.GameCore.Mapping
         /// <returns></returns>
         public Int16 GetMapHeight()
         {
-            if (this.Grid != null)
-                return Convert.ToInt16(Grid.GetUpperBound(1));
-            else
-                return 0;
+            return Grid != null ? Convert.ToInt16(Grid.GetUpperBound(1)) : (Int16)0;
         }
 
         /// <summary>
@@ -115,26 +116,42 @@ namespace Cells.GameCore.Mapping
         /// <returns></returns>
         public int GetMapWidth()
         {
-            if (this.Grid != null)
-                return Convert.ToInt16(Grid.GetUpperBound(0));
-            else
-                return 0;
+            return Grid != null ? Convert.ToInt16(Grid.GetUpperBound(0)) : 0;
         }
 
+        /// <summary>
+        /// Function registering a cell on the map
+        /// </summary>
+        /// <param name="newCell">The cell</param>
         internal void ImplantCell(Cells.Cell newCell)
         {
             if (newCell != null)
-                this.Grid[newCell.Position.X, newCell.Position.Y].CellReference = newCell;
+                Grid[newCell.Position.X, newCell.Position.Y].CellReference = newCell;
             else
                 throw new Exception("Cannot implant a non existing cell");
         }
 
+        /// <summary>
+        /// Function moving a cell on the map
+        /// </summary>
+        /// <param name="oldCoordinates">The coordinates where the cell is moving from</param>
+        /// <param name="newCoordinates">The coordinates where the cell is moving to</param>
         internal void MoveCell(Coordinates oldCoordinates, Coordinates newCoordinates)
         {
-            this.Grid[newCoordinates.X, newCoordinates.Y].CellReference =
-                this.Grid[oldCoordinates.X, oldCoordinates.Y].CellReference;
+            Grid[newCoordinates.X, newCoordinates.Y].CellReference = Grid[oldCoordinates.X, oldCoordinates.Y].CellReference;
+            Grid[oldCoordinates.X, oldCoordinates.Y].CellReference = null;
+        }
 
-            this.Grid[oldCoordinates.X, oldCoordinates.Y].CellReference = null;
+        /// <summary>
+        /// Function implanting ressources on the map
+        /// </summary>
+        /// <param name="coordinates">The coordinates where to implant the ressources</param>
+        /// <param name="ressourceLevel">The amount of ressources to implant</param>
+        /// <param name="growthRate">The growth rate of the ressources (per tick, 0 per default)</param>
+        internal void ImplantRessources(Coordinates coordinates, Int16 ressourceLevel, Int16 growthRate = 0)
+        {
+            Grid[coordinates.X, coordinates.Y].GrowthRate = growthRate;
+            Grid[coordinates.X, coordinates.Y].RessourceLevel = ressourceLevel;
         }
     }
 }

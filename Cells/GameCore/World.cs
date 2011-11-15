@@ -41,6 +41,10 @@ namespace Cells.GameCore
         internal void Initialize()
         {
             CreateInitialCellPopulation();
+
+            CreatePlantMap();
+
+            CreateRessourcesMap();
         }
 
         /// <summary>
@@ -113,9 +117,27 @@ namespace Cells.GameCore
         /// </summary>
         /// <param name="cell">The cell asking</param>
         /// <returns>A SurroundingView of the location where the cell resides</returns>
-        internal SurroundingView GetSurroundingsView(Cell cell)
+        public SurroundingView GetSurroundingsView(Cell cell)
         {
             return new SurroundingView(cell.Position, this.MasterMap.GetSubset(cell.Position, SubViewSize, SubViewSize));
+        }
+
+        private void CreateRessourcesMap()
+        {
+            MasterMap.ImplantRessources(new Coordinates(97, 97), 500, 0);
+            MasterMap.ImplantRessources(new Coordinates(125, 125), 100, 0);
+            MasterMap.ImplantRessources(new Coordinates(97, 117), 50, 0);
+            MasterMap.ImplantRessources(new Coordinates(97, 125), 5, 0);
+            MasterMap.ImplantRessources(new Coordinates(125, 100), 500, 0);
+        }
+
+        private void CreatePlantMap()
+        {
+            MasterMap.ImplantRessources(new Coordinates(99, 99), 50, 5);
+            MasterMap.ImplantRessources(new Coordinates(123, 123), 50, 5);
+            MasterMap.ImplantRessources(new Coordinates(99, 115), 50, 5);
+            MasterMap.ImplantRessources(new Coordinates(99, 120), 50, 5);
+            MasterMap.ImplantRessources(new Coordinates(123, 100), 50, 5);
         }
     }
 }
