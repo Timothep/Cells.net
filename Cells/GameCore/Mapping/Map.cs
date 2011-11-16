@@ -4,6 +4,7 @@ using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping.Tiles;
 using Cells.Interfaces;
 using Cells.Utils;
+using Cells.Properties;
 
 namespace Cells.GameCore.Mapping
 {
@@ -77,9 +78,9 @@ namespace Cells.GameCore.Mapping
             // Get the top left coordinates of the extract
             var smallGridMinX = centerPoint.X - numberOfSideColumns > 0 ? Convert.ToInt16(centerPoint.X - numberOfSideColumns) : (Int16)0;
             var smallGridMinY = centerPoint.Y - numberOfSideRows > 0 ? Convert.ToInt16(centerPoint.Y - numberOfSideRows) : (Int16)0;
-            // Get the bottom right coordinates of the extract
-            var smallGridMaxX = smallGridMinX + subWidth > Grid.Length ? Convert.ToInt16(Grid.GetUpperBound(0)) : Convert.ToInt16(smallGridMinX + subWidth);
-            var smallGridMaxY = smallGridMinY + subHeight > Grid.LongLength ? Convert.ToInt16(Grid.GetUpperBound(1)) : Convert.ToInt16(smallGridMinY + subHeight);
+            // Get the bottom right coordinates of the extract (-1 since we are working with a 0 based array)
+            var smallGridMaxX = smallGridMinX + subWidth >= Grid.GetLength(0) ? Convert.ToInt16(Grid.GetLength(0) - 1) : Convert.ToInt16(smallGridMinX + subWidth -1);
+            var smallGridMaxY = smallGridMinY + subHeight >= Grid.GetLength(1) ? Convert.ToInt16(Grid.GetLength(1) - 1) : Convert.ToInt16(smallGridMinY + subHeight -1);
             
             return GetSubArray(smallGridMinX, smallGridMaxX, smallGridMinY, smallGridMaxY);
         }
@@ -94,12 +95,20 @@ namespace Cells.GameCore.Mapping
         /// <returns>The sub 2D array</returns>
         private MapTile[,] GetSubArray(Int16 xMin, Int16 xMax, Int16 yMin, Int16 yMax)
         {
-            var newMap = new MapTile[(Int16)(xMax - xMin), (Int16)(yMax - yMin)];
-            for (int i = xMin; i < xMax; i++)
-                for (int j = yMin; j < yMax; j++)
-                    newMap[i - xMin ,j - yMin] = Grid[i,j];
+            Coordinates cMin = new Coordinates(xMin, yMin);
+            Coordinates cMax = new Coordinates(xMax, yMax);
 
-            return newMap;
+            if (CoordinatesAreValid(cMin) && CoordinatesAreValid(cMax))
+            {
+                // Create a new map (add +1 to the dimention since it is a 0 based array)
+                var newMap = new MapTile[(Int16)(xMax - xMin +1), (Int16)(yMax - yMin + 1)];
+                for (int i = xMin; i <= xMax; i++)
+                    for (int j = yMin; j <= yMax; j++)
+                        newMap[i - xMin, j - yMin] = Grid[i, j];
+                return newMap;
+            }
+            else
+                throw new Exception();
         }
 
         /// <summary>
@@ -139,8 +148,22 @@ namespace Cells.GameCore.Mapping
         /// <param name="newCoordinates">The coordinates where the cell is moving to</param>
         internal void MoveCell(Coordinates oldCoordinates, Coordinates newCoordinates)
         {
-            Grid[newCoordinates.X, newCoordinates.Y].CellReference = Grid[oldCoordinates.X, oldCoordinates.Y].CellReference;
-            Grid[oldCoordinates.X, oldCoordinates.Y].CellReference = null;
+            if (CoordinatesAreValid(oldCoordinates) && CoordinatesAreValid(newCoordinates))
+            {
+                Grid[newCoordinates.X, newCoordinates.Y].CellReference = Grid[oldCoordinates.X, oldCoordinates.Y].CellReference;
+                Grid[oldCoordinates.X, oldCoordinates.Y].CellReference = null;
+            }
+        }
+
+        private bool CoordinatesAreValid(Coordinates newCoordinates)
+        {
+            if (newCoordinates.X < 0
+                || newCoordinates.Y < 0
+                || newCoordinates.X >= this.Grid.GetLength(0)
+                || newCoordinates.Y >= this.Grid.GetLength(1))
+                return false;
+
+            return true;
         }
 
         /// <summary>

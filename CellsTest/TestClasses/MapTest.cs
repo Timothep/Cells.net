@@ -14,7 +14,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Assert.IsNotNull(testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 5, 5));
+            Assert.IsNotNull(testMap.GetSubset(new Coordinates(1, 1), 5, 5));
         }
 
         [TestMethod]
@@ -22,8 +22,8 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 3);
-            Assert.IsTrue(extract.GetMapWidth() == 3);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, 3);
+            Assert.IsTrue(extract.GetLength(0) == 3);
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(null, 3, 3);
+            MapTile[,] extract = testMap.GetSubset(null, 3, 3);
             Assert.IsNull(extract);
         }
 
@@ -40,7 +40,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 2, 3);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 2, 3);
             Assert.IsNull(extract);
         }
 
@@ -49,7 +49,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 2);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, 2);
             Assert.IsNull(extract);
         }
 
@@ -58,7 +58,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), -1, 3);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), -1, 3);
             Assert.IsNull(extract);
         }
 
@@ -67,7 +67,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, -1);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, -1);
             Assert.IsNull(extract);
         }
 
@@ -76,7 +76,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(3, 3);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 5, 5);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 5, 5);
             Assert.IsNull(extract);
         }
 
@@ -85,7 +85,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(3, 3);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 5, 5);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 5, 5);
             Assert.IsNull(extract);
         }
         
@@ -94,7 +94,7 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Assert.IsTrue(testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 3).GetMapWidth() > 0);
+            Assert.IsTrue(testMap.GetSubset(new Coordinates(1, 1), 3, 3).GetLength(0) > 0);
         }
 
         [TestMethod]
@@ -102,8 +102,8 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(1, 1), 3, 3);
-            Assert.IsTrue(extract.GetMapHeight() >= 1);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, 3);
+            Assert.IsTrue(extract.GetLength(1) >= 1);
         }
 
         [TestMethod]
@@ -111,8 +111,8 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Map extract = testMap.GetSubsetOfThisMap(new Coordinates(9, 9), 3, 3);
-            Assert.IsTrue(extract.GetMapWidth() == 2);
+            MapTile[,] extract = testMap.GetSubset(new Coordinates(9, 9), 3, 3);
+            Assert.IsTrue(extract.GetLength(1) == 2);
         }
 
     }

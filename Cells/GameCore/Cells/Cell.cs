@@ -31,7 +31,7 @@ namespace Cells.GameCore.Cells
         /// <param name="y">The y position where the cell is spawned</param>
         /// <param name="initialLife">life the cell is going to spawn with</param>
         /// <param name="thisWorld">A reference to the world the cell lives in</param>
-        public Cell(int x, int y, Int16 initialLife, World thisWorld, Color teamColor)
+        public Cell(Int16 x, Int16 y, Int16 initialLife, World thisWorld, Color teamColor)
         {
             Position = new Coordinates(x, y);
             _brain = new Brain(this as ICell);
@@ -46,14 +46,6 @@ namespace Cells.GameCore.Cells
         /// <returns>The chose action</returns>
         public CellAction Think()
         {
-            // Death comes first
-            DecreaseLife();
-            if (_life <= 0)
-            {
-                Die();
-                return CellAction.NONE;
-            }
-
             return _brain.ChooseNextAction();
         }
 
@@ -80,14 +72,14 @@ namespace Cells.GameCore.Cells
                 case CellAction.MOVEDOWN:
                     MoveDown();
                     break;
-                //case CellAction.ATTACK:
+                //case CellAction.ATTACK: //Not yet implemented
                 //    Attack();
                 //    break;
                 case CellAction.DROP:
-                    Drop();
+                    DropEarth();
                     break;
                 case CellAction.LIFT:
-                    Lift();
+                    LiftEarth();
                     break;
                 case CellAction.SPLIT:
                     Split();
@@ -104,15 +96,70 @@ namespace Cells.GameCore.Cells
         }
 
         /// <summary>
+        /// Function returning the previous action that the cell did
+        /// </summary>
+        /// <returns>The last CellAction the cell did</returns>
+        public CellAction GetPreviousAction()
+        {
+            return _cellPreviousAction;
+        }
+
+        /// <summary>
+        /// A cell is very much blind. 
+        /// When it senses its surroundings, it can see at most a square around itself
+        /// </summary>
+        /// <returns>A MapView describing its immediate surroundings</returns>
+        public SurroundingView Sense()
+        {
+            return _world.GetSurroundingsView(this);
+        }
+
+        /// <summary>
         /// Kills the cell
         /// </summary>
-        public void Die()
+        internal void Die()
         {
             DropAllRessources();
             DropEarth();
             UnregisterCell();
         }
-        
+
+        /// <summary>
+        /// Gets the color of the team the cell belongs to
+        /// </summary>
+        /// <returns>The color of the team</returns>
+        internal Color GetTeamColor()
+        {
+            return this._team;
+        }
+
+        /// <summary>
+        /// Decreases the life of the cell by a given amount
+        /// </summary>
+        /// <param name="malus">The amount of life to remove to the cell</param>
+        internal void DecreaseLife(Int16 malus = 1)
+        {
+            _life -= malus;
+        }
+
+        /// <summary>
+        /// Increases the life of the cell by a given amount
+        /// </summary>
+        /// <param name="bonus">The amount of life to add to the cell</param>
+        internal void IncreaseLife(Int16 bonus)
+        {
+            _life += bonus;
+        }
+
+        /// <summary>
+        /// Retrieves the current amount of life the cell has
+        /// </summary>
+        /// <returns>The amount as an Int16</returns>
+        internal Int16 GetLife()
+        {
+            return _life;
+        }
+
         /// <summary>
         /// Drops all contained ressources at the current position
         /// </summary>
@@ -132,6 +179,9 @@ namespace Cells.GameCore.Cells
             }
         }
 
+        /// <summary>
+        /// Removes the cell from the game
+        /// </summary>
         private void UnregisterCell()
         {
             this._world.UnregisterCell(this);
@@ -183,7 +233,7 @@ namespace Cells.GameCore.Cells
             if (_life > Settings.Default.CostOfCellDivision + 2 * Settings.Default.SpawnLifeThreshold)
             {
                 Int16 spawnLife = (Int16)Math.Truncate((float)(_life - Settings.Default.CostOfCellDivision) / 2);
-                
+
                 // Create the first spawn
                 _world.CreateSpawns(spawnLife, this);
 
@@ -192,35 +242,14 @@ namespace Cells.GameCore.Cells
         }
 
         /// <summary>
-        /// Lifts earth from the ground
-        /// </summary>
-        private void Lift()
-        {
-            LiftEarth();
-        }
-
-        /// <summary>
-        /// Drops carried earth on the ground
-        /// </summary>
-        private void Drop()
-        {
-            DropEarth();
-        }
-
-        /// <summary>
-        /// Function returning the previous action that the cell did
-        /// </summary>
-        /// <returns>The last CellAction the cell did</returns>
-        public CellAction GetPreviousAction()
-        {
-            return _cellPreviousAction;
-        }
-
-        /// <summary>
         /// Move the cell left and save its old position
         /// </summary>
         private void MoveLeft()
         {
+            // Check the potentially new coordinate
+            if (!CoordinatesAreValid((Int16)(Position.X - 1), Position.Y))
+                return;
+
             Coordinates oldPosition = Position.Clone();
             Position.X--;
             NotifyMovement(oldPosition, Position, _team);
@@ -231,6 +260,10 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void MoveRight()
         {
+            // Check the potentially new coordinate
+            if (!CoordinatesAreValid((Int16)(Position.X + 1), Position.Y))
+                return;
+
             Coordinates oldPosition = Position.Clone();
             Position.X++;
             NotifyMovement(oldPosition, Position, _team);
@@ -241,8 +274,12 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void MoveUp()
         {
+            // Check the potentially new coordinate
+            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y - 1)))
+                return;
+
             Coordinates oldPosition = Position.Clone();
-            Position.Y++;
+            Position.Y--;
             NotifyMovement(oldPosition, Position, _team);
         }
 
@@ -251,10 +288,32 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void MoveDown()
         {
+            // Check the potentially new coordinate
+            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y + 1)))
+                return;
+
             Coordinates oldPosition = Position.Clone();
-            Position.Y--;
+            Position.Y++;
             NotifyMovement(oldPosition, Position, _team);
         }
+
+        /// <summary>
+        /// Checks that the given coordinate are in the limits of the game
+        /// </summary>
+        /// <param name="X">The x coordinate</param>
+        /// <param name="Y">The y coordinate</param>
+        /// <returns>True if they can be used, false otherwise</returns>
+        private Boolean CoordinatesAreValid(Int16 X, Int16 Y)
+        {
+            if (X < 0
+                || Y < 0
+                || X >= Settings.Default.WorldWidth
+                || Y >= Settings.Default.WorldHeight)
+                return false;
+
+            return true;
+        }
+
 
         /// <summary>
         /// Notify the world that a cell moved
@@ -266,43 +325,6 @@ namespace Cells.GameCore.Cells
         {
             _world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
             return;
-        }
-
-        /// <summary>
-        /// A cell is very much blind. 
-        /// When it senses its surroundings, it can see at most a square around itself
-        /// </summary>
-        /// <returns>A MapView describing its immediate surroundings</returns>
-        public SurroundingView Sense()
-        {
-            return _world.GetSurroundingsView(this);
-        }
-
-        /// <summary>
-        /// Gets the color of the team the cell belongs to
-        /// </summary>
-        /// <returns>The color of the team</returns>
-        internal Color GetTeamColor()
-        {
-            return this._team;
-        }
-
-        ///// <summary>
-        ///// Attack a cell
-        ///// </summary>
-        //private void Attack()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        internal void DecreaseLife()
-        {
-            _life--;
-        }
-
-        internal Int16 GetLife()
-        {
-            return _life;
         }
     }
 }

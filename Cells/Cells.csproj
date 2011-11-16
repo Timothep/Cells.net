@@ -73,7 +73,7 @@
     <Compile Include="GameEngine\Timer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utils\Coordinates.cs" />
-    <Compile Include="Utils\RandomGenerator.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <EmbeddedResource Include="GameEngine\CellsCanvas.resx">
       <DependentUpon>CellsCanvas.cs</DependentUpon>
     </EmbeddedResource>

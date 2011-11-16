@@ -9,7 +9,7 @@
       <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="SubViewSize" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">9</Value>
     </Setting>
     <Setting Name="MinLandscapeHeight" Type="System.Int16" Scope="Application">
       <Value Profile="(Default)">0</Value>
@@ -17,20 +17,23 @@
     <Setting Name="MaxLandscapeHeight" Type="System.Int16" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="InitialPopulationPerBrain" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">20</Value>
+    <Setting Name="InitialPopulationPerTeam" Type="System.Int16" Scope="Application">
+      <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="MaxNumberOfCells" Type="System.Int16" Scope="Application">
       <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="CellInitialLife" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">10</Value>
+    <Setting Name="CellMaxInitialLife" Type="System.Int16" Scope="Application">
+      <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="CostOfCellDivision" Type="System.Int16" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="SpawnLifeThreshold" Type="System.Int16" Scope="Application">
       <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="NumberOfTeams" Type="System.Int16" Scope="Application">
+      <Value Profile="(Default)">2</Value>
     </Setting>
   </Settings>
 </SettingsFile>

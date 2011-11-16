@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using Cells.Utils;
@@ -58,23 +59,26 @@ namespace Cells.GameCore
         private void Tick()
         {
             if (null == _world)
+            {
                 return;
+            }
 
             _world.ResetMovementsList();
 
             IEnumerable<Cell> allCells = _world.GetCells();
+            Debug.WriteLine("Number of alive cells: " + allCells.Count().ToString());
 
             if (null != allCells)
             {
                 foreach (Cell currentCell in _world.GetCells())
                 {
                     //// Death comes first
-                    //currentCell.DecreaseLife();
-                    //if (currentCell.GetLife() <= 0)
-                    //{
-                    //    currentCell.Die();
-                    //    return;
-                    //}
+                    currentCell.DecreaseLife();
+                    if (currentCell.GetLife() <= 0)
+                    {
+                        currentCell.Die();
+                        continue;
+                    }
 
                     // Alive cells get to do something
                     CellAction action = currentCell.Think();

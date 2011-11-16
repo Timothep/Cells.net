@@ -1,17 +1,19 @@
-﻿namespace Cells.Utils
+﻿using System;
+using Cells.Properties;
+namespace Cells.Utils
 {
     /// <summary>
     /// Class representing a vector of coordinates X and Y
     /// </summary>
     public class Coordinates
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public Int16 X { get; set; }
+        public Int16 Y { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public Coordinates(int inX, int inY)
+        public Coordinates(Int16 inX, Int16 inY)
         {
             X = inX;
             Y = inY;

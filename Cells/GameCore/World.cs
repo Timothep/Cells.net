@@ -32,7 +32,7 @@ namespace Cells.GameCore
         /// <summary>
         /// Constructor
         /// </summary>
-        internal World()
+        public World()
         {
             // Create the empty map of the world
             _masterMap = new Map(_worldWidth, _worldHeight);
@@ -79,8 +79,15 @@ namespace Cells.GameCore
         internal void RegisterCellMovement(Coordinates oldCoordinates, Coordinates newCoordinates, Color team)
         {
             // Add the cell movements to the logs
-            _updatedElements.Add(oldCoordinates, Color.Black);
-            _updatedElements.Add(newCoordinates, team);
+            if (!_updatedElements.ContainsKey(oldCoordinates))        
+                _updatedElements.Add(oldCoordinates, Color.Black);
+
+            if (_updatedElements.ContainsKey(newCoordinates) && _updatedElements[newCoordinates] != Color.Black)
+            {
+                throw new InvalidOperationException("Trying to move a cell to a position where a cell already resides");
+            }
+            else
+                _updatedElements.Add(newCoordinates, team);
 
             // Update the map
             this._masterMap.MoveCell(oldCoordinates, newCoordinates);
@@ -175,22 +182,48 @@ namespace Cells.GameCore
             _deadCellsToRemove.Clear();
         }
 
+        ///// <summary>
+        ///// Creates a population of cells
+        ///// </summary>
+        //private void CreateInitialCellPopulation()
+        //{
+        //    for (int i = 100; i < 102; i++)
+        //    {
+        //        for (int j = 100; j < 102; j++)
+        //        {
+        //            // Create a brand new cell
+        //            Color color = i%2 == 0 ? Color.Yellow : Color.Red;
+        //            var newCell = new Cell(i, j, Convert.ToInt16(RandomGenerator.GetRandomInteger(500)), this, color);
+
+        //            InjectCell(newCell);
+        //        }
+        //    }
+        //}
+
         /// <summary>
         /// Creates a population of cells
         /// </summary>
         private void CreateInitialCellPopulation()
         {
-            for (int i = 100; i < 120; i++)
-            {
-                for (int j = 100; j < 120; j++)
-                {
-                    // Create a brand new cell
-                    Color color = i%2 == 0 ? Color.Yellow : Color.Red;
-                    var newCell = new Cell(i, j, Convert.ToInt16(RandomGenerator.GetRandomInteger(50)), this, color);
+            CreateCellPopulation(Settings.Default.InitialPopulationPerTeam, Color.Red);
+            CreateCellPopulation(Settings.Default.InitialPopulationPerTeam, Color.Yellow);
+        }
 
-                    InjectCell(newCell);
-                }
+        private void CreateCellPopulation(short numberOfCells, Color teamColor)
+        {
+            for (int i = 0; i < numberOfCells; i++)
+            {   
+                Coordinates newCoordinates = GetRandomCoordinates();
+                Int16 initialLife = (Int16)RandomGenerator.GetRandomInteger(Settings.Default.CellMaxInitialLife);
+                InjectCell(new Cell(newCoordinates.X, newCoordinates.Y, initialLife, this, teamColor));
             }
+        }
+
+        private Coordinates GetRandomCoordinates()
+        {
+            return new Coordinates(
+                RandomGenerator.GetRandomInt16((Int16)(Settings.Default.WorldWidth - 1)), 
+                RandomGenerator.GetRandomInt16((Int16)(Settings.Default.WorldHeight - 1)));
         }
 
         /// <summary>
@@ -208,20 +241,20 @@ namespace Cells.GameCore
 
         private void CreateRessourcesMap()
         {
-            _masterMap.ImplantRessources(new Coordinates(97, 97), 500, 0);
-            _masterMap.ImplantRessources(new Coordinates(125, 125), 100, 0);
-            _masterMap.ImplantRessources(new Coordinates(97, 117), 50, 0);
-            _masterMap.ImplantRessources(new Coordinates(97, 125), 5, 0);
-            _masterMap.ImplantRessources(new Coordinates(125, 100), 500, 0);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 100, 0);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 0);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 5, 0);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
         }
 
         private void CreatePlantMap()
         {
-            _masterMap.ImplantRessources(new Coordinates(99, 99), 50, 5);
-            _masterMap.ImplantRessources(new Coordinates(123, 123), 50, 5);
-            _masterMap.ImplantRessources(new Coordinates(99, 115), 50, 5);
-            _masterMap.ImplantRessources(new Coordinates(99, 120), 50, 5);
-            _masterMap.ImplantRessources(new Coordinates(123, 100), 50, 5);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
         }
 
         internal void CreateSpawns(short spawnLife, Cell cell)

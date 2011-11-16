@@ -10,8 +10,7 @@ namespace CellsTest.TestClasses
         [TestMethod]
         public void TestGetCellsNotNull()
         {
-            World testWorld = new World();
-            Assert.IsNotNull(testWorld.GetCells());    
+   
         }
     }
 }

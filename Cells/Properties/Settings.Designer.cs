@@ -43,7 +43,7 @@ namespace Cells.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
         public short SubViewSize {
             get {
                 return ((short)(this["SubViewSize"]));
@@ -70,10 +70,10 @@ namespace Cells.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20")]
-        public short InitialPopulationPerBrain {
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public short InitialPopulationPerTeam {
             get {
-                return ((short)(this["InitialPopulationPerBrain"]));
+                return ((short)(this["InitialPopulationPerTeam"]));
             }
         }
         
@@ -88,10 +88,10 @@ namespace Cells.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public short CellInitialLife {
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public short CellMaxInitialLife {
             get {
-                return ((short)(this["CellInitialLife"]));
+                return ((short)(this["CellMaxInitialLife"]));
             }
         }
         
@@ -110,6 +110,15 @@ namespace Cells.Properties {
         public short SpawnLifeThreshold {
             get {
                 return ((short)(this["SpawnLifeThreshold"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public short NumberOfTeams {
+            get {
+                return ((short)(this["NumberOfTeams"]));
             }
         }
     }

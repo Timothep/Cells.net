@@ -34,6 +34,7 @@ namespace Cells.GameEngine
             this.bStartEngine = new System.Windows.Forms.Button();
             this.bStopEngine = new System.Windows.Forms.Button();
             this.ParametersGroupBox = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,7 +56,8 @@ namespace Cells.GameEngine
             this.tBViewSize = new System.Windows.Forms.TextBox();
             this.lSubViewSize = new System.Windows.Forms.Label();
             this.gBBrainSelection = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox10 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DrawBox)).BeginInit();
             this.ParametersGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -95,6 +97,8 @@ namespace Cells.GameEngine
             // 
             // ParametersGroupBox
             // 
+            this.ParametersGroupBox.Controls.Add(this.textBox10);
+            this.ParametersGroupBox.Controls.Add(this.label5);
             this.ParametersGroupBox.Controls.Add(this.label4);
             this.ParametersGroupBox.Controls.Add(this.label3);
             this.ParametersGroupBox.Controls.Add(this.label2);
@@ -122,6 +126,15 @@ namespace Cells.GameEngine
             this.ParametersGroupBox.TabIndex = 3;
             this.ParametersGroupBox.TabStop = false;
             this.ParametersGroupBox.Text = "Parameters";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 176);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(102, 13);
+            this.label4.TabIndex = 23;
+            this.label4.Text = "Spawn life threshold";
             // 
             // label3
             // 
@@ -292,14 +305,21 @@ namespace Cells.GameEngine
             this.gBBrainSelection.TabStop = false;
             this.gBBrainSelection.Text = "Brain Selection";
             // 
-            // label4
+            // label5
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 176);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(102, 13);
-            this.label4.TabIndex = 23;
-            this.label4.Text = "Spawn life threshold";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 280);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(91, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Number of Teams";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(175, 277);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(56, 20);
+            this.textBox10.TabIndex = 25;
             // 
             // CellsCanvas
             // 
@@ -349,6 +369,8 @@ namespace Cells.GameEngine
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.Label label5;
     }
 }
 

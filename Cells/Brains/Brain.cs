@@ -17,7 +17,7 @@ namespace Cells.Brains
         /// Constructor
         /// </summary>
         /// <param name="theCell">The cell that the brain should control</param>
-        public Brain(ICell theCell)
+        internal Brain(ICell theCell)
         {
             _cell = theCell;
         }

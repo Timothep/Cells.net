@@ -36,8 +36,8 @@ namespace Cells.GameCore.Mapping
         {
             List<Cell> newList = new List<Cell>();
 
-            for (int i = 0; i < ViewSize; i++)
-                for (int j = 0; j < ViewSize; j++)
+            for (int i = 0; i < ViewSize - 1 ; i++)
+                for (int j = 0; j < ViewSize - 1 ; j++)
                     if (_view.Grid[i,j].CellReference != null)
                         newList.Add(_view.Grid[i, j].CellReference);
 
