@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Brains\SwarmBrain.cs" />
+    <Compile Include="Brain\SwarmBrain.cs" />
     <Compile Include="GameCore\Cells\Cell.cs" />
     <Compile Include="GameCore\GameCoreEngine.cs" />
     <Compile Include="GameCore\Mapping\CellsMap.cs" />

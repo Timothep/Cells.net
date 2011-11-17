@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Drawing;
+using Cells.Brain;
 using Cells.GameCore.Mapping.Tiles;
 using Cells.Properties;
 using Cells.Utils;
 using Cells.GameCore.Mapping;
-using Cells.Brains;
 using Cells.Interfaces;
 
 namespace Cells.GameCore.Cells
 {
     public enum CellAction { NONE, MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, ATTACK, SPLIT, LIFT, DROP, DIE }
     
+    [Export(typeof(ICell))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class Cell: ICell
     {
         public Coordinates Position { get; private set; }
         private readonly IBrain _brain;
+
         private Int16 _life;
         private readonly Color _team;
         private CellAction _cellPreviousAction = CellAction.NONE;
@@ -31,10 +35,11 @@ namespace Cells.GameCore.Cells
         /// <param name="y">The y position where the cell is spawned</param>
         /// <param name="initialLife">life the cell is going to spawn with</param>
         /// <param name="thisWorld">A reference to the world the cell lives in</param>
+        /// <param name="teamColor">The color of the team this cell belongs to</param>
         public Cell(Int16 x, Int16 y, Int16 initialLife, World thisWorld, Color teamColor)
         {
             Position = new Coordinates(x, y);
-            _brain = new SwarmBrain(this as ICell);
+            _brain = new SwarmBrain();
             _life = initialLife;
             _world = thisWorld;
             _team = teamColor;
