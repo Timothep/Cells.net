@@ -25,6 +25,13 @@ namespace Cells.GameEngine
             InitializeComponent();
             _canvas = DrawBox.CreateGraphics();
             _canvas.Clear(_defaultBackgroundColor);
+
+            //Create BrainsList
+            List<String> brains = _gameEngine.GetBrainsList();
+            foreach (var brain in brains)
+            {
+                lBBrains.Items.Add(brain);
+            }
         }
 
         #region CanvasPainting

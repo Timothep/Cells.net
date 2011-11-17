@@ -59,6 +59,7 @@ namespace Cells.GameEngine
             this.lMinAltitude = new System.Windows.Forms.Label();
             this.tBViewSize = new System.Windows.Forms.TextBox();
             this.lSubViewSize = new System.Windows.Forms.Label();
+            this.lBBrains = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.DrawBox)).BeginInit();
             this.ParametersGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -123,9 +124,9 @@ namespace Cells.GameEngine
             this.ParametersGroupBox.Controls.Add(this.lMinAltitude);
             this.ParametersGroupBox.Controls.Add(this.tBViewSize);
             this.ParametersGroupBox.Controls.Add(this.lSubViewSize);
-            this.ParametersGroupBox.Location = new System.Drawing.Point(519, 42);
+            this.ParametersGroupBox.Location = new System.Drawing.Point(519, 151);
             this.ParametersGroupBox.Name = "ParametersGroupBox";
-            this.ParametersGroupBox.Size = new System.Drawing.Size(237, 471);
+            this.ParametersGroupBox.Size = new System.Drawing.Size(237, 362);
             this.ParametersGroupBox.TabIndex = 3;
             this.ParametersGroupBox.TabStop = false;
             this.ParametersGroupBox.Text = "Parameters";
@@ -276,7 +277,7 @@ namespace Cells.GameEngine
             // 
             // bSaveSettings
             // 
-            this.bSaveSettings.Location = new System.Drawing.Point(144, 442);
+            this.bSaveSettings.Location = new System.Drawing.Point(144, 329);
             this.bSaveSettings.Name = "bSaveSettings";
             this.bSaveSettings.Size = new System.Drawing.Size(87, 23);
             this.bSaveSettings.TabIndex = 7;
@@ -332,12 +333,21 @@ namespace Cells.GameEngine
             this.lSubViewSize.TabIndex = 0;
             this.lSubViewSize.Text = "Cell Sensory View Size";
             // 
+            // lBBrains
+            // 
+            this.lBBrains.FormattingEnabled = true;
+            this.lBBrains.Location = new System.Drawing.Point(520, 46);
+            this.lBBrains.Name = "lBBrains";
+            this.lBBrains.Size = new System.Drawing.Size(236, 95);
+            this.lBBrains.TabIndex = 4;
+            // 
             // CellsCanvas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(764, 524);
+            this.Controls.Add(this.lBBrains);
             this.Controls.Add(this.bStopEngine);
             this.Controls.Add(this.ParametersGroupBox);
             this.Controls.Add(this.bStartEngine);
@@ -383,6 +393,7 @@ namespace Cells.GameEngine
         private System.Windows.Forms.Label lNumberOfTeams;
         private System.Windows.Forms.TextBox tBCellSize;
         private System.Windows.Forms.Label lCellSize;
+        private System.Windows.Forms.ListBox lBBrains;
     }
 }
 

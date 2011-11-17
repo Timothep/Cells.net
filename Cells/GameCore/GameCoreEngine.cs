@@ -128,5 +128,18 @@ namespace Cells.GameCore
             
             return _world.GetUpdatedElements();
         }
+
+        /// <summary>
+        /// Get the names of all the brains that were discovered by MEF
+        /// </summary>
+        /// <returns>A list of all the names</returns>
+        internal List<string> GetBrainsList()
+        {
+            List<String> lsBrains = new List<string>();
+
+            lsBrains.AddRange(Brains.Select(brain => brain.GetType().ToString()));
+
+            return lsBrains;
+        }
     }
 }
