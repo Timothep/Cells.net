@@ -34,30 +34,31 @@ namespace Cells.GameEngine
             this.bStartEngine = new System.Windows.Forms.Button();
             this.bStopEngine = new System.Windows.Forms.Button();
             this.ParametersGroupBox = new System.Windows.Forms.GroupBox();
+            this.tBCellSize = new System.Windows.Forms.TextBox();
+            this.lCellSize = new System.Windows.Forms.Label();
+            this.tBNumberOfTeams = new System.Windows.Forms.TextBox();
+            this.lNumberOfTeams = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lDamageOnAggrOpponent = new System.Windows.Forms.Label();
+            this.lDamageOnDefOpponent = new System.Windows.Forms.Label();
+            this.lCellDivCost = new System.Windows.Forms.Label();
             this.lMaxNumberOfCells = new System.Windows.Forms.Label();
             this.lInitialPopPerBrain = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tBMaxAltitude = new System.Windows.Forms.TextBox();
+            this.tBMinAltitude = new System.Windows.Forms.TextBox();
+            this.tBCellSensoryViewSize = new System.Windows.Forms.TextBox();
+            this.tBSpawnLifeThreshold = new System.Windows.Forms.TextBox();
+            this.tBDamageOnAggressiveOpponent = new System.Windows.Forms.TextBox();
+            this.tBDamageOnPassiveOpponent = new System.Windows.Forms.TextBox();
+            this.tBCellDivisionCost = new System.Windows.Forms.TextBox();
             this.lCellInitialLife = new System.Windows.Forms.Label();
             this.bSaveSettings = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lMaxLandscapeHeight = new System.Windows.Forms.Label();
-            this.lMinLandscapeHeight = new System.Windows.Forms.Label();
+            this.tBCellInitialLife = new System.Windows.Forms.TextBox();
+            this.tBMaxNumberCells = new System.Windows.Forms.TextBox();
+            this.lMaxAltitude = new System.Windows.Forms.Label();
+            this.lMinAltitude = new System.Windows.Forms.Label();
             this.tBViewSize = new System.Windows.Forms.TextBox();
             this.lSubViewSize = new System.Windows.Forms.Label();
-            this.gBBrainSelection = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DrawBox)).BeginInit();
             this.ParametersGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -97,35 +98,69 @@ namespace Cells.GameEngine
             // 
             // ParametersGroupBox
             // 
-            this.ParametersGroupBox.Controls.Add(this.textBox10);
-            this.ParametersGroupBox.Controls.Add(this.label5);
+            this.ParametersGroupBox.Controls.Add(this.tBCellSize);
+            this.ParametersGroupBox.Controls.Add(this.lCellSize);
+            this.ParametersGroupBox.Controls.Add(this.tBNumberOfTeams);
+            this.ParametersGroupBox.Controls.Add(this.lNumberOfTeams);
             this.ParametersGroupBox.Controls.Add(this.label4);
-            this.ParametersGroupBox.Controls.Add(this.label3);
-            this.ParametersGroupBox.Controls.Add(this.label2);
-            this.ParametersGroupBox.Controls.Add(this.label1);
+            this.ParametersGroupBox.Controls.Add(this.lDamageOnAggrOpponent);
+            this.ParametersGroupBox.Controls.Add(this.lDamageOnDefOpponent);
+            this.ParametersGroupBox.Controls.Add(this.lCellDivCost);
             this.ParametersGroupBox.Controls.Add(this.lMaxNumberOfCells);
             this.ParametersGroupBox.Controls.Add(this.lInitialPopPerBrain);
-            this.ParametersGroupBox.Controls.Add(this.textBox9);
-            this.ParametersGroupBox.Controls.Add(this.textBox8);
-            this.ParametersGroupBox.Controls.Add(this.textBox7);
-            this.ParametersGroupBox.Controls.Add(this.textBox6);
-            this.ParametersGroupBox.Controls.Add(this.textBox5);
-            this.ParametersGroupBox.Controls.Add(this.textBox4);
-            this.ParametersGroupBox.Controls.Add(this.textBox3);
+            this.ParametersGroupBox.Controls.Add(this.tBMaxAltitude);
+            this.ParametersGroupBox.Controls.Add(this.tBMinAltitude);
+            this.ParametersGroupBox.Controls.Add(this.tBCellSensoryViewSize);
+            this.ParametersGroupBox.Controls.Add(this.tBSpawnLifeThreshold);
+            this.ParametersGroupBox.Controls.Add(this.tBDamageOnAggressiveOpponent);
+            this.ParametersGroupBox.Controls.Add(this.tBDamageOnPassiveOpponent);
+            this.ParametersGroupBox.Controls.Add(this.tBCellDivisionCost);
             this.ParametersGroupBox.Controls.Add(this.lCellInitialLife);
             this.ParametersGroupBox.Controls.Add(this.bSaveSettings);
-            this.ParametersGroupBox.Controls.Add(this.textBox2);
-            this.ParametersGroupBox.Controls.Add(this.textBox1);
-            this.ParametersGroupBox.Controls.Add(this.lMaxLandscapeHeight);
-            this.ParametersGroupBox.Controls.Add(this.lMinLandscapeHeight);
+            this.ParametersGroupBox.Controls.Add(this.tBCellInitialLife);
+            this.ParametersGroupBox.Controls.Add(this.tBMaxNumberCells);
+            this.ParametersGroupBox.Controls.Add(this.lMaxAltitude);
+            this.ParametersGroupBox.Controls.Add(this.lMinAltitude);
             this.ParametersGroupBox.Controls.Add(this.tBViewSize);
             this.ParametersGroupBox.Controls.Add(this.lSubViewSize);
-            this.ParametersGroupBox.Location = new System.Drawing.Point(519, 155);
+            this.ParametersGroupBox.Location = new System.Drawing.Point(519, 42);
             this.ParametersGroupBox.Name = "ParametersGroupBox";
-            this.ParametersGroupBox.Size = new System.Drawing.Size(237, 358);
+            this.ParametersGroupBox.Size = new System.Drawing.Size(237, 471);
             this.ParametersGroupBox.TabIndex = 3;
             this.ParametersGroupBox.TabStop = false;
             this.ParametersGroupBox.Text = "Parameters";
+            // 
+            // tBCellSize
+            // 
+            this.tBCellSize.Location = new System.Drawing.Point(175, 303);
+            this.tBCellSize.Name = "tBCellSize";
+            this.tBCellSize.Size = new System.Drawing.Size(56, 20);
+            this.tBCellSize.TabIndex = 27;
+            // 
+            // lCellSize
+            // 
+            this.lCellSize.AutoSize = true;
+            this.lCellSize.Location = new System.Drawing.Point(6, 306);
+            this.lCellSize.Name = "lCellSize";
+            this.lCellSize.Size = new System.Drawing.Size(115, 13);
+            this.lCellSize.TabIndex = 26;
+            this.lCellSize.Text = "Map cell size (in Pixels)";
+            // 
+            // tBNumberOfTeams
+            // 
+            this.tBNumberOfTeams.Location = new System.Drawing.Point(175, 277);
+            this.tBNumberOfTeams.Name = "tBNumberOfTeams";
+            this.tBNumberOfTeams.Size = new System.Drawing.Size(56, 20);
+            this.tBNumberOfTeams.TabIndex = 25;
+            // 
+            // lNumberOfTeams
+            // 
+            this.lNumberOfTeams.AutoSize = true;
+            this.lNumberOfTeams.Location = new System.Drawing.Point(6, 280);
+            this.lNumberOfTeams.Name = "lNumberOfTeams";
+            this.lNumberOfTeams.Size = new System.Drawing.Size(91, 13);
+            this.lNumberOfTeams.TabIndex = 24;
+            this.lNumberOfTeams.Text = "Number of Teams";
             // 
             // label4
             // 
@@ -136,32 +171,32 @@ namespace Cells.GameEngine
             this.label4.TabIndex = 23;
             this.label4.Text = "Spawn life threshold";
             // 
-            // label3
+            // lDamageOnAggrOpponent
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 150);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(164, 13);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Damage on aggressive opponent";
+            this.lDamageOnAggrOpponent.AutoSize = true;
+            this.lDamageOnAggrOpponent.Location = new System.Drawing.Point(6, 150);
+            this.lDamageOnAggrOpponent.Name = "lDamageOnAggrOpponent";
+            this.lDamageOnAggrOpponent.Size = new System.Drawing.Size(164, 13);
+            this.lDamageOnAggrOpponent.TabIndex = 22;
+            this.lDamageOnAggrOpponent.Text = "Damage on aggressive opponent";
             // 
-            // label2
+            // lDamageOnDefOpponent
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 124);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(149, 13);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Damage on passive opponent";
+            this.lDamageOnDefOpponent.AutoSize = true;
+            this.lDamageOnDefOpponent.Location = new System.Drawing.Point(6, 124);
+            this.lDamageOnDefOpponent.Name = "lDamageOnDefOpponent";
+            this.lDamageOnDefOpponent.Size = new System.Drawing.Size(149, 13);
+            this.lDamageOnDefOpponent.TabIndex = 21;
+            this.lDamageOnDefOpponent.Text = "Damage on passive opponent";
             // 
-            // label1
+            // lCellDivCost
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 98);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Cost of cell division";
+            this.lCellDivCost.AutoSize = true;
+            this.lCellDivCost.Location = new System.Drawing.Point(6, 98);
+            this.lCellDivCost.Name = "lCellDivCost";
+            this.lCellDivCost.Size = new System.Drawing.Size(97, 13);
+            this.lCellDivCost.TabIndex = 20;
+            this.lCellDivCost.Text = "Cost of cell division";
             // 
             // lMaxNumberOfCells
             // 
@@ -181,54 +216,54 @@ namespace Cells.GameEngine
             this.lInitialPopPerBrain.TabIndex = 18;
             this.lInitialPopPerBrain.Text = "Initial Population per Brain";
             // 
-            // textBox9
+            // tBMaxAltitude
             // 
-            this.textBox9.Location = new System.Drawing.Point(175, 251);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(56, 20);
-            this.textBox9.TabIndex = 15;
+            this.tBMaxAltitude.Location = new System.Drawing.Point(175, 251);
+            this.tBMaxAltitude.Name = "tBMaxAltitude";
+            this.tBMaxAltitude.Size = new System.Drawing.Size(56, 20);
+            this.tBMaxAltitude.TabIndex = 15;
             // 
-            // textBox8
+            // tBMinAltitude
             // 
-            this.textBox8.Location = new System.Drawing.Point(175, 225);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(56, 20);
-            this.textBox8.TabIndex = 14;
+            this.tBMinAltitude.Location = new System.Drawing.Point(175, 225);
+            this.tBMinAltitude.Name = "tBMinAltitude";
+            this.tBMinAltitude.Size = new System.Drawing.Size(56, 20);
+            this.tBMinAltitude.TabIndex = 14;
             // 
-            // textBox7
+            // tBCellSensoryViewSize
             // 
-            this.textBox7.Location = new System.Drawing.Point(175, 199);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(56, 20);
-            this.textBox7.TabIndex = 13;
+            this.tBCellSensoryViewSize.Location = new System.Drawing.Point(175, 199);
+            this.tBCellSensoryViewSize.Name = "tBCellSensoryViewSize";
+            this.tBCellSensoryViewSize.Size = new System.Drawing.Size(56, 20);
+            this.tBCellSensoryViewSize.TabIndex = 13;
             // 
-            // textBox6
+            // tBSpawnLifeThreshold
             // 
-            this.textBox6.Location = new System.Drawing.Point(175, 173);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(56, 20);
-            this.textBox6.TabIndex = 12;
+            this.tBSpawnLifeThreshold.Location = new System.Drawing.Point(175, 173);
+            this.tBSpawnLifeThreshold.Name = "tBSpawnLifeThreshold";
+            this.tBSpawnLifeThreshold.Size = new System.Drawing.Size(56, 20);
+            this.tBSpawnLifeThreshold.TabIndex = 12;
             // 
-            // textBox5
+            // tBDamageOnAggressiveOpponent
             // 
-            this.textBox5.Location = new System.Drawing.Point(175, 147);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(56, 20);
-            this.textBox5.TabIndex = 11;
+            this.tBDamageOnAggressiveOpponent.Location = new System.Drawing.Point(175, 147);
+            this.tBDamageOnAggressiveOpponent.Name = "tBDamageOnAggressiveOpponent";
+            this.tBDamageOnAggressiveOpponent.Size = new System.Drawing.Size(56, 20);
+            this.tBDamageOnAggressiveOpponent.TabIndex = 11;
             // 
-            // textBox4
+            // tBDamageOnPassiveOpponent
             // 
-            this.textBox4.Location = new System.Drawing.Point(175, 121);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(56, 20);
-            this.textBox4.TabIndex = 10;
+            this.tBDamageOnPassiveOpponent.Location = new System.Drawing.Point(175, 121);
+            this.tBDamageOnPassiveOpponent.Name = "tBDamageOnPassiveOpponent";
+            this.tBDamageOnPassiveOpponent.Size = new System.Drawing.Size(56, 20);
+            this.tBDamageOnPassiveOpponent.TabIndex = 10;
             // 
-            // textBox3
+            // tBCellDivisionCost
             // 
-            this.textBox3.Location = new System.Drawing.Point(175, 95);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(56, 20);
-            this.textBox3.TabIndex = 9;
+            this.tBCellDivisionCost.Location = new System.Drawing.Point(175, 95);
+            this.tBCellDivisionCost.Name = "tBCellDivisionCost";
+            this.tBCellDivisionCost.Size = new System.Drawing.Size(56, 20);
+            this.tBCellDivisionCost.TabIndex = 9;
             // 
             // lCellInitialLife
             // 
@@ -241,44 +276,45 @@ namespace Cells.GameEngine
             // 
             // bSaveSettings
             // 
-            this.bSaveSettings.Location = new System.Drawing.Point(146, 329);
+            this.bSaveSettings.Location = new System.Drawing.Point(144, 442);
             this.bSaveSettings.Name = "bSaveSettings";
             this.bSaveSettings.Size = new System.Drawing.Size(87, 23);
             this.bSaveSettings.TabIndex = 7;
             this.bSaveSettings.Text = "Save Changes";
             this.bSaveSettings.UseVisualStyleBackColor = true;
+            this.bSaveSettings.Click += new System.EventHandler(this.BSaveSettingsClick);
             // 
-            // textBox2
+            // tBCellInitialLife
             // 
-            this.textBox2.Location = new System.Drawing.Point(175, 69);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(56, 20);
-            this.textBox2.TabIndex = 5;
+            this.tBCellInitialLife.Location = new System.Drawing.Point(175, 69);
+            this.tBCellInitialLife.Name = "tBCellInitialLife";
+            this.tBCellInitialLife.Size = new System.Drawing.Size(56, 20);
+            this.tBCellInitialLife.TabIndex = 5;
             // 
-            // textBox1
+            // tBMaxNumberCells
             // 
-            this.textBox1.Location = new System.Drawing.Point(175, 43);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(56, 20);
-            this.textBox1.TabIndex = 4;
+            this.tBMaxNumberCells.Location = new System.Drawing.Point(175, 43);
+            this.tBMaxNumberCells.Name = "tBMaxNumberCells";
+            this.tBMaxNumberCells.Size = new System.Drawing.Size(56, 20);
+            this.tBMaxNumberCells.TabIndex = 4;
             // 
-            // lMaxLandscapeHeight
+            // lMaxAltitude
             // 
-            this.lMaxLandscapeHeight.AutoSize = true;
-            this.lMaxLandscapeHeight.Location = new System.Drawing.Point(6, 254);
-            this.lMaxLandscapeHeight.Name = "lMaxLandscapeHeight";
-            this.lMaxLandscapeHeight.Size = new System.Drawing.Size(117, 13);
-            this.lMaxLandscapeHeight.TabIndex = 3;
-            this.lMaxLandscapeHeight.Text = "Max Landscape Height";
+            this.lMaxAltitude.AutoSize = true;
+            this.lMaxAltitude.Location = new System.Drawing.Point(6, 254);
+            this.lMaxAltitude.Name = "lMaxAltitude";
+            this.lMaxAltitude.Size = new System.Drawing.Size(64, 13);
+            this.lMaxAltitude.TabIndex = 3;
+            this.lMaxAltitude.Text = "Max altitude";
             // 
-            // lMinLandscapeHeight
+            // lMinAltitude
             // 
-            this.lMinLandscapeHeight.AutoSize = true;
-            this.lMinLandscapeHeight.Location = new System.Drawing.Point(6, 228);
-            this.lMinLandscapeHeight.Name = "lMinLandscapeHeight";
-            this.lMinLandscapeHeight.Size = new System.Drawing.Size(114, 13);
-            this.lMinLandscapeHeight.TabIndex = 2;
-            this.lMinLandscapeHeight.Text = "Min Landscape Height";
+            this.lMinAltitude.AutoSize = true;
+            this.lMinAltitude.Location = new System.Drawing.Point(6, 228);
+            this.lMinAltitude.Name = "lMinAltitude";
+            this.lMinAltitude.Size = new System.Drawing.Size(61, 13);
+            this.lMinAltitude.TabIndex = 2;
+            this.lMinAltitude.Text = "Min altitude";
             // 
             // tBViewSize
             // 
@@ -296,31 +332,6 @@ namespace Cells.GameEngine
             this.lSubViewSize.TabIndex = 0;
             this.lSubViewSize.Text = "Cell Sensory View Size";
             // 
-            // gBBrainSelection
-            // 
-            this.gBBrainSelection.Location = new System.Drawing.Point(519, 41);
-            this.gBBrainSelection.Name = "gBBrainSelection";
-            this.gBBrainSelection.Size = new System.Drawing.Size(237, 108);
-            this.gBBrainSelection.TabIndex = 4;
-            this.gBBrainSelection.TabStop = false;
-            this.gBBrainSelection.Text = "Brain Selection";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 280);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(91, 13);
-            this.label5.TabIndex = 24;
-            this.label5.Text = "Number of Teams";
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(175, 277);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(56, 20);
-            this.textBox10.TabIndex = 25;
-            // 
             // CellsCanvas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -328,12 +339,12 @@ namespace Cells.GameEngine
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(764, 524);
             this.Controls.Add(this.bStopEngine);
-            this.Controls.Add(this.gBBrainSelection);
             this.Controls.Add(this.ParametersGroupBox);
             this.Controls.Add(this.bStartEngine);
             this.Controls.Add(this.DrawBox);
             this.Name = "CellsCanvas";
             this.Text = "CellEngine";
+            this.Load += new System.EventHandler(this.CellsCanvas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DrawBox)).EndInit();
             this.ParametersGroupBox.ResumeLayout(false);
             this.ParametersGroupBox.PerformLayout();
@@ -349,28 +360,29 @@ namespace Cells.GameEngine
         private System.Windows.Forms.GroupBox ParametersGroupBox;
         private System.Windows.Forms.TextBox tBViewSize;
         private System.Windows.Forms.Label lSubViewSize;
-        private System.Windows.Forms.Label lMaxLandscapeHeight;
-        private System.Windows.Forms.Label lMinLandscapeHeight;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lMaxAltitude;
+        private System.Windows.Forms.Label lMinAltitude;
+        private System.Windows.Forms.TextBox tBCellInitialLife;
+        private System.Windows.Forms.TextBox tBMaxNumberCells;
         private System.Windows.Forms.Button bSaveSettings;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tBMaxAltitude;
+        private System.Windows.Forms.TextBox tBMinAltitude;
+        private System.Windows.Forms.TextBox tBCellSensoryViewSize;
+        private System.Windows.Forms.TextBox tBSpawnLifeThreshold;
+        private System.Windows.Forms.TextBox tBDamageOnAggressiveOpponent;
+        private System.Windows.Forms.TextBox tBDamageOnPassiveOpponent;
+        private System.Windows.Forms.TextBox tBCellDivisionCost;
         private System.Windows.Forms.Label lCellInitialLife;
-        private System.Windows.Forms.GroupBox gBBrainSelection;
         private System.Windows.Forms.Label lMaxNumberOfCells;
         private System.Windows.Forms.Label lInitialPopPerBrain;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lCellDivCost;
+        private System.Windows.Forms.Label lDamageOnAggrOpponent;
+        private System.Windows.Forms.Label lDamageOnDefOpponent;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tBNumberOfTeams;
+        private System.Windows.Forms.Label lNumberOfTeams;
+        private System.Windows.Forms.TextBox tBCellSize;
+        private System.Windows.Forms.Label lCellSize;
     }
 }
 

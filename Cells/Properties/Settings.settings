@@ -2,38 +2,41 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Cells.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="WorldWidth" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">500</Value>
-    </Setting>
-    <Setting Name="WorldHeight" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">500</Value>
-    </Setting>
-    <Setting Name="SubViewSize" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">9</Value>
-    </Setting>
-    <Setting Name="MinLandscapeHeight" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="MaxLandscapeHeight" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
-    <Setting Name="InitialPopulationPerTeam" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">200</Value>
-    </Setting>
-    <Setting Name="MaxNumberOfCells" Type="System.Int16" Scope="Application">
+    <Setting Name="WorldWidth" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="CellMaxInitialLife" Type="System.Int16" Scope="Application">
-      <Value Profile="(Default)">50</Value>
+    <Setting Name="WorldHeight" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="CostOfCellDivision" Type="System.Int16" Scope="Application">
+    <Setting Name="SensoryViewSize" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="MinAltitude" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MaxAltitude" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="SpawnLifeThreshold" Type="System.Int16" Scope="Application">
+    <Setting Name="InitialPopulationPerTeam" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="MaxNumberOfCells" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="CellMaxInitialLife" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">10000</Value>
+    </Setting>
+    <Setting Name="CostOfCellDivision" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="SpawnLifeThreshold" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="NumberOfTeams" Type="System.Int16" Scope="Application">
+    <Setting Name="NumberOfTeams" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="PixelSize" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">5</Value>
     </Setting>
   </Settings>
 </SettingsFile>

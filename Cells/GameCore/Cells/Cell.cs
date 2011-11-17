@@ -115,6 +115,33 @@ namespace Cells.GameCore.Cells
         }
 
         /// <summary>
+        /// Function returning a cell action indicating in which direction the cell should move to approach the given coordinates
+        /// </summary>
+        /// <param name="coordinates">The target coordinates</param>
+        /// <returns>A cell action indicating how the cell should move to get there</returns>
+        public CellAction GetRelativePosition(Utils.Coordinates coordinates)
+        {
+            List<CellAction> actions = new List<CellAction>();
+
+            if (coordinates.Y > this.Position.Y)
+                actions.Add(CellAction.MOVEDOWN);
+
+            if (coordinates.Y < this.Position.Y)
+                actions.Add(CellAction.MOVEUP);
+            
+            if (coordinates.X < this.Position.X)
+                actions.Add(CellAction.MOVELEFT);
+            
+            if (coordinates.X > this.Position.X)
+                actions.Add(CellAction.MOVERIGHT);
+            
+            if (actions.Count > 0)
+                return actions[RandomGenerator.GetRandomInteger(actions.Count)];
+            else
+                return CellAction.NONE;
+        }
+
+        /// <summary>
         /// Kills the cell
         /// </summary>
         internal void Die()

@@ -23,102 +23,147 @@ namespace Cells.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public short WorldWidth {
             get {
                 return ((short)(this["WorldWidth"]));
             }
+            set {
+                this["WorldWidth"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public short WorldHeight {
             get {
                 return ((short)(this["WorldHeight"]));
             }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9")]
-        public short SubViewSize {
-            get {
-                return ((short)(this["SubViewSize"]));
+            set {
+                this["WorldHeight"] = value;
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public short SensoryViewSize {
+            get {
+                return ((short)(this["SensoryViewSize"]));
+            }
+            set {
+                this["SensoryViewSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public short MinLandscapeHeight {
+        public short MinAltitude {
             get {
-                return ((short)(this["MinLandscapeHeight"]));
+                return ((short)(this["MinAltitude"]));
+            }
+            set {
+                this["MinAltitude"] = value;
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public short MaxLandscapeHeight {
+        public short MaxAltitude {
             get {
-                return ((short)(this["MaxLandscapeHeight"]));
+                return ((short)(this["MaxAltitude"]));
+            }
+            set {
+                this["MaxAltitude"] = value;
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public short InitialPopulationPerTeam {
             get {
                 return ((short)(this["InitialPopulationPerTeam"]));
             }
+            set {
+                this["InitialPopulationPerTeam"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
         public short MaxNumberOfCells {
             get {
                 return ((short)(this["MaxNumberOfCells"]));
             }
+            set {
+                this["MaxNumberOfCells"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
         public short CellMaxInitialLife {
             get {
                 return ((short)(this["CellMaxInitialLife"]));
             }
+            set {
+                this["CellMaxInitialLife"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public short CostOfCellDivision {
             get {
                 return ((short)(this["CostOfCellDivision"]));
             }
+            set {
+                this["CostOfCellDivision"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public short SpawnLifeThreshold {
             get {
                 return ((short)(this["SpawnLifeThreshold"]));
             }
+            set {
+                this["SpawnLifeThreshold"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public short NumberOfTeams {
             get {
                 return ((short)(this["NumberOfTeams"]));
+            }
+            set {
+                this["NumberOfTeams"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public short PixelSize {
+            get {
+                return ((short)(this["PixelSize"]));
+            }
+            set {
+                this["PixelSize"] = value;
             }
         }
     }

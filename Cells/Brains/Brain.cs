@@ -31,27 +31,26 @@ namespace Cells.Brains
             CellAction action;
 
             // The cell has 25% chance to continue as it was going before
-            if (0 == RandomGenerator.GetRandomInteger(4))
-                action = _cell.GetPreviousAction();
-            else
+            //if (0 == RandomGenerator.GetRandomInteger(4))
+            //    action = _cell.GetPreviousAction();
+            //else
             {
                 // Pick one of its neighbors direction
                 SurroundingView surroundings = _cell.Sense();
                 List<Cell> neighbors = surroundings.GetAllCells();
 
                 // If the cell has no neighbours or in 25% of the cases it goes random
-                if (neighbors.Count == 0 || RandomGenerator.GetRandomInteger(4) == 0)
+                if (neighbors.Count == 0 || RandomGenerator.GetRandomInteger(100) == 0)
                     action = GetRandomAction();
                 else
                 {
                     // Else the cell follows a neighbour
-                    action = neighbors[RandomGenerator.GetRandomInteger(neighbors.Count)].GetPreviousAction();
+                    action = this._cell.GetRelativePosition(neighbors[RandomGenerator.GetRandomInteger(neighbors.Count)].Position);
                 }
             }
 
             return action;
         }
-
 
         /// <summary>
         /// Function randomly choosing among all the possible actions

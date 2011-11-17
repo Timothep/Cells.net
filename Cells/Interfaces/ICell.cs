@@ -17,5 +17,7 @@ namespace Cells.Interfaces
         SurroundingView Sense();
 
         CellAction GetPreviousAction();
+
+        CellAction GetRelativePosition(Utils.Coordinates coordinates);
     }
 }

@@ -18,9 +18,9 @@ namespace Cells.GameCore
     {
         private readonly Int16 _worldWidth = Settings.Default.WorldWidth;
         private readonly Int16 _worldHeight = Settings.Default.WorldHeight;
-        private readonly Int16 _subViewSize = Settings.Default.SubViewSize;
-        private readonly Int16 _minLandscapeHeight = Settings.Default.MinLandscapeHeight;
-        private readonly Int16 _maxLandscapeHeight = Settings.Default.MaxLandscapeHeight;
+        private readonly Int16 _subViewSize = Settings.Default.SensoryViewSize;
+        private readonly Int16 _minLandscapeHeight = Settings.Default.MinAltitude;
+        private readonly Int16 _maxLandscapeHeight = Settings.Default.MaxAltitude;
 
         private readonly Map _masterMap;
         private readonly List<Cell> _cells = new List<Cell>();
@@ -109,8 +109,13 @@ namespace Cells.GameCore
         /// <returns>A SurroundingView of the location where the cell resides</returns>
         internal SurroundingView GetSurroundingsView(Cell cell)
         {
-            return new SurroundingView(cell.Position,
-                                       this._masterMap.GetSubset(cell.Position, _subViewSize, _subViewSize));
+            MapTile[,] map = this._masterMap.GetSubset(cell.Position, _subViewSize, _subViewSize);
+
+            if (map == null)
+            { 
+            }
+
+            return new SurroundingView(cell.Position, map);
         }
 
         /// <summary>
