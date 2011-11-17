@@ -15,7 +15,7 @@ namespace Cells.GameCore.Cells
     public class Cell: ICell
     {
         public Coordinates Position { get; private set; }
-        private readonly Brain _brain;
+        private readonly IBrain _brain;
         private Int16 _life;
         private readonly Color _team;
         private CellAction _cellPreviousAction = CellAction.NONE;
@@ -34,7 +34,7 @@ namespace Cells.GameCore.Cells
         public Cell(Int16 x, Int16 y, Int16 initialLife, World thisWorld, Color teamColor)
         {
             Position = new Coordinates(x, y);
-            _brain = new Brain(this as ICell);
+            _brain = new SwarmBrain(this as ICell);
             _life = initialLife;
             _world = thisWorld;
             _team = teamColor;

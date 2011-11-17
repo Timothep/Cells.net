@@ -2,7 +2,7 @@
 
 namespace Cells.Interfaces
 {
-    interface IBrain
+    public interface IBrain
     {
         CellAction ChooseNextAction();
     }

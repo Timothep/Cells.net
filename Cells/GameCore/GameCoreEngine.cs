@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
+using Cells.Interfaces;
 using Cells.Utils;
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
@@ -13,7 +17,10 @@ namespace Cells.GameCore
     {
         // List of the length of each cycle (for stats and performance purpose)
         readonly List<Double> _cycleLength = new List<Double>();
-        
+
+        [ImportMany("IBrain")]
+        public IEnumerable<IBrain> Brains { get; set; }
+
         // The world where all is happening
         World _world;
 
@@ -22,7 +29,31 @@ namespace Cells.GameCore
         /// </summary>
         public GameCoreEngine()
         {
-            
+            Compose();
+        }
+
+        private void Compose()
+        {
+            // AssemblyCatalog takes an assembly and  looks for all Imports and Exports within it
+            var assemblyCatalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
+            // DirectoryCatalog takes all assemblies with in a given dir and looks for Imports/Exports
+            //var directoryCatalog = new DirectoryCatalog("PlugIns");
+
+            // AggregateCatalog holds multiple  ComposablePartCatalogs
+            var aggregator = new AggregateCatalog();
+            aggregator.Catalogs.Add(assemblyCatalog);
+            //aggregator.Catalogs.Add(directoryCatalog);
+
+            var container = new CompositionContainer(aggregator);
+            container.ComposeParts(this);
+        }
+
+        public void OnImportsSatisfied()
+        {
+            foreach (var brain in this.Brains)
+            {
+                
+            }
         }
 
         /// <summary>

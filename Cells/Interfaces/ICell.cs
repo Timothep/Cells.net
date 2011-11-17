@@ -8,7 +8,7 @@ using Cells.GameCore.Mapping.Tiles;
 
 namespace Cells.Interfaces
 {
-    interface ICell
+    public interface ICell
     {
         CellAction Think();
 
