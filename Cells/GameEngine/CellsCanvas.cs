@@ -10,9 +10,9 @@ namespace Cells.GameEngine
 {
     public partial class CellsCanvas : Form
     {
-        private Color DefaultBackgroundColor = Color.Black;
+        private readonly Color _defaultBackgroundColor = Color.Black;
         private const long GameLoopLength = 50;
-        private short PixelSize = Settings.Default.PixelSize;
+        private readonly short _pixelSize = Settings.Default.PixelSize;
 
         readonly Timer _timer = new Timer();
         readonly Graphics _canvas;
@@ -24,7 +24,7 @@ namespace Cells.GameEngine
         {
             InitializeComponent();
             _canvas = DrawBox.CreateGraphics();
-            _canvas.Clear(DefaultBackgroundColor);
+            _canvas.Clear(_defaultBackgroundColor);
         }
 
         #region CanvasPainting
@@ -36,13 +36,9 @@ namespace Cells.GameEngine
         /// <param name="color">The color in which to paint</param>
         private void PaintSinglePixel(Coordinates coordvector, Color color)
         {
-            SolidBrush br = new SolidBrush(color);
-            
-            Rectangle rect = new Rectangle(coordvector.X * PixelSize, coordvector.Y * PixelSize, PixelSize, PixelSize);
-
-            _canvas.FillRectangle(br, rect);
-            
-            //_canvas.DrawRectangle(new Pen(br), coordvector.X * PixelSize, coordvector.Y * PixelSize, PixelSize, PixelSize);
+            _canvas.FillRectangle(
+                new SolidBrush(color),
+                new Rectangle(coordvector.X * _pixelSize, coordvector.Y * _pixelSize, _pixelSize, _pixelSize));
         }
 
         /// <summary>
@@ -72,7 +68,7 @@ namespace Cells.GameEngine
         private void BStopEngineClick(object sender, EventArgs e)
         {
             _gameEngine.StopGame();
-            _canvas.Clear(DefaultBackgroundColor);
+            _canvas.Clear(_defaultBackgroundColor);
         }
 
         #endregion
