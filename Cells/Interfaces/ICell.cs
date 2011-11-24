@@ -18,6 +18,12 @@ namespace Cells.Interfaces
 
         CellAction GetPreviousAction();
 
-        CellAction GetRelativePosition(Utils.Coordinates coordinates);
+        CellAction GetRelativeMovment(Utils.Coordinates coordinates);
+
+        void DecreaseLife(Int16 malus = 1);
+
+        Int16 GetLife();
+
+        void Die();
     }
 }

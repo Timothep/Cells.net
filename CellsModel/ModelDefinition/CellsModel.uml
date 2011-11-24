@@ -25,6 +25,15 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="ca7c0b71-8575-45ac-adc4-57b3b07070e1">
+            <interfaceMoniker
+              Id="7cfaf67b-3145-4693-ab57-d49da852f171"
+              LastKnownName="ICell"
+              LastKnownLocation="CellsModel.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
         <targetEnds>
           <association
             Id="4d7949d7-4686-453b-bf39-ea9cedd686af"
@@ -67,12 +76,11 @@
             </relationshipOwnedElementsInternal>
           </association>
           <association
-            Id="c4ded12e-ab93-408f-b77c-a5616eaa78c3"
+            Id="0e71b307-9f95-40f3-be1a-a0fd5e8e7cbe"
             isDerived="false"
             sourceEndRoleName="Cell"
             targetEndRoleName="Brain"
             isLeaf="false"
-            name="Is controlled by"
             isAbstract="false">
             <classMoniker
               Id="722a56d0-5ca0-43f5-b704-fc5fddd5583e"
@@ -81,61 +89,21 @@
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="87dee7c0-a95a-419e-acf7-9c23e8430bc8"
+                  Id="9243295e-d518-4265-9024-f7e96bb73be9"
                   name="Cell"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
                   isDerived="false"
                   isDerivedUnion="false"
-                  aggregation="None"
+                  aggregation="Shared"
                   isComposite="false"
                   isNavigableOwned="false" />
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="f077b15e-9f49-4fdd-ba7d-10ec7adfbc70"
+                  Id="9f910d77-0157-4a44-af36-4f873d3e7a7e"
                   name="Brain"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="c886a99b-b9a7-4d0c-bd71-5b7f4a5e88d7"
-            isDerived="false"
-            sourceEndRoleName="Cell"
-            targetEndRoleName="World"
-            isLeaf="false"
-            name="Refers to"
-            isAbstract="false">
-            <classMoniker
-              Id="058804d4-1d5b-490f-a435-53dc7d65e295"
-              LastKnownName="World"
-              LastKnownLocation="CellsModel.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="64fb1c83-a7d0-4c77-bfaf-171d8c5acc1b"
-                  name="Cell"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="74493d18-c17b-4e37-8979-051dafaebb38"
-                  name="World"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
@@ -184,6 +152,17 @@
                 LastKnownLocation="CellsModel.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="a9440066-2614-4ce0-a13d-4dbe0caa5a19"
+            name="world"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -240,6 +219,38 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation
+            Id="b13cd2ba-5c8e-4bec-9fdc-6518817a809d"
+            name="Sense"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="fa0619c0-9585-4e5a-b0d1-da6e9dbd9ed1"
+            name="GetPreviousAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="02d0338b-d88f-4e4a-8f4f-1ca5c87f2fb6"
+            name="GetRelativeMovment"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="6b2f384e-adbe-40b4-8b62-b6554e10f365"
+            name="Think"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -261,12 +272,11 @@
         </suppliersInternal>
         <targetEnds>
           <association
-            Id="ed14a934-5438-4c12-a2d1-1adff268b317"
+            Id="8dc3de80-b8de-4456-b25a-37d80e9e743f"
             isDerived="false"
             sourceEndRoleName="Brain"
             targetEndRoleName="View"
             isLeaf="false"
-            name="Uses"
             isAbstract="false">
             <classMoniker
               Id="c0e70abc-3987-4e60-b29c-0d8bc07a4254"
@@ -275,7 +285,7 @@
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="023c200b-6a9b-45d5-ab05-f03d1e4fbfb5"
+                  Id="2deee9cc-6d48-4108-81bb-be18ea418342"
                   name="Brain"
                   isLeaf="false"
                   isStatic="false"
@@ -288,7 +298,7 @@
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="3e187b73-88b7-4f05-8020-93fbab2844e9"
+                  Id="67d5e7d6-60bb-48c8-b431-83df64d1e496"
                   name="View"
                   isLeaf="false"
                   isStatic="false"
@@ -296,24 +306,21 @@
                   isDerived="false"
                   isDerivedUnion="false"
                   aggregation="None"
-                  isComposite="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="f44686e4-22eb-4ad4-82c6-903f25ae2025"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="dfeaf331-d1ce-4418-a158-43315b55374e"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
+                  isComposite="false" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
         </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="7e4316cb-dbfd-4863-94b2-9eb188535f64"
+            name="ChooseNextAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -435,6 +442,63 @@
                 LastKnownLocation="CellsModel.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="90168fde-ec0a-4a0f-b92a-22b0d72d3e30"
+            name="MinimumMapSize"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="6163fa79-e955-484e-ab78-ccfdae4c8745"
+                LastKnownName="Int16"
+                LastKnownLocation="CellsModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="648a9bfb-f5fc-4afd-9a0e-8bec532e2a59"
+            name="Width"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="6163fa79-e955-484e-ab78-ccfdae4c8745"
+                LastKnownName="Int16"
+                LastKnownLocation="CellsModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="7f474c03-1d69-4540-82b1-1e1c667b77dc"
+            name="Height"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="6163fa79-e955-484e-ab78-ccfdae4c8745"
+                LastKnownName="Int16"
+                LastKnownLocation="CellsModel.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -485,6 +549,52 @@
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+          <operation
+            Id="5e9cca44-ae6a-446f-9724-e325b7912136"
+            name="Map"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e6f13531-786b-47fb-9689-754233b95c5b"
+                  direction="Return">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6ce89a2c-d2f7-4075-93a5-6f0376db7e19"
+                      LastKnownName="void"
+                      LastKnownLocation="CellsModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="05a36d85-b26b-4412-ba94-3425801e4afd"
+            name="InitializeGrid"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e7ad7468-e5ae-4550-a0ce-fe35b3fa5f3e"
+                  direction="Return">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6ce89a2c-d2f7-4075-93a5-6f0376db7e19"
+                      LastKnownName="void"
+                      LastKnownLocation="CellsModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -515,7 +625,6 @@
           <property
             Id="7335df2b-f556-418b-abc5-e968034d1988"
             name="CellReference"
-            visibility="Private"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -534,7 +643,6 @@
           <property
             Id="ae4c84d0-6d5a-4d68-a053-a402e7a11958"
             name="GrowthRate"
-            visibility="Private"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -553,6 +661,42 @@
           <property
             Id="743455f5-7eee-4585-bb51-ab4808ec4c51"
             name="RessourceLevel"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="6163fa79-e955-484e-ab78-ccfdae4c8745"
+                LastKnownName="Int16"
+                LastKnownLocation="CellsModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="b3042213-bef7-4e6c-8308-bd08909c45b0"
+            name="Height"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="6163fa79-e955-484e-ab78-ccfdae4c8745"
+                LastKnownName="Int16"
+                LastKnownLocation="CellsModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="eeee7297-6670-493e-8869-bcec71e11578"
+            name="Position"
             visibility="Private"
             isLeaf="false"
             isStatic="false"
@@ -572,21 +716,51 @@
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
-            Id="db68a374-fe91-4302-a41f-5ee57a5d07c5"
-            name="GetCell"
+            Id="5793b482-eacc-496c-9fd0-fcac78d924b0"
+            name="GetPosition"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f74bf1e4-6c5d-4f2b-90b1-2e7e4424f5e4"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="1b918181-81f6-4874-ab4c-36703e6540a3"
+                      LastKnownName="Coordinates"
+                      LastKnownLocation="CellsModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
-            Id="728a9f6d-efae-4fbb-9fb6-811d34f12467"
-            name="GetRessourceLevel"
+            Id="04f28486-4227-426e-a742-1a15edecf387"
+            name="SetPosition"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ff7193db-2040-441c-a5fc-2d2337a43727"
+                  direction="Return">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6ce89a2c-d2f7-4075-93a5-6f0376db7e19"
+                      LastKnownName="void"
+                      LastKnownLocation="CellsModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -726,6 +900,45 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="5520ebf8-4b52-4f5a-b3b7-c96f25bf7768"
+            isDerived="false"
+            sourceEndRoleName="GameCoreEngine"
+            targetEndRoleName="BrainManager"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="5992c7cd-964d-4cc9-9e40-735bc179e604"
+              LastKnownName="BrainManager"
+              LastKnownLocation="CellsModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="37fe6132-afe9-44db-882f-4bcaf28d7151"
+                  name="GameCoreEngine"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2bb42f15-9b64-44fb-bc3f-e54f82a88aff"
+                  name="BrainManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
       </class>
     </packageHasNamedElement>
@@ -797,7 +1010,18 @@
         Id="7bda66f4-ea44-4d0f-a93f-183d693b0768"
         name="IBrain"
         isAbstract="false"
-        isLeaf="false" />
+        isLeaf="false">
+        <ownedOperations>
+          <operation
+            Id="644b5491-3c6d-4dac-b0c6-c8dd02fa1a5b"
+            name="ChooseNextAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperations>
+      </Interface>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <class
@@ -1162,6 +1386,99 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="fe4308f7-4359-4a7a-b3c1-bbe0a2e9b48b"
+            isDerived="false"
+            sourceEndRoleName="World"
+            targetEndRoleName="Cell"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="c28d5842-41ad-400e-8312-0eae688ddf1e"
+              LastKnownName="Cell"
+              LastKnownLocation="CellsModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="af6db6df-b894-4691-84e1-4fabbdb22a03"
+                  name="World"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="61554e20-f40e-45a3-9338-1fb068e0b649"
+                  name="Cell"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ce293a65-3387-4da5-a295-f0d58377ba4f"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="9d5513fe-b9eb-4be7-aadb-3bf4e8b4cd14"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="3f9a5762-170a-4d7c-8d35-7d4839fe62f3"
+            isDerived="false"
+            sourceEndRoleName="World"
+            targetEndRoleName="BrainManager"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="5992c7cd-964d-4cc9-9e40-735bc179e604"
+              LastKnownName="BrainManager"
+              LastKnownLocation="CellsModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5ed59550-3aea-4cdb-a0f3-c1e138a9603b"
+                  name="World"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="63863077-1edf-4d21-bf24-aa5f8f4a9795"
+                  name="BrainManager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="3983475e-3107-4c05-bfc6-de7685d03837"
@@ -1330,6 +1647,77 @@
       <class
         Id="e5a482db-69b7-45a4-970e-00c9bb5c4a3f"
         name="Class2"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="e70b5e34-75f4-40f7-9b20-8d24a97759a0"
+        name="CellFactory"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="7cfaf67b-3145-4693-ab57-d49da852f171"
+        name="ICell"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedOperations>
+          <operation
+            Id="78228f0e-b9a6-4aa8-8e32-81daab617c53"
+            name="Do"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="57aa357c-edf5-4f67-8f10-26c5b92af4ae"
+            name="Sense"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="b11e69de-4f0b-4e0c-bf3e-9362895b7c9c"
+            name="GetPreviousAction"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="a39afd03-48fa-480d-a908-1d29207b281f"
+            name="GetRelativeMovment"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="aeb2a63a-b6ce-465e-baac-bce30da91f68"
+            name="Think"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="6ce89a2c-d2f7-4075-93a5-6f0376db7e19"
+        name="void" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="5992c7cd-964d-4cc9-9e40-735bc179e604"
+        name="BrainManager"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
