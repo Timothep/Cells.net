@@ -15,18 +15,14 @@ namespace Cells.GameCore.Cells
     
     public class Cell: ICell
     {
-        public Coordinates Position { get; set; }
-
-        [Inject]
+        private IWorld _world;
         private IBrain _brain { get; set; }
+        public ICoordinates Position { get; set; }
+        public Int16 Life { get; set; }
+        public Color Team { get; set; }
 
-        private Int16 _life;
-        private Color _team;
         private CellAction _cellPreviousAction = CellAction.NONE;
         private Boolean _carryingWeight = false;
-
-        [Inject]
-        private IWorld _world;
 
         /// <summary>
         /// Cell constructor
@@ -35,19 +31,34 @@ namespace Cells.GameCore.Cells
         /// <param name="y">The y position where the cell is spawned</param>
         /// <param name="initialLife">life the cell is going to spawn with</param>
         /// <param name="thisWorld">A reference to the world the cell lives in</param>
-        /// <param name="teamColor">The color of the team this cell belongs to</param>
-        //public Cell(Int16 x, Int16 y, Int16 initialLife, World thisWorld, Color teamColor)
-        
+        /// <param name="teamColor">The color of the team this cell belongs to</param>        
         public Cell()
         {
-            Ninject.IKernel kernel = new StandardKernel(new CellModule());
+            _world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
+            
+            IKernel kernel2 = new StandardKernel(new CellModule());
+            _brain = kernel2.Get<IBrain>();
+            Position = kernel2.Get<ICoordinates>();
 
-            _brain = kernel.Get<IBrain>();
+            _brain.SetCell(this);
+        }
 
-            //Position = new Coordinates(x, y);
-            //_life = initialLife;
-            //_world = thisWorld;
-            //_team = teamColor;
+        /// <summary>
+        /// Set life
+        /// </summary>
+        /// <param name="life"></param>
+        public void SetLife(Int16 life)
+        {
+            Life = life;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="teamColor"></param>
+        public void SetTeam(Color teamColor)
+        {
+            Team = teamColor;
         }
 
         /// <summary>
@@ -82,9 +93,6 @@ namespace Cells.GameCore.Cells
                 case CellAction.MOVEDOWN:
                     MoveDown();
                     break;
-                //case CellAction.ATTACK: //Not yet implemented
-                //    Attack();
-                //    break;
                 case CellAction.DROP:
                     DropEarth();
                     break;
@@ -99,6 +107,9 @@ namespace Cells.GameCore.Cells
                     break;
                 case CellAction.NONE:
                     break;
+                //case CellAction.ATTACK: //Not yet implemented
+                //    Attack();
+                //    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -129,7 +140,7 @@ namespace Cells.GameCore.Cells
         /// </summary>
         /// <param name="coordinates">The target coordinates</param>
         /// <returns>A cell action indicating how the cell should move to get there</returns>
-        public CellAction GetRelativeMovment(Utils.Coordinates coordinates)
+        public CellAction GetRelativeMovment(ICoordinates coordinates)
         {
             var actions = new List<CellAction>();
 
@@ -167,7 +178,7 @@ namespace Cells.GameCore.Cells
         /// <returns>The color of the team</returns>
         internal Color GetTeamColor()
         {
-            return this._team;
+            return this.Team;
         }
 
         /// <summary>
@@ -176,7 +187,7 @@ namespace Cells.GameCore.Cells
         /// <param name="malus">The amount of life to remove to the cell</param>
         public void DecreaseLife(Int16 malus = 1)
         {
-            _life -= malus;
+            Life -= malus;
         }
 
         /// <summary>
@@ -185,7 +196,7 @@ namespace Cells.GameCore.Cells
         /// <param name="bonus">The amount of life to add to the cell</param>
         internal void IncreaseLife(Int16 bonus)
         {
-            _life += bonus;
+            Life += bonus;
         }
 
         /// <summary>
@@ -194,7 +205,7 @@ namespace Cells.GameCore.Cells
         /// <returns>The amount as an Int16</returns>
         public Int16 GetLife()
         {
-            return _life;
+            return Life;
         }
 
         /// <summary>
@@ -202,17 +213,17 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void DropAllRessources()
         {
-            if (_life > 0)
+            if (Life > 0)
             {
                 try
                 {
-                    _world.DropRessources(Position, _life);
+                    _world.DropRessources(Position, Life);
                 }
                 catch (InvalidOperationException e)
                 {
                     return;
                 }
-                _life = 0;
+                Life = 0;
             }
         }
 
@@ -269,9 +280,9 @@ namespace Cells.GameCore.Cells
         {
             throw new Exception("NotImplemented");
 
-            //if (_life > Settings.Default.CostOfCellDivision + 2 * Settings.Default.SpawnLifeThreshold)
+            //if (Life > Settings.Default.CostOfCellDivision + 2 * Settings.Default.SpawnLifeThreshold)
             //{
-            //    Int16 spawnLife = (Int16)Math.Truncate((float)(_life - Settings.Default.CostOfCellDivision) / 2);
+            //    Int16 spawnLife = (Int16)Math.Truncate((float)(Life - Settings.Default.CostOfCellDivision) / 2);
 
             //    // Create the first spawn
             //    _world.CreateSpawns(spawnLife, this);
@@ -289,9 +300,9 @@ namespace Cells.GameCore.Cells
             if (!CoordinatesAreValid((Int16)(Position.X - 1), Position.Y))
                 return;
 
-            Coordinates oldPosition = Position.Clone();
+            ICoordinates oldPosition = Position.Clone();
             Position.X--;
-            NotifyMovement(oldPosition, Position, _team);
+            NotifyMovement(oldPosition, Position, Team);
         }
 
         /// <summary>
@@ -303,9 +314,9 @@ namespace Cells.GameCore.Cells
             if (!CoordinatesAreValid((Int16)(Position.X + 1), Position.Y))
                 return;
 
-            Coordinates oldPosition = Position.Clone();
+            ICoordinates oldPosition = Position.Clone();
             Position.X++;
-            NotifyMovement(oldPosition, Position, _team);
+            NotifyMovement(oldPosition, Position, Team);
         }
 
         /// <summary>
@@ -317,9 +328,9 @@ namespace Cells.GameCore.Cells
             if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y - 1)))
                 return;
 
-            Coordinates oldPosition = Position.Clone();
+            ICoordinates oldPosition = Position.Clone();
             Position.Y--;
-            NotifyMovement(oldPosition, Position, _team);
+            NotifyMovement(oldPosition, Position, Team);
         }
 
         /// <summary>
@@ -331,9 +342,9 @@ namespace Cells.GameCore.Cells
             if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y + 1)))
                 return;
 
-            Coordinates oldPosition = Position.Clone();
+            ICoordinates oldPosition = Position.Clone();
             Position.Y++;
-            NotifyMovement(oldPosition, Position, _team);
+            NotifyMovement(oldPosition, Position, Team);
         }
 
         /// <summary>
@@ -360,18 +371,23 @@ namespace Cells.GameCore.Cells
         /// <param name="oldCoordinates">The old coordinates where the cell was</param>
         /// <param name="newCoordinates">The new coordinates where the cell is</param>
         /// <param name="team">The color the team is on</param>
-        private void NotifyMovement(Coordinates oldCoordinates, Coordinates newCoordinates, Color team)
+        private void NotifyMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
         {
             _world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
             return;
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     internal class CellModule : NinjectModule
     {
         public override void Load()
         {
             Bind<IBrain>().To<SwarmBrain>();
+            Bind<IWorld>().To<World>().InSingletonScope();
+            Bind<ICoordinates>().To<Coordinates>();
         }
     }
 }

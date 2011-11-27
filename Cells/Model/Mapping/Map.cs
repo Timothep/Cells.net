@@ -8,7 +8,7 @@ using Cells.Properties;
 
 namespace Cells.GameCore.Mapping
 {
-    public class Map
+    public class Map : IMap
     {
         private const Int16 MinimumMapSize = 3;
         private readonly short Width;
@@ -62,7 +62,7 @@ namespace Cells.GameCore.Mapping
         /// <param name="subWidth">The odd numbered width of the section</param>
         /// <param name="subHeight">The odd numbered height of the section</param>
         /// <returns>A 2D list MapTiles</returns>
-        public MapTile[,] GetSubset(Coordinates centerPoint, short subWidth, short subHeight)
+        public MapTile[,] GetSubset(ICoordinates centerPoint, short subWidth, short subHeight)
         {
             // Check input parameters
             if (null == centerPoint
@@ -94,8 +94,10 @@ namespace Cells.GameCore.Mapping
         /// <returns>The sub 2D array</returns>
         private MapTile[,] GetSubArray(Int16 xMin, Int16 xMax, Int16 yMin, Int16 yMax)
         {
-            Coordinates cMin = new Coordinates(xMin, yMin);
-            Coordinates cMax = new Coordinates(xMax, yMax);
+            ICoordinates cMin = new Coordinates();
+            cMin.SetCoordinates(xMin, yMin);
+            ICoordinates cMax = new Coordinates();
+            cMax.SetCoordinates(xMax, yMax);
 
             if (CoordinatesAreValid(cMin) && CoordinatesAreValid(cMax))
             {
@@ -145,7 +147,7 @@ namespace Cells.GameCore.Mapping
         /// </summary>
         /// <param name="oldCoordinates">The coordinates where the cell is moving from</param>
         /// <param name="newCoordinates">The coordinates where the cell is moving to</param>
-        internal void MoveCell(Coordinates oldCoordinates, Coordinates newCoordinates)
+        internal void MoveCell(ICoordinates oldCoordinates, ICoordinates newCoordinates)
         {
             if (CoordinatesAreValid(oldCoordinates) && CoordinatesAreValid(newCoordinates))
             {
@@ -154,7 +156,7 @@ namespace Cells.GameCore.Mapping
             }
         }
 
-        private bool CoordinatesAreValid(Coordinates newCoordinates)
+        private bool CoordinatesAreValid(ICoordinates newCoordinates)
         {
             if (newCoordinates.X < 0
                 || newCoordinates.Y < 0
@@ -171,28 +173,28 @@ namespace Cells.GameCore.Mapping
         /// <param name="coordinates">The coordinates where to implant the ressources</param>
         /// <param name="ressourceLevel">The amount of ressources to implant</param>
         /// <param name="growthRate">The growth rate of the ressources (per tick, 0 per default)</param>
-        internal void ImplantRessources(Coordinates coordinates, Int16 ressourceLevel, Int16 growthRate = 0)
+        internal void ImplantRessources(ICoordinates coordinates, Int16 ressourceLevel, Int16 growthRate = 0)
         {
             Grid[coordinates.X, coordinates.Y].GrowthRate = growthRate;
             Grid[coordinates.X, coordinates.Y].RessourceLevel = ressourceLevel;
         }
 
-        internal void RaiseLandscape(Coordinates position)
+        internal void RaiseLandscape(ICoordinates position)
         {
             Grid[position.X, position.Y].Height++;
         }
 
-        internal void LowerLandscape(Coordinates position)
+        internal void LowerLandscape(ICoordinates position)
         {
             Grid[position.X, position.Y].Height--;
         }
 
-        internal Int16 GetLandscapeHeight(Coordinates position)
+        internal Int16 GetLandscapeHeight(ICoordinates position)
         {
             return Grid[position.X, position.Y].Height;
         }
 
-        internal void IncreaseRessources(Coordinates position, short ressources)
+        internal void IncreaseRessources(ICoordinates position, short ressources)
         {
             Grid[position.X, position.Y].RessourceLevel += ressources;
         }
@@ -201,7 +203,7 @@ namespace Cells.GameCore.Mapping
         /// Removes a cell from the grid
         /// </summary>
         /// <param name="cellToRemove"></param>
-        internal void RemoveCell(Cell cellToRemove)
+        internal void RemoveCell(ICell cellToRemove)
         {
             if (cellToRemove != null)
                 Grid[cellToRemove.Position.X, cellToRemove.Position.Y].CellReference = null;

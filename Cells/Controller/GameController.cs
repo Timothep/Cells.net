@@ -31,7 +31,7 @@ namespace Cells.Controller
         CellsCanvas _view;
 
         // The world where all is happening
-        World _world;
+        IWorld _world;
         private bool _running = true;
 
         public GameController()
@@ -68,8 +68,8 @@ namespace Cells.Controller
         /// </summary>
         public void StartGame()
         {
-            IKernel kernel = new StandardKernel(new GameCoreEngineModule());
-            _world = kernel.Get<World>();
+            _world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
+            _world.Initialize();
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Cells.Controller
         /// Gets a list of the coordinates where a cell shall be painted
         /// </summary>
         /// <returns>A list of coordinates and the team it belongs to</returns>
-        public IEnumerable<KeyValuePair<Coordinates, Color>> GetUpdatedElements()
+        public IEnumerable<KeyValuePair<ICoordinates, Color>> GetUpdatedElements()
         {
             if (null == _world)
                 return null;
@@ -139,25 +139,35 @@ namespace Cells.Controller
             return _world.GetUpdatedElements();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         internal IEnumerable<String> GetAvailableBrainTypes()
         {
             return this.bDM.GetAvailableBrainTypes();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal void Close()
         {
             this._running = false;
         }
     }
 
-    internal class GameCoreEngineModule : NinjectModule
-    {
-        public override void Load()
-        {
-            Bind<IWorld>().To<World>().InSingletonScope();
-        }
+    ///// <summary>
+    ///// Ninject module 
+    ///// </summary>
+    //internal class GameCoreEngineModule : NinjectModule
+    //{
+    //    public override void Load()
+    //    {
+    //        Bind<IWorld>().To<World>().InSingletonScope();
+    //    }
 
         
-    }
+    //}
 
 }

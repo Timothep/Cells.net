@@ -18,7 +18,7 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="InitialPopulationPerTeam" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="MaxNumberOfCells" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">400</Value>

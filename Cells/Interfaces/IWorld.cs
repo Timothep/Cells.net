@@ -1,21 +1,31 @@
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
+using System.Drawing;
 
 namespace Cells.Interfaces
 {
     public interface IWorld
     {
+        SurroundingView GetSurroundingsView(ICell cell);
 
-        SurroundingView GetSurroundingsView(Cell cell);
+        void DropRessources(ICoordinates Position, short _life);
 
-        void DropRessources(Utils.Coordinates Position, short _life);
+        void UnregisterCell(ICell cell);
 
-        void UnregisterCell(Cell cell);
+        void LowerLandscape(ICoordinates Position);
 
-        void LowerLandscape(Utils.Coordinates Position);
+        void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team);
 
-        void RegisterCellMovement(Utils.Coordinates oldCoordinates, Utils.Coordinates newCoordinates, System.Drawing.Color team);
+        void RaiseLandscape(ICoordinates Position);
 
-        void RaiseLandscape(Utils.Coordinates Position);
+        void RemoveDeadCells();
+
+        System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ICoordinates, Color>> GetUpdatedElements();
+
+        System.Collections.Generic.IEnumerable<ICell> GetCells();
+
+        void Initialize();
+
+        void ResetMovementsList();
     }
 }

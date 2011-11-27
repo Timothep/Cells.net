@@ -25,6 +25,11 @@ namespace Cells.Brain
 
         }
 
+        public void SetCell(ICell cell)
+        {
+            this._cell = cell;
+        }
+
         /// <summary>
         /// Function chosing the next action to be performed
         /// </summary>
@@ -42,7 +47,7 @@ namespace Cells.Brain
             else
             {
                 // Else the cell goes toward a neighbour
-                action = this._cell.GetRelativeMovment((neighbors[RandomGenerator.GetRandomInteger(neighbors.Count)] as Cell).Position);
+                action = _cell.GetRelativeMovment((neighbors[RandomGenerator.GetRandomInteger(neighbors.Count)] as Cell).Position);
             }
 
             return action;

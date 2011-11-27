@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Cells.Brain;
+using Cells.GameCore;
+using Cells.GameCore.Cells;
+using Cells.Interfaces;
 using Cells.Properties;
+using Ninject;
+using Ninject.Modules;
 
 namespace Cells.Utils
 {
@@ -31,5 +37,18 @@ namespace Cells.Utils
 
             return true;
         }
+    }
+
+    public class GlobalWorldModule : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<IWorld>().To<World>().InSingletonScope();
+        }
+    }
+
+    public class NinjectGlobalKernel
+    {
+        public static IKernel GlobalKernel = new StandardKernel(new GlobalWorldModule());
     }
 }

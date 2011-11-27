@@ -2,16 +2,28 @@
 using Cells.GameCore.Cells;
 using Cells.Interfaces;
 using Cells.Utils;
+using Ninject;
+using Ninject.Modules;
 
 namespace Cells.GameCore.Mapping.Tiles
 {
     public class MapTile
     {
-        private Coordinates _position = null;
+        [Inject]
+        private ICoordinates _position;
+
         public ICell CellReference = null;
         public Int16 GrowthRate = 0;
         public Int16 RessourceLevel = 0;
         public Int16 Height = 0;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public MapTile()
+        {
+            _position = new Coordinates();
+        }
 
         /// <summary>
         /// Sets the position of the current element
@@ -21,14 +33,15 @@ namespace Cells.GameCore.Mapping.Tiles
         /// <returns></returns>
         internal void SetPositions(short x, short y)
         {
-            _position = new Coordinates(x, y);
+            _position.X = x;
+            _position.Y = y;
         }
 
         /// <summary>
         /// Retrieves the position of the current element
         /// </summary>
         /// <returns></returns>
-        internal Coordinates GetPosition()
+        internal ICoordinates GetPosition()
         {
             return _position;
         }

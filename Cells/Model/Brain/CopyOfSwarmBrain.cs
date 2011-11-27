@@ -26,6 +26,15 @@ namespace Cells.Brain
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cell"></param>
+        public void SetCell(ICell cell)
+        {
+            this._cell = cell;
+        }
+
+        /// <summary>
         /// Function chosing the next action to be performed
         /// </summary>
         /// <returns></returns>

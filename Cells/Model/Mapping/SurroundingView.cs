@@ -6,15 +6,16 @@ using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping.Tiles;
 using Cells.Utils;
 using Cells.Interfaces;
+using Cells.Model.Mapping;
 
 namespace Cells.GameCore.Mapping
 {
     /// <summary>
     /// Class representing what the cell can "see"
     /// </summary>
-    public class SurroundingView
+    public class SurroundingView : ISurroundingView
     {
-        private Coordinates _centerOfView;
+        private ICoordinates _centerOfView;
         
         // The view is a square centered on the cell
         private const short ViewSize = 3;
@@ -25,7 +26,7 @@ namespace Cells.GameCore.Mapping
         /// Constructor
         /// </summary>
         /// <param name="coordinates"></param>
-        public SurroundingView(Coordinates coordinates, MapTile[,] view)
+        public SurroundingView(ICoordinates coordinates, MapTile[,] view)
         {
             // Set the center coordinate
             _centerOfView = coordinates;
@@ -33,6 +34,10 @@ namespace Cells.GameCore.Mapping
             _view.InitializeGrid(view);
         }
 
+        /// <summary>
+        /// Function returning a list of all the cells present on the view
+        /// </summary>
+        /// <returns>An IList of ICell</returns>
         public IList<ICell> GetAllCells()
         {
             IList<ICell> newList = new List<ICell>();

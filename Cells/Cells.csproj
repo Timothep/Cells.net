@@ -59,6 +59,9 @@
     <Compile Include="Model\Cells\Cell.cs" />
     <Compile Include="Controller\GameController.cs" />
     <Compile Include="Interfaces\IWorld.cs" />
+    <Compile Include="Interfaces\ICoordinates.cs" />
+    <Compile Include="Interfaces\IMap.cs" />
+    <Compile Include="Interfaces\ISurroundingView.cs" />
     <Compile Include="Model\Mapping\SurroundingView.cs" />
     <Compile Include="Model\Mapping\Map.cs" />
     <Compile Include="Model\Mapping\MapTile.cs" />

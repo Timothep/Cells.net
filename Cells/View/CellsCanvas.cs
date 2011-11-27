@@ -6,6 +6,7 @@ using Cells.GameCore;
 using Cells.Utils;
 using Cells.Properties;
 using Cells.Controller;
+using Cells.Interfaces;
 
 namespace Cells.View
 {
@@ -16,6 +17,9 @@ namespace Cells.View
         private readonly GameController _controller;
         readonly Graphics _canvas;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public CellsCanvas(GameController controller)
         {
             InitializeComponent();
@@ -27,10 +31,11 @@ namespace Cells.View
             PopulateBrains();
         }
 
+        /// <summary>
+        /// Displays the available brains in the UI
+        /// </summary>
         private void PopulateBrains()
         {
-            //IList<String> brainTypes ) 
-
             foreach (String brainType in this._controller.GetAvailableBrainTypes())
                 this.lBBrains.Items.Add(brainType);
         }
@@ -42,7 +47,7 @@ namespace Cells.View
         /// </summary>
         /// <param name="coordvector">The coordinates where to paint</param>
         /// <param name="color">The color in which to paint</param>
-        private void PaintSinglePixel(Coordinates coordvector, Color color)
+        private void PaintSinglePixel(ICoordinates coordvector, Color color)
         {
             _canvas.FillRectangle(
                 new SolidBrush(color),
@@ -53,12 +58,12 @@ namespace Cells.View
         /// Paints the list of pixels passed as a parameter
         /// </summary>
         /// <param name="modificationsDictionary">A list of KeyValuePair containting coordinates at which to paint and the color to use</param>
-        private void PaintPixels(IEnumerable<KeyValuePair<Coordinates, Color>> modificationsDictionary)
+        private void PaintPixels(IEnumerable<KeyValuePair<ICoordinates, Color>> modificationsDictionary)
         {
             if (null == modificationsDictionary)
                 return;
             
-            foreach (KeyValuePair<Coordinates, Color> keyValuePair in modificationsDictionary)
+            foreach (KeyValuePair<ICoordinates, Color> keyValuePair in modificationsDictionary)
             {
                 PaintSinglePixel(keyValuePair.Key, keyValuePair.Value);
             }

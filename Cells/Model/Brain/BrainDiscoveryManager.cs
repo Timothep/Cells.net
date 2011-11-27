@@ -33,7 +33,7 @@ namespace Cells.Brain
         /// </summary>
         /// <returns>The list of Braintypes as a list of strings</returns>
         public IEnumerable<String> GetAvailableBrainTypes()
-        {             
+        {
             foreach (IBrain brain in availableBrains)
                 yield return brain.GetType().ToString();
         }
