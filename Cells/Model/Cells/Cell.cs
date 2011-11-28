@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Cells.Brain;
+using Cells.Model;
 using Cells.Properties;
 using Cells.Utils;
 using Cells.GameCore.Mapping;
@@ -11,8 +11,6 @@ using Ninject.Modules;
 
 namespace Cells.GameCore.Cells
 {
-    public enum CellAction { NONE, MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, EAT, ATTACK, SPLIT, LIFT, DROP, DIE }
-    
     public class Cell: ICell
     {
         private readonly IWorld world;
@@ -21,7 +19,7 @@ namespace Cells.GameCore.Cells
         public Int16 Life { get; set; }
         public Color Team { get; set; }
 
-        private CellAction cellPreviousAction = CellAction.NONE;
+        private AvailableActions cellPreviousAction = AvailableActions.NONE;
         private Boolean carryingWeight = false;
 
         /// <summary>
@@ -68,46 +66,52 @@ namespace Cells.GameCore.Cells
         /// <param name="action">The action to apply</param>
         public void Do(CellAction action)
         {
-            this.cellPreviousAction = action;
+            this.cellPreviousAction = action.GetAction();
 
-            switch (action)
+            switch (action.GetAction())
             {
-                case CellAction.MOVELEFT:
+                case AvailableActions.MOVELEFT:
                     MoveLeft();
                     break;
-                case CellAction.MOVERIGHT:
+                case AvailableActions.MOVERIGHT:
                     MoveRight();
                     break;
-                case CellAction.MOVEUP:
+                case AvailableActions.MOVEUP:
                     MoveUp();
                     break;
-                case CellAction.MOVEDOWN:
+                case AvailableActions.MOVEDOWN:
                     MoveDown();
                     break;
-                case CellAction.DROP:
+                case AvailableActions.DROP:
                     DropEarth();
                     break;
-                case CellAction.LIFT:
+                case AvailableActions.LIFT:
                     LiftEarth();
                     break;
-                case CellAction.SPLIT:
+                case AvailableActions.SPLIT:
                     Split();
                     break;
-                case CellAction.DIE:
+                case AvailableActions.DIE:
                     Die();
                     break;
-                case CellAction.NONE:
+                case AvailableActions.EAT:
+                    Eat();
                     break;
-                case CellAction.EAT:
+                case AvailableActions.ATTACK:
                     throw new NotImplementedException();
+                    //Attack();
                     break;
-                case CellAction.ATTACK:
-                    throw new NotImplementedException();
+                case AvailableActions.NONE:
                     break;
                 default:
                     throw new NotImplementedException();
             }
             return;
+        }
+
+        private void Eat()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -116,7 +120,7 @@ namespace Cells.GameCore.Cells
         /// <returns>The last CellAction the cell did</returns>
         public CellAction GetPreviousAction()
         {
-            return cellPreviousAction;
+            return new CellAction(cellPreviousAction);
         }
 
         /// <summary>
@@ -134,26 +138,26 @@ namespace Cells.GameCore.Cells
         /// </summary>
         /// <param name="coordinates">The target coordinates</param>
         /// <returns>A cell action indicating how the cell should move to get there</returns>
-        public CellAction GetRelativeMovment(ICoordinates coordinates)
+        public AvailableActions GetRelativeMovment(ICoordinates coordinates)
         {
-            var actions = new List<CellAction>();
+            var actions = new List<AvailableActions>();
 
             if (coordinates.Y > this.Position.Y)
-                actions.Add(CellAction.MOVEDOWN);
+                actions.Add(AvailableActions.MOVEDOWN);
 
             if (coordinates.Y < this.Position.Y)
-                actions.Add(CellAction.MOVEUP);
+                actions.Add(AvailableActions.MOVEUP);
             
             if (coordinates.X < this.Position.X)
-                actions.Add(CellAction.MOVELEFT);
+                actions.Add(AvailableActions.MOVELEFT);
             
             if (coordinates.X > this.Position.X)
-                actions.Add(CellAction.MOVERIGHT);
+                actions.Add(AvailableActions.MOVERIGHT);
             
             if (actions.Count > 0)
                 return actions[RandomGenerator.GetRandomInt32(actions.Count)];
 
-            return CellAction.NONE;
+            return AvailableActions.NONE;
         }
 
         /// <summary>

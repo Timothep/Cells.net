@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using Cells.Interfaces;
+using Cells.Model;
 using Cells.Utils;
 using Cells.GameCore.Cells;
 using Ninject;

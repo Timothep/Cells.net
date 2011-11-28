@@ -6,6 +6,7 @@ using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
 using Cells.GameCore.Mapping.Tiles;
 using System.Drawing;
+using Cells.Model;
 
 namespace Cells.Interfaces
 {
@@ -19,7 +20,7 @@ namespace Cells.Interfaces
 
         CellAction GetPreviousAction();
 
-        CellAction GetRelativeMovment(ICoordinates coordinates);
+        AvailableActions GetRelativeMovment(ICoordinates coordinates);
 
         void DecreaseLife(Int16 malus = 1);
 

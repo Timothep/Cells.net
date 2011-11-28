@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Cells.GameCore.Mapping;
 using Cells.GameCore.Cells;
+using Cells.Model;
 using Cells.Utils;
 using Cells.Interfaces;
 using System.ComponentModel.Composition;
@@ -32,7 +33,7 @@ namespace Cells.Brain
         /// <returns></returns>
         public override CellAction ChooseNextAction()
         {
-            CellAction action;
+            AvailableActions action;
 
             SurroundingView surroundings = this.cell.Sense();
             IList<ICell> neighbours = surroundings.GetAllCells();
@@ -51,7 +52,7 @@ namespace Cells.Brain
                     action = this.cell.GetRelativeMovment(closestNeighbour.Position);
             }
 
-            return action;
+            return new CellAction(action);
         }
 
         /// <summary>
@@ -79,22 +80,22 @@ namespace Cells.Brain
         /// Function randomly choosing among all the possible actions
         /// </summary>
         /// <returns>One of the possible action</returns>
-        private CellAction GetRandomAction()
+        private AvailableActions GetRandomAction()
         {
             var randomNumber = (Int16)RandomGenerator.GetRandomInt32(5);
 
             switch (randomNumber)
             {
                 case 0:
-                    return CellAction.MOVERIGHT;
+                    return AvailableActions.MOVERIGHT;
                 case 1:
-                    return CellAction.MOVELEFT;
+                    return AvailableActions.MOVELEFT;
                 case 2:
-                    return CellAction.MOVEDOWN;
+                    return AvailableActions.MOVEDOWN;
                 case 3:
-                    return CellAction.MOVEUP;
+                    return AvailableActions.MOVEUP;
                 case 4:
-                    return CellAction.NONE;
+                    return AvailableActions.NONE;
                 default:
                     throw new Exception("Something went wrong with the random numbers");
             }

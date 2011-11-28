@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Action.cs" />
     <Compile Include="Model\Brain\BaseBrain.cs" />
     <Compile Include="Model\Brain\BrainDiscoveryManager.cs" />
     <Compile Include="Model\Brain\AnotherRandomMovingBrain.cs" />

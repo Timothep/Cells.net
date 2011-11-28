@@ -32,7 +32,7 @@ namespace Cells.Model.Brain
         /// <returns>Returns one Action</returns>
         public virtual CellAction ChooseNextAction()
         {
-            return CellAction.NONE;
+            return new CellAction(AvailableActions.NONE);
         }
     }
 }
