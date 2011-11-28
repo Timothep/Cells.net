@@ -108,8 +108,15 @@ namespace Cells.GameCore.Cells
             return;
         }
 
+        /// <summary>
+        /// Tries to eat ressources present at the given coordinates
+        /// </summary>
+        /// <param name="coordinates">The coordinates where something to eat should be present</param>
         private void Eat(ICoordinates coordinates)
         {
+            if (coordinates == null)
+                return;
+
             Int16 ressourcesLeft = this.world.GetAmountOfRessourcesLeft(coordinates);
             Int16 lifeBonus = ressourcesLeft < Settings.Default.MaxEatingPerRoundQuantity ? ressourcesLeft : Settings.Default.MaxEatingPerRoundQuantity;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cells.GameCore.Mapping.Tiles;
 
 namespace Cells.Interfaces
@@ -11,5 +12,6 @@ namespace Cells.Interfaces
         void InitializeGrid();
         void InitializeGrid(MapTile[,] view);
         ICell GetCellAt(Int16 x, Int16 y);
+        IList<ICoordinates> GetRessourcesList();
     }
 }

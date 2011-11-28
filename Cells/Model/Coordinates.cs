@@ -40,5 +40,20 @@ namespace Cells.Utils
             coord.SetCoordinates(X, Y);
             return coord;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
+        public Int16? DistanceTo(ICoordinates position)
+        {
+            if (position == null)
+                return null;
+
+            return (Int16)(Math.Abs((UInt16)(this.X - position.X)) +
+                   Math.Abs((UInt16)(this.Y - position.Y)));
+        }
     }
 }

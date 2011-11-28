@@ -54,14 +54,78 @@ namespace Cells.GameCore.Mapping
             return newList;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         internal Int16 GetWidth()
         {
             return this._view.GetMapWidth();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         internal Int16 GetHeight()
         {
             return this._view.GetMapHeight();
+        }
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //internal ICoordinates GetClosestRessourcePool()
+        //{
+        //    IList<ICoordinates> ressources = this._view.GetRessourcesList();
+        //    ICoordinates closestRessource = null;
+        //    Int16? minDistance = null;
+        //    foreach(ICoordinates spot in ressources)
+        //    {
+        //        if (closestRessource == null)
+        //        {
+        //            closestRessource = spot;
+        //            minDistance = this._centerOfView.DistanceTo(spot);
+        //        }
+        //        if (spot.DistanceTo(closestRessource) < minDistance)
+        //        {
+        //            closestRessource = spot;
+        //            minDistance = this._centerOfView.DistanceTo(spot);
+        //        }
+        //    }
+            
+        //    return null;
+        //}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal ICoordinates GetClosestRessourcePool()
+        {
+            ICoordinates theOne = null;
+            Int16? minDistanceSofar = (Int16)this._view.Grid.GetLength(0);
+
+            for (int i = 0; i < this._view.Grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < this._view.Grid.GetLength(1); j++)
+                {
+                    if (this._view.Grid[i, j].RessourceLevel > 0)
+                    {
+                        var coord = new Coordinates();
+                        coord.SetCoordinates((Int16)i, (Int16)j);
+                        Int16? distTo = this._centerOfView.DistanceTo(coord);
+                        if (distTo < minDistanceSofar)
+                        {
+                            minDistanceSofar = distTo;
+                            theOne = coord;
+                        }
+                    }
+                }
+            }
+
+            return theOne;
         }
     }
 }

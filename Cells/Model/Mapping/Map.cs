@@ -13,6 +13,7 @@ namespace Cells.GameCore.Mapping
         private const Int16 MinimumMapSize = 3;
         private readonly short Width;
         private readonly short Height;
+        private IList<ICoordinates> ressourcesList = new List<ICoordinates>();
 
         public MapTile[,] Grid;
         
@@ -154,7 +155,7 @@ namespace Cells.GameCore.Mapping
         internal void ImplantCell(ICell newCell)
         {
             if (newCell != null)
-                Grid[(newCell as Cell).Position.X, (newCell as Cell).Position.Y].CellReference = newCell;
+                Grid[newCell.Position.X, newCell.Position.Y].CellReference = newCell;
             else
                 throw new Exception("Cannot implant a non existing cell");
         }
@@ -173,6 +174,11 @@ namespace Cells.GameCore.Mapping
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newCoordinates"></param>
+        /// <returns></returns>
         private bool CoordinatesAreValid(ICoordinates newCoordinates)
         {
             if (newCoordinates.X < 0
@@ -192,33 +198,66 @@ namespace Cells.GameCore.Mapping
         /// <param name="growthRate">The growth rate of the ressources (per tick, 0 per default)</param>
         internal void ImplantRessources(ICoordinates coordinates, Int16 ressourceLevel, Int16 growthRate = 0)
         {
-            Grid[coordinates.X, coordinates.Y].GrowthRate = growthRate;
-            Grid[coordinates.X, coordinates.Y].RessourceLevel = ressourceLevel;
+            this.Grid[coordinates.X, coordinates.Y].GrowthRate = growthRate;
+            this.Grid[coordinates.X, coordinates.Y].RessourceLevel = ressourceLevel;
+            this.ressourcesList.Add(coordinates);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
         internal void RaiseLandscape(ICoordinates position)
         {
             Grid[position.X, position.Y].Height++;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
         internal void LowerLandscape(ICoordinates position)
         {
             Grid[position.X, position.Y].Height--;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         internal Int16 GetLandscapeHeight(ICoordinates position)
         {
             return Grid[position.X, position.Y].Height;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="ressources"></param>
         internal void IncreaseRessources(ICoordinates position, short ressources)
         {
             Grid[position.X, position.Y].RessourceLevel += ressources;
+            
+            if (!this.ressourcesList.Contains(position))
+                this.ressourcesList.Add(position);
         }
 
-        internal void DecreaseRessources(ICoordinates position, short ressources)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="ressources"></param>
+        internal void DecreaseRessources(ICoordinates position, Int16 ressources)
         {
             Grid[position.X, position.Y].RessourceLevel -= ressources;
+
+            if (Grid[position.X, position.Y].RessourceLevel < 0)
+            {
+                Grid[position.X, position.Y].RessourceLevel = 0;
+                this.ressourcesList.Remove(position);
+            }
         }
 
         /// <summary>
@@ -233,6 +272,16 @@ namespace Cells.GameCore.Mapping
                 throw new Exception("Cannot remove a non existing cell");
         }
 
+        public IList<ICoordinates> GetRessourcesList()
+        {
+            return this.ressourcesList;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
         internal Int16 GetAmountOfRessourcesLeft(ICoordinates coordinates)
         {
             return this.Grid[coordinates.X, coordinates.Y].RessourceLevel;
