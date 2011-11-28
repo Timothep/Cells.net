@@ -14,7 +14,9 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Assert.IsNotNull(testMap.GetSubset(new Coordinates(1, 1), 5, 5));
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1,1);
+            Assert.IsNotNull(testMap.GetSubset(coord, 5, 5));
         }
 
         [TestMethod]
@@ -22,7 +24,9 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, 3);
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+            MapTile[,] extract = testMap.GetSubset(coord, 3, 3);
             Assert.IsTrue(extract.GetLength(0) == 3);
         }
 
@@ -40,7 +44,9 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 2, 3);
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+            MapTile[,] extract = testMap.GetSubset(coord, 2, 3);
             Assert.IsNull(extract);
         }
 
@@ -49,7 +55,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, 2);
+
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+
+            MapTile[,] extract = testMap.GetSubset(coord, 3, 2);
             Assert.IsNull(extract);
         }
 
@@ -58,7 +68,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), -1, 3);
+
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+
+            MapTile[,] extract = testMap.GetSubset(coord, -1, 3);
             Assert.IsNull(extract);
         }
 
@@ -67,7 +81,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, -1);
+
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+
+            MapTile[,] extract = testMap.GetSubset(coord, 3, -1);
             Assert.IsNull(extract);
         }
 
@@ -76,7 +94,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(3, 3);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 5, 5);
+            
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+
+            MapTile[,] extract = testMap.GetSubset(coord, 5, 5);
             Assert.IsNull(extract);
         }
 
@@ -85,7 +107,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(3, 3);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 5, 5);
+
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+
+            MapTile[,] extract = testMap.GetSubset(coord, 5, 5);
             Assert.IsNull(extract);
         }
         
@@ -94,7 +120,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            Assert.IsTrue(testMap.GetSubset(new Coordinates(1, 1), 3, 3).GetLength(0) > 0);
+
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1); 
+            
+            Assert.IsTrue(testMap.GetSubset(coord, 3, 3).GetLength(0) > 0);
         }
 
         [TestMethod]
@@ -102,7 +132,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(1, 1), 3, 3);
+            
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+
+            MapTile[,] extract = testMap.GetSubset(coord, 3, 3);
             Assert.IsTrue(extract.GetLength(1) >= 1);
         }
 
@@ -111,7 +145,11 @@ namespace CellsTest.TestClasses
         {
             Map testMap = new Map(10, 10);
             testMap.InitializeGrid();
-            MapTile[,] extract = testMap.GetSubset(new Coordinates(9, 9), 3, 3);
+
+            Coordinates coord = new Coordinates();
+            coord.SetCoordinates(1, 1);
+
+            MapTile[,] extract = testMap.GetSubset(coord, 3, 3);
             Assert.IsTrue(extract.GetLength(1) == 2);
         }
 

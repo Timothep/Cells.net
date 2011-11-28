@@ -1,4 +1,4 @@
-﻿using Cells.GameCore;
+﻿using Cells.Controller;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CellsTest.TestClasses
@@ -9,7 +9,7 @@ namespace CellsTest.TestClasses
         [TestMethod]
         public void TestGetCellsToPaintNotNull()
         {
-            GameCoreEngine testEngine = new GameCoreEngine();
+            GameController testEngine = new GameController();
             testEngine.StartGame();
             Assert.IsNotNull(testEngine.GetUpdatedElements());
         }
