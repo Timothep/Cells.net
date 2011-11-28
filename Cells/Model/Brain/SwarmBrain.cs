@@ -16,7 +16,7 @@ namespace Cells.Brain
     [Export(typeof(IBrain))]
     public class SwarmBrain : BaseBrain, IBrain
     {
-        private const Int16 randomMovementChances =50; //Expressed in %
+        private const Int16 randomMovementChances =10; //Expressed in %
 
         /// <summary>
         /// Constructor
