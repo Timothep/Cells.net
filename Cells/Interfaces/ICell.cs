@@ -32,5 +32,7 @@ namespace Cells.Interfaces
         void SetLife(Int16 life);
 
         void SetTeam(Color teamColor);
+
+        void SetBrain(IBrain brain);
     }
 }

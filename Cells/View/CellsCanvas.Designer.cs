@@ -57,7 +57,7 @@ namespace Cells.View
             this.tBMaxNumberCells = new System.Windows.Forms.TextBox();
             this.lMaxAltitude = new System.Windows.Forms.Label();
             this.lMinAltitude = new System.Windows.Forms.Label();
-            this.tBViewSize = new System.Windows.Forms.TextBox();
+            this.tBIntialPopPerBrain = new System.Windows.Forms.TextBox();
             this.lSubViewSize = new System.Windows.Forms.Label();
             this.lBBrains = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.DrawBox)).BeginInit();
@@ -122,7 +122,7 @@ namespace Cells.View
             this.ParametersGroupBox.Controls.Add(this.tBMaxNumberCells);
             this.ParametersGroupBox.Controls.Add(this.lMaxAltitude);
             this.ParametersGroupBox.Controls.Add(this.lMinAltitude);
-            this.ParametersGroupBox.Controls.Add(this.tBViewSize);
+            this.ParametersGroupBox.Controls.Add(this.tBIntialPopPerBrain);
             this.ParametersGroupBox.Controls.Add(this.lSubViewSize);
             this.ParametersGroupBox.Location = new System.Drawing.Point(519, 151);
             this.ParametersGroupBox.Name = "ParametersGroupBox";
@@ -317,12 +317,12 @@ namespace Cells.View
             this.lMinAltitude.TabIndex = 2;
             this.lMinAltitude.Text = "Min altitude";
             // 
-            // tBViewSize
+            // tBIntialPopPerBrain
             // 
-            this.tBViewSize.Location = new System.Drawing.Point(175, 17);
-            this.tBViewSize.Name = "tBViewSize";
-            this.tBViewSize.Size = new System.Drawing.Size(56, 20);
-            this.tBViewSize.TabIndex = 1;
+            this.tBIntialPopPerBrain.Location = new System.Drawing.Point(175, 17);
+            this.tBIntialPopPerBrain.Name = "tBIntialPopPerBrain";
+            this.tBIntialPopPerBrain.Size = new System.Drawing.Size(56, 20);
+            this.tBIntialPopPerBrain.TabIndex = 1;
             // 
             // lSubViewSize
             // 
@@ -338,6 +338,7 @@ namespace Cells.View
             this.lBBrains.FormattingEnabled = true;
             this.lBBrains.Location = new System.Drawing.Point(520, 46);
             this.lBBrains.Name = "lBBrains";
+            this.lBBrains.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lBBrains.Size = new System.Drawing.Size(236, 95);
             this.lBBrains.TabIndex = 4;
             // 
@@ -369,7 +370,7 @@ namespace Cells.View
         private System.Windows.Forms.Button bStartEngine;
         private System.Windows.Forms.Button bStopEngine;
         private System.Windows.Forms.GroupBox ParametersGroupBox;
-        private System.Windows.Forms.TextBox tBViewSize;
+        private System.Windows.Forms.TextBox tBIntialPopPerBrain;
         private System.Windows.Forms.Label lSubViewSize;
         private System.Windows.Forms.Label lMaxAltitude;
         private System.Windows.Forms.Label lMinAltitude;

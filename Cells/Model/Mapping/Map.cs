@@ -81,7 +81,13 @@ namespace Cells.GameCore.Mapping
             var smallGridMaxX = smallGridMinX + subWidth >= Grid.GetLength(0) ? Convert.ToInt16(Grid.GetLength(0) - 1) : Convert.ToInt16(smallGridMinX + subWidth -1);
             var smallGridMaxY = smallGridMinY + subHeight >= Grid.GetLength(1) ? Convert.ToInt16(Grid.GetLength(1) - 1) : Convert.ToInt16(smallGridMinY + subHeight -1);
             
-            return GetSubArray(smallGridMinX, smallGridMaxX, smallGridMinY, smallGridMaxY);
+            MapTile[,] subArray = GetSubArray(smallGridMinX, smallGridMaxX, smallGridMinY, smallGridMaxY);
+
+            if (subArray == null)
+            {
+            }
+
+            return subArray;
         }
 
         /// <summary>
@@ -125,9 +131,9 @@ namespace Cells.GameCore.Mapping
         /// Returns the width of the map
         /// </summary>
         /// <returns></returns>
-        public int GetMapWidth()
+        public Int16 GetMapWidth()
         {
-            return Grid != null ? Convert.ToInt16(Grid.GetUpperBound(0)) : 0;
+            return Grid != null ? Convert.ToInt16(Grid.GetUpperBound(0)) : (Int16)0;
         }
 
         /// <summary>

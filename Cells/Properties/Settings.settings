@@ -17,7 +17,7 @@
     <Setting Name="MaxAltitude" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="InitialPopulationPerTeam" Type="System.Int16" Scope="User">
+    <Setting Name="InitialPopulationPerBrain" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="MaxNumberOfCells" Type="System.Int16" Scope="User">
@@ -36,6 +36,12 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="PixelSize" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="DamageOnAggressiveOpponent" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="DamageOnPassiveOpponent" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
   </Settings>

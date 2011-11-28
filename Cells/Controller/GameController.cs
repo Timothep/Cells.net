@@ -12,6 +12,7 @@ using Cells.Brain;
 using Cells.GameCore;
 using Cells.View;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace Cells.Controller
 {
@@ -33,6 +34,8 @@ namespace Cells.Controller
         // The world where all is happening
         IWorld _world;
         private bool _running = true;
+
+        private IEnumerable<String> selectedBrainList;
 
         public GameController()
         {
@@ -68,8 +71,10 @@ namespace Cells.Controller
         /// </summary>
         public void StartGame()
         {
+            this.selectedBrainList = this._view.GetSelectedBrains();
+
             _world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
-            _world.Initialize();
+            _world.Initialize(this.selectedBrainList as IList<String>);
         }
 
         /// <summary>
@@ -77,6 +82,9 @@ namespace Cells.Controller
         /// </summary>
         public void StopGame()
         {
+            if(_world != null)
+                Utils.NinjectGlobalKernel.GlobalKernel.Release(_world);
+
             _world = null;
         }
 

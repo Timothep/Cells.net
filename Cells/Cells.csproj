@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -53,8 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Brain\BaseBrain.cs" />
     <Compile Include="Model\Brain\BrainDiscoveryManager.cs" />
-    <Compile Include="Model\Brain\CopyOfSwarmBrain.cs" />
+    <Compile Include="Model\Brain\AnotherRandomMovingBrain.cs" />
+    <Compile Include="Model\Brain\RandomMovingBrain.cs" />
     <Compile Include="Model\Brain\SwarmBrain.cs" />
     <Compile Include="Model\Cells\Cell.cs" />
     <Compile Include="Controller\GameController.cs" />

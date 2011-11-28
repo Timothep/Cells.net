@@ -11,7 +11,7 @@ using Ninject.Modules;
 
 namespace Cells.GameCore.Cells
 {
-    public enum CellAction { NONE, MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, ATTACK, SPLIT, LIFT, DROP, DIE }
+    public enum CellAction { NONE, MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, EAT, ATTACK, SPLIT, LIFT, DROP, DIE }
     
     public class Cell: ICell
     {
@@ -37,10 +37,8 @@ namespace Cells.GameCore.Cells
             _world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
             
             IKernel kernel2 = new StandardKernel(new CellModule());
-            _brain = kernel2.Get<IBrain>();
+            
             Position = kernel2.Get<ICoordinates>();
-
-            _brain.SetCell(this);
         }
 
         /// <summary>
@@ -107,9 +105,12 @@ namespace Cells.GameCore.Cells
                     break;
                 case CellAction.NONE:
                     break;
-                //case CellAction.ATTACK: //Not yet implemented
-                //    Attack();
-                //    break;
+                case CellAction.EAT:
+                    throw new NotImplementedException();
+                    break;
+                case CellAction.ATTACK:
+                    throw new NotImplementedException();
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -157,7 +158,7 @@ namespace Cells.GameCore.Cells
                 actions.Add(CellAction.MOVERIGHT);
             
             if (actions.Count > 0)
-                return actions[RandomGenerator.GetRandomInteger(actions.Count)];
+                return actions[RandomGenerator.GetRandomInt32(actions.Count)];
 
             return CellAction.NONE;
         }
@@ -375,6 +376,12 @@ namespace Cells.GameCore.Cells
         {
             _world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
             return;
+        }
+
+        public void SetBrain(IBrain brain)
+        {
+            this._brain = brain;
+            this._brain.SetCell(this);
         }
     }
 

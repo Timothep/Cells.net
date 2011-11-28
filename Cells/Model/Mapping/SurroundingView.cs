@@ -7,6 +7,7 @@ using Cells.GameCore.Mapping.Tiles;
 using Cells.Utils;
 using Cells.Interfaces;
 using Cells.Model.Mapping;
+using Cells.Properties;
 
 namespace Cells.GameCore.Mapping
 {
@@ -18,9 +19,10 @@ namespace Cells.GameCore.Mapping
         private ICoordinates _centerOfView;
         
         // The view is a square centered on the cell
-        private const short ViewSize = 3;
+        private short _ViewSizeX;
+        private short _ViewSizeY;
 
-        private Map _view = new Map(ViewSize, ViewSize);
+        public Map _view;
 
         /// <summary>
         /// Constructor
@@ -30,7 +32,9 @@ namespace Cells.GameCore.Mapping
         {
             // Set the center coordinate
             _centerOfView = coordinates;
-            _view = new Map(Convert.ToInt16(view.GetUpperBound(0)), Convert.ToInt16(view.GetUpperBound(1)));
+            _ViewSizeX = Convert.ToInt16(view.GetUpperBound(0));
+            _ViewSizeY = Convert.ToInt16(view.GetUpperBound(1));
+            _view = new Map(_ViewSizeX, _ViewSizeY);
             _view.InitializeGrid(view);
         }
 
@@ -42,12 +46,22 @@ namespace Cells.GameCore.Mapping
         {
             IList<ICell> newList = new List<ICell>();
 
-            for (int i = 0; i < ViewSize - 1 ; i++)
-                for (int j = 0; j < ViewSize - 1 ; j++)
+            for (int i = 0; i < _ViewSizeX - 1; i++)
+                for (int j = 0; j < _ViewSizeY - 1; j++)
                     if (_view.Grid[i,j].CellReference != null)
                         newList.Add(_view.Grid[i, j].CellReference);
 
             return newList;
+        }
+
+        internal Int16 GetWidth()
+        {
+            return this._view.GetMapWidth();
+        }
+
+        internal Int16 GetHeight()
+        {
+            return this._view.GetMapHeight();
         }
     }
 }

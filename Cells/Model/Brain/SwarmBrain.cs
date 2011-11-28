@@ -5,53 +5,76 @@ using Cells.GameCore.Cells;
 using Cells.Utils;
 using Cells.Interfaces;
 using System.ComponentModel.Composition;
+using Cells.Model.Brain;
 
 namespace Cells.Brain
 {
     /// <summary>
-    /// SwarmBrain class exporting itself as an IBrain
+    /// The SwarmBrain does nothing else than moving
+    /// It moves either randomly (10% chances)
     /// </summary>
     [Export(typeof(IBrain))]
-    public class SwarmBrain: IBrain
+    public class SwarmBrain : BaseBrain, IBrain
     {
-        private ICell _cell;
+        private const Int16 randomMovementChances =50; //Expressed in %
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="theCell">The cell that the brain should control</param>
         public SwarmBrain()
-        { 
-
-        }
-
-        public void SetCell(ICell cell)
         {
-            this._cell = cell;
+
         }
 
         /// <summary>
         /// Function chosing the next action to be performed
         /// </summary>
         /// <returns></returns>
-        public CellAction ChooseNextAction()
+        public override CellAction ChooseNextAction()
         {
             CellAction action;
 
             SurroundingView surroundings = _cell.Sense();
-            IList<ICell> neighbors = surroundings.GetAllCells();
+            IList<ICell> neighbours = surroundings.GetAllCells();
 
-            // If the cell has no neighbours or in 1% of the cases => it goes random
-            if (neighbors.Count == 0 || RandomGenerator.GetRandomInteger(100) == 0)
+            // In randomMovementChances % of the cases => it goes random
+            if (RandomGenerator.GetRandomInt32(100) < randomMovementChances)
                 action = GetRandomAction();
             else
             {
-                // Else the cell goes toward a neighbour
-                action = _cell.GetRelativeMovment((neighbors[RandomGenerator.GetRandomInteger(neighbors.Count)] as Cell).Position);
+                // Else the cell goes toward the closest neighbour
+                ICell closestNeighbour = GetClosestNeighbour(neighbours);
+
+                if (closestNeighbour == null)
+                    action = GetRandomAction();
+                else
+                    action = _cell.GetRelativeMovment(closestNeighbour.Position);
             }
 
             return action;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="neighbours"></param>
+        /// <returns></returns>
+        private ICell GetClosestNeighbour(IList<ICell> neighbours)
+        {
+            Int16? minDistance = null;
+            ICell chosenOne = null;
+
+            foreach(ICell cell in neighbours)
+            {
+                if (minDistance == null)
+                    chosenOne = cell;
+                else if (Math.Abs((UInt16)(this._cell.Position.X - cell.Position.X)) + Math.Abs((UInt16)(this._cell.Position.Y - cell.Position.Y)) < minDistance)
+                    chosenOne = cell;
+            }
+
+            return chosenOne;
+        } 
 
         /// <summary>
         /// Function randomly choosing among all the possible actions
@@ -59,7 +82,7 @@ namespace Cells.Brain
         /// <returns>One of the possible action</returns>
         private CellAction GetRandomAction()
         {
-            var randomNumber = (Int16)RandomGenerator.GetRandomInteger(5);
+            var randomNumber = (Int16)RandomGenerator.GetRandomInt32(5);
 
             switch (randomNumber)
             {

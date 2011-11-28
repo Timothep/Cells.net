@@ -5,9 +5,9 @@ namespace Cells.Interfaces
 {
     public interface IMap
     {
-        short GetMapHeight();
-        int GetMapWidth();
-        MapTile[,] GetSubset(ICoordinates centerPoint, short subWidth, short subHeight);
+        Int16 GetMapHeight();
+        Int16 GetMapWidth();
+        MapTile[,] GetSubset(ICoordinates centerPoint, Int16 subWidth, Int16 subHeight);
         void InitializeGrid();
         void InitializeGrid(MapTile[,] view);
     }

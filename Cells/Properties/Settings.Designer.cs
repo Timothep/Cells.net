@@ -86,12 +86,12 @@ namespace Cells.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public short InitialPopulationPerTeam {
+        public short InitialPopulationPerBrain {
             get {
-                return ((short)(this["InitialPopulationPerTeam"]));
+                return ((short)(this["InitialPopulationPerBrain"]));
             }
             set {
-                this["InitialPopulationPerTeam"] = value;
+                this["InitialPopulationPerBrain"] = value;
             }
         }
         
@@ -164,6 +164,30 @@ namespace Cells.Properties {
             }
             set {
                 this["PixelSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public short DamageOnAggressiveOpponent {
+            get {
+                return ((short)(this["DamageOnAggressiveOpponent"]));
+            }
+            set {
+                this["DamageOnAggressiveOpponent"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public short DamageOnPassiveOpponent {
+            get {
+                return ((short)(this["DamageOnPassiveOpponent"]));
+            }
+            set {
+                this["DamageOnPassiveOpponent"] = value;
             }
         }
     }

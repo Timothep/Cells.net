@@ -12,6 +12,7 @@ using Ninject;
 using Ninject.Modules;
 using Cells.Model.Mapping;
 using Cells.Brain;
+using System.Diagnostics;
 
 namespace Cells.GameCore
 {
@@ -21,28 +22,35 @@ namespace Cells.GameCore
     public class World : IWorld
     {
         private Map _masterMap;
-        private List<String> _brains;
-        private List<ICell> _cells = new List<ICell>();
+        private IList<String> _brains;
+        private IList<ICell> _cells = new List<ICell>();
         private readonly List<ICell> _deadCellsToRemove = new List<ICell>();
         private readonly IDictionary<ICoordinates, Color> _updatedElements = new ConcurrentDictionary<ICoordinates, Color>();
+        private IList<Color> availableColors = new List<Color>();
 
         /// <summary>
         /// Constructor
         /// </summary>
         public World()
         {
-            //Initialize();
+            availableColors.Add(Color.Red);
+            availableColors.Add(Color.Blue);
+            availableColors.Add(Color.Yellow);
+            availableColors.Add(Color.Green);
         }
 
         /// <summary>
         /// Initializes the world as we know it
         /// </summary>
-        public void Initialize()
+        public void Initialize(IList<String> availableBrains)
         {
+            this._brains = availableBrains;
+
             IKernel kernel = new StandardKernel(new CellModule());
 
             _masterMap = new Map(Settings.Default.WorldWidth, Settings.Default.WorldHeight);
             _cells = new List<ICell>();
+            
             CreateInitialCellPopulation();
             CreatePlantMap();
             CreateRessourcesMap();
@@ -183,20 +191,29 @@ namespace Cells.GameCore
         /// </summary>
         private void CreateInitialCellPopulation()
         {
-            CreateCellPopulation(Settings.Default.InitialPopulationPerTeam, Color.Red);
-            CreateCellPopulation(Settings.Default.InitialPopulationPerTeam, Color.Yellow);
+            foreach (String brainType in this._brains)
+            {
+                Color teamColor = availableColors[RandomGenerator.GetRandomInt16((Int16)availableColors.Count)];
+                availableColors.Remove(teamColor);
+
+                CreateCellPopulation(brainType, Settings.Default.InitialPopulationPerBrain, teamColor);
+            }
         }
 
-        private void CreateCellPopulation(short numberOfCells, Color teamColor)
+        private void CreateCellPopulation(String brainType, short numberOfCells, Color teamColor)
         {
-            Ninject.IKernel kernel = new StandardKernel(new WorldModule());
+            IKernel kernel = new StandardKernel(new WorldModule());
+            IKernel brainKernel = new StandardKernel();
 
             for (int i = 0; i < numberOfCells; i++)
             {
                 var cell = kernel.Get<ICell>();
 
+                var brain = brainKernel.Get(Type.GetType(brainType)) as IBrain;
+                cell.SetBrain(brain);
+
                 cell.Position = GetRandomCoordinates();
-                cell.SetLife((Int16)RandomGenerator.GetRandomInteger(Settings.Default.CellMaxInitialLife));
+                cell.SetLife((Int16)RandomGenerator.GetRandomInt32(Settings.Default.CellMaxInitialLife));
                 cell.SetTeam(teamColor);
 
                 InjectCell(cell);
@@ -208,6 +225,7 @@ namespace Cells.GameCore
             ICoordinates coord = new Coordinates();
             coord.X = RandomGenerator.GetRandomInt16((Int16)(Settings.Default.WorldWidth - 1));
             coord.Y = RandomGenerator.GetRandomInt16((Int16)(Settings.Default.WorldHeight - 1));
+            Debug.WriteLine(coord.X.ToString() + " " + coord.Y.ToString());
             return coord;
         }
 
@@ -254,7 +272,7 @@ namespace Cells.GameCore
         public override void Load()
         {
             Bind<ICell>().To<Cell>();
-            Bind<IBrain>().To<SwarmBrain>();
+            //Bind<IBrain>().To<SwarmBrain>();
             //Bind<IWorld>().To<World>().InSingletonScope();
         }
     }

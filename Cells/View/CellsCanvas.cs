@@ -38,9 +38,14 @@ namespace Cells.View
         {
             foreach (String brainType in this._controller.GetAvailableBrainTypes())
                 this.lBBrains.Items.Add(brainType);
-        }
 
-        #region CanvasPainting
+            // Preselect the two first brains if present
+            if (this.lBBrains.Items.Count > 0)
+                this.lBBrains.SetSelected(0, true);
+
+            if (this.lBBrains.Items.Count > 1)
+                this.lBBrains.SetSelected(1, true);
+        }
 
         /// <summary>
         /// Paint a single pixel of color at the given coordinates
@@ -69,10 +74,6 @@ namespace Cells.View
             }
         }
 
-        #endregion
-
-        #region ButtonMgmt
-
         /// <summary>
         /// Is called when the button "start the engine" was pressed
         /// </summary>
@@ -97,8 +98,6 @@ namespace Cells.View
         {
             SaveSettingChanges();
         }
-
-        #endregion
 
         /// <summary>
         /// This function renders what there is to display
@@ -130,10 +129,9 @@ namespace Cells.View
             this.tBMinAltitude.Text = Settings.Default.MinAltitude.ToString();
             this.tBNumberOfTeams.Text = Settings.Default.NumberOfTeams.ToString();
             this.tBSpawnLifeThreshold.Text = Settings.Default.SpawnLifeThreshold.ToString();
-            this.tBViewSize.Text = Settings.Default.SensoryViewSize.ToString();
-
-            //this.tBDamageOnAggressiveOpponent.Text = Settings.Default..ToString();
-            //this.tBDamageOnPassiveOpponent.Text = Settings.Default..ToString();
+            this.tBIntialPopPerBrain.Text = Settings.Default.InitialPopulationPerBrain.ToString();
+            this.tBDamageOnAggressiveOpponent.Text = Settings.Default.DamageOnAggressiveOpponent.ToString();
+            this.tBDamageOnPassiveOpponent.Text = Settings.Default.DamageOnPassiveOpponent.ToString();
         }
 
         /// <summary>
@@ -150,18 +148,35 @@ namespace Cells.View
             Settings.Default.MinAltitude = Convert.ToInt16(tBMinAltitude.Text);
             Settings.Default.NumberOfTeams = Convert.ToInt16(tBNumberOfTeams.Text);
             Settings.Default.SpawnLifeThreshold = Convert.ToInt16(tBSpawnLifeThreshold.Text);
-            Settings.Default.SensoryViewSize = Convert.ToInt16(tBViewSize.Text);
-
-            //Settings.Default. = Convert.ToInt16(tBDamageOnAggressiveOpponent.Text);
-            //Settings.Default. = Convert.ToInt16(tBDamageOnPassiveOpponent.Text);
-            
+            Settings.Default.InitialPopulationPerBrain = Convert.ToInt16(tBIntialPopPerBrain.Text);
+            Settings.Default.DamageOnAggressiveOpponent = Convert.ToInt16(tBDamageOnAggressiveOpponent.Text);
+            Settings.Default.DamageOnPassiveOpponent = Convert.ToInt16(tBDamageOnPassiveOpponent.Text);
             Settings.Default.Save();
+
+            if (Settings.Default.SensoryViewSize % 2 == 0)
+                MessageBox.Show("Warning, the sensory view size must be an odd number");
         }
 
+        /// <summary>
+        /// Cleanup the open instances upon form close
+        /// </summary>
         private void CellsCanvas_FormClosed(object sender, FormClosedEventArgs e)
         {
             this._controller.StopGame();
             this._controller.Close();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal IEnumerable<string> GetSelectedBrains()
+        {
+            IList<String> list = new List<String>();
+            foreach (object selectedItem in this.lBBrains.SelectedItems)
+                list.Add(selectedItem.ToString());
+
+            return list;
         }
     }
 }

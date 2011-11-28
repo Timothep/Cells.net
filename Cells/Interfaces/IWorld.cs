@@ -1,6 +1,8 @@
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
 using System.Drawing;
+using System;
+using System.Collections.Generic;
 
 namespace Cells.Interfaces
 {
@@ -24,7 +26,7 @@ namespace Cells.Interfaces
 
         System.Collections.Generic.IEnumerable<ICell> GetCells();
 
-        void Initialize();
+        void Initialize(IList<String> availableBrains);
 
         void ResetMovementsList();
     }
