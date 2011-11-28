@@ -190,5 +190,17 @@ namespace Cells.Properties {
                 this["DamageOnPassiveOpponent"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public short MaxEatingPerRoundQuantity {
+            get {
+                return ((short)(this["MaxEatingPerRoundQuantity"]));
+            }
+            set {
+                this["MaxEatingPerRoundQuantity"] = value;
+            }
+        }
     }
 }

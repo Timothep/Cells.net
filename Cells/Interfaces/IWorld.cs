@@ -22,9 +22,7 @@ namespace Cells.Interfaces
 
         void RemoveDeadCells();
 
-        System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<ICoordinates, Color>> GetUpdatedElements();
-
-        System.Collections.Generic.IEnumerable<ICell> GetCells();
+        IEnumerable<ICell> GetCells();
 
         void Initialize(IList<String> availableBrains);
 
@@ -32,6 +30,12 @@ namespace Cells.Interfaces
 
         void CreateSpawns(short spawnLife, Cell cell);
 
-        void AddNewlyCreatedCells();
+        void AddNewlyCreatedCellsToTheGame();
+
+        void ReduceRessources(ICoordinates coordinates, short lifeBonus);
+
+        Int16 GetAmountOfRessourcesLeft(ICoordinates coordinates);
+
+        IMap GetMap();
     }
 }

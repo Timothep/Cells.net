@@ -24,6 +24,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -54,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\DisplayController.cs" />
     <Compile Include="Model\Action.cs" />
     <Compile Include="Model\Brain\BaseBrain.cs" />
     <Compile Include="Model\Brain\BrainDiscoveryManager.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="Model\Mapping\Map.cs" />
     <Compile Include="Model\Mapping\MapTile.cs" />
     <Compile Include="Model\World\World.cs" />
+    <Compile Include="Interfaces\IDisplayController.cs" />
     <Compile Include="View\CellsCanvas.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -37,5 +37,13 @@ namespace Cells.Interfaces
         void SetBrain(IBrain brain);
 
         bool CanDivide();
+
+        bool CanMoveRight();
+        
+        bool CanMoveLeft();
+        
+        bool CanMoveDown();
+        
+        bool CanMoveUp();
     }
 }

@@ -119,6 +119,17 @@ namespace Cells.GameCore.Mapping
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public ICell GetCellAt(Int16 x, Int16 y)
+        {
+            return this.Grid[x, y].CellReference;
+        }
+
+        /// <summary>
         /// Returns the height of the map
         /// </summary>
         /// <returns></returns>
@@ -205,6 +216,11 @@ namespace Cells.GameCore.Mapping
             Grid[position.X, position.Y].RessourceLevel += ressources;
         }
 
+        internal void DecreaseRessources(ICoordinates position, short ressources)
+        {
+            Grid[position.X, position.Y].RessourceLevel -= ressources;
+        }
+
         /// <summary>
         /// Removes a cell from the grid
         /// </summary>
@@ -215,6 +231,11 @@ namespace Cells.GameCore.Mapping
                 Grid[cellToRemove.Position.X, cellToRemove.Position.Y].CellReference = null;
             else
                 throw new Exception("Cannot remove a non existing cell");
+        }
+
+        internal Int16 GetAmountOfRessourcesLeft(ICoordinates coordinates)
+        {
+            return this.Grid[coordinates.X, coordinates.Y].RessourceLevel;
         }
     }
 }

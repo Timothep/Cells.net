@@ -24,5 +24,7 @@
         private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
             // Add code to handle the SettingsSaving event here.
         }
+
+        public short EatingPerRoundThreshold { get; set; }
     }
 }

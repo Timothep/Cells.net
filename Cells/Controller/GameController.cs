@@ -29,6 +29,8 @@ namespace Cells.Controller
         // Brain broker gathering brains via MEF
         BrainDiscoveryManager bDM = new BrainDiscoveryManager();
 
+        private IDisplayController displayController;
+
         // The view
         CellsCanvas view;
 
@@ -42,6 +44,7 @@ namespace Cells.Controller
         {
             this.view = new CellsCanvas(this);
             this.view.Show();
+            this.displayController = NinjectGlobalKernel.GlobalKernel.Get<IDisplayController>();
         }
 
         /// <summary>
@@ -106,21 +109,19 @@ namespace Cells.Controller
         private void Tick()
         {
             if (null == this.world)
-            {
                 return;
-            }
 
-            this.world.AddNewlyCreatedCells();
+            // Reset
+            this.world.AddNewlyCreatedCellsToTheGame();
             this.world.ResetMovementsList();
 
             IEnumerable<ICell> allCells = this.world.GetCells();
-            Debug.WriteLine("Number of alive cells: " + allCells.Count().ToString());
 
             if (null != allCells)
             {
                 foreach (ICell currentCell in this.world.GetCells())
                 {
-                    //// Death comes first
+                    // Death comes first
                     currentCell.DecreaseLife();
                     if (currentCell.GetLife() <= 0)
                     {
@@ -146,11 +147,11 @@ namespace Cells.Controller
             if (null == this.world)
                 return null;
             
-            return this.world.GetUpdatedElements();
+            return this.displayController.GetUpdatedElements();
         }
 
         /// <summary>
-        /// 
+        /// This function returns an IEnumerable containing the available brain types that were discovered
         /// </summary>
         /// <returns></returns>
         internal IEnumerable<String> GetAvailableBrainTypes()
@@ -159,7 +160,7 @@ namespace Cells.Controller
         }
 
         /// <summary>
-        /// 
+        /// Signals to the game contoller that the game loop has to be stopped
         /// </summary>
         internal void Close()
         {

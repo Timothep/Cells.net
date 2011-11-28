@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
+using Cells.Controller;
 using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
 using Cells.GameCore.Mapping.Tiles;
@@ -32,17 +33,18 @@ namespace Cells.GameCore
         /// <summary>
         /// List of all the cells created during the round
         /// </summary>
-        private IList<ICell> newCellsToAdd = new List<ICell>();
+        private readonly IList<ICell> newCellsToAdd = new List<ICell>();
 
         /// <summary>
         /// List of all the cells that died during the round
         /// </summary>
         private readonly List<ICell> deadCellsToRemove = new List<ICell>();
 
-        private readonly IDictionary<ICoordinates, Color> updatedElements = new ConcurrentDictionary<ICoordinates, Color>();
         private readonly IList<Color> availableColors = new List<Color>();
         private readonly IKernel worldKernel = new StandardKernel(new WorldModule());
         private readonly IKernel brainKernel = new StandardKernel();
+
+        private IDisplayController displayController;
 
         /// <summary>
         /// Constructor
@@ -62,7 +64,7 @@ namespace Cells.GameCore
         {
             this.brains = availableBrains;
 
-            IKernel kernel = new StandardKernel(new CellModule());
+            this.displayController = NinjectGlobalKernel.GlobalKernel.Get<IDisplayController>();
 
             masterMap = new Map(Settings.Default.WorldWidth, Settings.Default.WorldHeight);
             cells = new List<ICell>();
@@ -78,16 +80,7 @@ namespace Cells.GameCore
         /// <returns></returns>
         public IEnumerable<ICell> GetCells()
         {
-            return cells;
-        }
-
-        /// <summary>
-        /// Retrieves the list of updated elements
-        /// </summary>
-        /// <returns>A list of coordinates where elements were updated</returns>
-        public IEnumerable<KeyValuePair<ICoordinates, Color>> GetUpdatedElements()
-        {
-            return updatedElements;
+            return this.cells;
         }
 
         /// <summary>
@@ -99,11 +92,11 @@ namespace Cells.GameCore
         public void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
         {
             // Add the cell movements to the logs
-            if (!updatedElements.ContainsKey(oldCoordinates))        
-                updatedElements.Add(oldCoordinates, Color.Black);
+            if (!this.displayController.updatedElements.ContainsKey(oldCoordinates))        
+                this.displayController.updatedElements.Add(oldCoordinates, Color.Black);
 
-            if (!updatedElements.ContainsKey(newCoordinates) || updatedElements[newCoordinates] == Color.Black)
-                updatedElements.Add(newCoordinates, team);
+            if (!this.displayController.updatedElements.ContainsKey(newCoordinates) || this.displayController.updatedElements[newCoordinates] == Color.Black)
+                this.displayController.updatedElements.Add(newCoordinates, team);
 
             // Update the map
             this.masterMap.MoveCell(oldCoordinates, newCoordinates);
@@ -114,7 +107,7 @@ namespace Cells.GameCore
         /// </summary>
         public void ResetMovementsList()
         {
-            updatedElements.Clear();
+            this.displayController.updatedElements.Clear();
         }
 
         /// <summary>
@@ -184,45 +177,42 @@ namespace Cells.GameCore
         public void RemoveDeadCells()
         {
             foreach (Cell deadCell in deadCellsToRemove)
-            {
                 RejectCell(deadCell);
-            }
 
             deadCellsToRemove.Clear();
         }
 
         /// <summary>
-        /// 
+        /// Commit removal of the current cell from the game
         /// </summary>
         /// <param name="deadCell"></param>
         private void RejectCell(Cell deadCell)
         {
             this.cells.Remove(deadCell);
-            masterMap.RemoveCell(deadCell);
+            this.masterMap.RemoveCell(deadCell);
 
-            if (updatedElements.ContainsKey(deadCell.Position))
-            {
-                updatedElements.Remove(deadCell.Position);
-            }
+            if (this.displayController.updatedElements.ContainsKey(deadCell.Position))
+                this.displayController.updatedElements.Remove(deadCell.Position);
 
-            updatedElements.Add(deadCell.Position, Color.Black);
+            this.displayController.updatedElements.Add(deadCell.Position, Color.Black);
         }
 
         /// <summary>
-        /// 
+        /// This function adds all the newly created cells to the game
+        /// Those cells orginate from splittings of the previous round
         /// </summary>
-        public void AddNewlyCreatedCells()
+        public void AddNewlyCreatedCellsToTheGame()
         {
             foreach (Cell newCell in this.newCellsToAdd)
             {
                 this.InjectCell(newCell);
 
-                if (!updatedElements.ContainsKey(newCell.Position))
-                    updatedElements.Add(newCell.Position, newCell.GetTeamColor());
+                if (!this.displayController.updatedElements.ContainsKey(newCell.Position))
+                    this.displayController.updatedElements.Add(newCell.Position, newCell.GetTeamColor());
                 else
                 {
-                    if (updatedElements[newCell.Position] == Color.Black)
-                        updatedElements[newCell.Position] = newCell.GetTeamColor();
+                    if (this.displayController.updatedElements[newCell.Position] == Color.Black)
+                        this.displayController.updatedElements[newCell.Position] = newCell.GetTeamColor();
                 }                    
             }
 
@@ -230,7 +220,7 @@ namespace Cells.GameCore
         }
 
         /// <summary>
-        /// Creates a population of cells
+        /// Creates a population of cells for each selected braintype
         /// </summary>
         private void CreateInitialCellPopulation()
         {
@@ -280,6 +270,10 @@ namespace Cells.GameCore
             RegisterNewCell(cell);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private ICoordinates GetRandomCoordinates()
         {
             ICoordinates coord = new Coordinates();
@@ -358,6 +352,35 @@ namespace Cells.GameCore
 
             this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, cell.Position);
             this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, positionSpawn);
+        }
+
+        /// <summary>
+        /// Retrieves the GameMap
+        /// </summary>
+        /// <returns></returns>
+        public IMap GetMap()
+        {
+            return this.masterMap as IMap;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <param name="ressources"></param>
+        public void ReduceRessources(ICoordinates coordinates, Int16 ressources)
+        {
+            this.masterMap.DecreaseRessources(coordinates, ressources);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
+        public Int16 GetAmountOfRessourcesLeft(ICoordinates coordinates)
+        {
+            return this.masterMap.GetAmountOfRessourcesLeft(coordinates);
         }
     }
 

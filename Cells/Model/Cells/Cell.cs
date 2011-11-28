@@ -95,11 +95,10 @@ namespace Cells.GameCore.Cells
                     Die();
                     break;
                 case AvailableActions.EAT:
-                    Eat();
+                    Eat(action.GetTargetMapTile());
                     break;
                 case AvailableActions.ATTACK:
                     throw new NotImplementedException();
-                    //Attack();
                     break;
                 case AvailableActions.NONE:
                     break;
@@ -109,9 +108,16 @@ namespace Cells.GameCore.Cells
             return;
         }
 
-        private void Eat()
+        private void Eat(ICoordinates coordinates)
         {
-            throw new NotImplementedException();
+            Int16 ressourcesLeft = this.world.GetAmountOfRessourcesLeft(coordinates);
+            Int16 lifeBonus = ressourcesLeft < Settings.Default.MaxEatingPerRoundQuantity ? ressourcesLeft : Settings.Default.MaxEatingPerRoundQuantity;
+
+            if (lifeBonus > 0)
+            {
+                this.world.ReduceRessources(coordinates, lifeBonus);
+                this.IncreaseLife(lifeBonus);
+            }
         }
 
         /// <summary>
@@ -293,7 +299,7 @@ namespace Cells.GameCore.Cells
         private void MoveLeft()
         {
             // Check the potentially new coordinate
-            if (!CoordinatesAreValid((Int16)(Position.X - 1), Position.Y))
+            if (!CoordinatesAreValid((Int16)(Position.X - 1), Position.Y) || !CanMoveLeft())
                 return;
 
             ICoordinates oldPosition = Position.Clone();
@@ -307,7 +313,7 @@ namespace Cells.GameCore.Cells
         private void MoveRight()
         {
             // Check the potentially new coordinate
-            if (!CoordinatesAreValid((Int16)(Position.X + 1), Position.Y))
+            if (!CoordinatesAreValid((Int16)(Position.X + 1), Position.Y) || !CanMoveRight())
                 return;
 
             ICoordinates oldPosition = Position.Clone();
@@ -321,7 +327,7 @@ namespace Cells.GameCore.Cells
         private void MoveUp()
         {
             // Check the potentially new coordinate
-            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y - 1)))
+            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y - 1)) || !CanMoveUp())
                 return;
 
             ICoordinates oldPosition = Position.Clone();
@@ -335,7 +341,7 @@ namespace Cells.GameCore.Cells
         private void MoveDown()
         {
             // Check the potentially new coordinate
-            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y + 1)))
+            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y + 1)) || !CanMoveDown())
                 return;
 
             ICoordinates oldPosition = Position.Clone();
@@ -360,7 +366,6 @@ namespace Cells.GameCore.Cells
             return true;
         }
 
-
         /// <summary>
         /// Notify the world that a cell moved
         /// </summary>
@@ -374,9 +379,9 @@ namespace Cells.GameCore.Cells
         }
 
         /// <summary>
-        /// 
+        /// Builds up the relation between the brain and the cell
         /// </summary>
-        /// <param name="newBrain"></param>
+        /// <param name="newBrain">The IBrain to use</param>
         public void SetBrain(IBrain newBrain)
         {
             this.Brain = newBrain;
@@ -384,24 +389,57 @@ namespace Cells.GameCore.Cells
         }
 
         /// <summary>
-        /// 
+        /// Returns the type of brain currently attached to the cell
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string describing the brain</returns>
         internal String GetAttachedBrainType()
         {
             return this.Brain.GetType().ToString();
         }
 
         /// <summary>
-        /// 
+        /// Proofs if the cell has enough life to divide itself
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the division is allowed</returns>
         public bool CanDivide()
         {
-            if ((this.Life - Settings.Default.CostOfCellDivision) / 2 > 0)
-                return true;
-            else
-                return false;
+            return (this.Life - Settings.Default.CostOfCellDivision) / 2 > 0;
+        }
+
+        /// <summary>
+        /// Checks if the up position is free to move to
+        /// </summary>
+        /// <returns>True if the cell can move up</returns>
+        public bool CanMoveUp()
+        {
+            return (this.world.GetMap().GetCellAt(this.Position.X, (Int16)(this.Position.Y - 1)) == null);
+        }
+
+        /// <summary>
+        /// Checks if the down position is free to move to
+        /// </summary>
+        /// <returns>True if the cell can move down</returns>
+        public bool CanMoveDown()
+        {
+            return (this.world.GetMap().GetCellAt(this.Position.X, (Int16)(this.Position.Y + 1)) == null);
+        }
+
+        /// <summary>
+        /// Checks if the left position is free to move to
+        /// </summary>
+        /// <returns>True if the cell can move left</returns>
+        public bool CanMoveLeft()
+        {
+            return (this.world.GetMap().GetCellAt((Int16)(this.Position.X - 1), this.Position.Y) == null);
+        }
+
+        /// <summary>
+        /// Checks if the right position is free to move to
+        /// </summary>
+        /// <returns>True if the cell can move right</returns>
+        public bool CanMoveRight()
+        {
+            return (this.world.GetMap().GetCellAt((Int16)(this.Position.X + 1), this.Position.Y) == null);
         }
     }
 

@@ -10,5 +10,6 @@ namespace Cells.Interfaces
         MapTile[,] GetSubset(ICoordinates centerPoint, Int16 subWidth, Int16 subHeight);
         void InitializeGrid();
         void InitializeGrid(MapTile[,] view);
+        ICell GetCellAt(Int16 x, Int16 y);
     }
 }

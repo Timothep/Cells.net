@@ -35,7 +35,7 @@ namespace Cells.Brain
         {
             AvailableActions action;
 
-            SurroundingView surroundings = this.cell.Sense();
+            SurroundingView surroundings = this.Cell.Sense();
             IList<ICell> neighbours = surroundings.GetAllCells();
 
             // In randomMovementChances % of the cases => it goes random
@@ -49,7 +49,7 @@ namespace Cells.Brain
                 if (closestNeighbour == null)
                     action = GetRandomAction();
                 else
-                    action = this.cell.GetRelativeMovment(closestNeighbour.Position);
+                    action = this.Cell.GetRelativeMovment(closestNeighbour.Position);
             }
 
             return new CellAction(action);
@@ -69,7 +69,7 @@ namespace Cells.Brain
             {
                 if (minDistance == null)
                     chosenOne = cell;
-                else if (Math.Abs((UInt16)(this.cell.Position.X - cell.Position.X)) + Math.Abs((UInt16)(this.cell.Position.Y - cell.Position.Y)) < minDistance)
+                else if (Math.Abs((UInt16)(this.Cell.Position.X - cell.Position.X)) + Math.Abs((UInt16)(this.Cell.Position.Y - cell.Position.Y)) < minDistance)
                     chosenOne = cell;
             }
 

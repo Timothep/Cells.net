@@ -15,7 +15,7 @@ namespace Cells.Model.Brain
         /// <summary>
         /// A reference to the cell the brain belongs to
         /// </summary>
-        protected ICell cell { get; set; }
+        protected ICell Cell { get; set; }
 
         /// <summary>
         /// Attach the cell to the brain
@@ -23,7 +23,7 @@ namespace Cells.Model.Brain
         /// <param name="cell">The cell to attach</param>
         public void SetCell(ICell cell)
         {
-            this.cell = cell;
+            this.Cell = cell;
         }
 
         /// <summary>

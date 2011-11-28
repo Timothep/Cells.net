@@ -10,19 +10,24 @@ namespace Cells.Model
 
     public class CellAction
     {
-        private AvailableActions action { get; set; }
-
-        private ICoordinates targetCell;
+        private AvailableActions Action { get; set; }
+        private ICoordinates TargetMapTile { get; set; }
 
         public CellAction(AvailableActions theAction, ICoordinates targetCell = null)
         {
-            this.action = theAction;
-            this.targetCell = targetCell;
+            this.Action = theAction;
+            this.TargetMapTile = targetCell;
         }
 
         public AvailableActions GetAction()
         {
-            return this.action;
+            return this.Action;
         }
+
+        public ICoordinates GetTargetMapTile()
+        {
+            return this.TargetMapTile;
+        }
+
     }
 }
