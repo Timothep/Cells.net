@@ -147,7 +147,7 @@ namespace CellsTest.TestClasses
             testMap.InitializeGrid();
 
             Coordinates coord = new Coordinates();
-            coord.SetCoordinates(1, 1);
+            coord.SetCoordinates(9, 9);
 
             MapTile[,] extract = testMap.GetSubset(coord, 3, 3);
             Assert.IsTrue(extract.GetLength(1) == 2);
