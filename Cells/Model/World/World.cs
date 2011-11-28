@@ -295,6 +295,9 @@ namespace Cells.GameCore
         /// <param name="newCell"></param>
         private void RegisterNewCell(ICell newCell)
         {
+            if (newCell.Position.X == 100)
+            {}
+
             this.newCellsToAdd.Add(newCell);
         }
 
@@ -343,8 +346,18 @@ namespace Cells.GameCore
         /// <param name="cell"></param>
         public void CreateSpawns(short spawnLife, Cell cell)
         {
+            // We don't create spawns at the same place
+            ICoordinates positionSpawn = new Coordinates();
+            positionSpawn.X = cell.Position.X;
+            positionSpawn.Y = cell.Position.Y;
+
+            if (Helper.CoordinatesAreValid((Int16)(positionSpawn.X + 1), positionSpawn.Y))
+                positionSpawn.X += 1;
+            else
+                positionSpawn.X += -1;
+
             this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, cell.Position);
-            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, cell.Position);
+            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, positionSpawn);
         }
     }
 

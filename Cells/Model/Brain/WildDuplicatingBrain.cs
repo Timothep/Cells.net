@@ -32,7 +32,7 @@ namespace Cells.Brain
         {
             CellAction action = CellAction.SPLIT;
 
-            if (!this.cell.CanDivide())
+            if (RandomGenerator.GetRandomInt16(2) == 1 || !this.cell.CanDivide())
                 action = GetRandomAction();
 
             return action; 

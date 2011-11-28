@@ -55,6 +55,7 @@
     <Compile Include="TestClasses\MapViewTest.cs" />
     <Compile Include="TestClasses\RandomGeneratorTest.cs" />
     <Compile Include="TestClasses\TestCoordinates.cs" />
+    <Compile Include="TestClasses\UtilsTest.cs" />
     <Compile Include="TestClasses\WorldTest.cs" />
   </ItemGroup>
   <ItemGroup>

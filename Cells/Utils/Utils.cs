@@ -53,8 +53,8 @@ namespace Cells.Utils
         /// <returns></returns>
         static public Boolean CoordinatesAreValid(Int16 coordX, Int16 coordY)
         {
-            if (coordX < 0 || coordX > Settings.Default.WorldWidth
-             || coordY < 0 || coordY > Settings.Default.WorldHeight)
+            if (coordX < 0 || coordX >= Settings.Default.WorldWidth
+             || coordY < 0 || coordY >= Settings.Default.WorldHeight)
                 return false;
 
             return true;
