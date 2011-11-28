@@ -21,12 +21,28 @@ namespace Cells.GameCore
     /// </summary>
     public class World : IWorld
     {
-        private Map _masterMap;
-        private IList<String> _brains;
-        private IList<ICell> _cells = new List<ICell>();
-        private readonly List<ICell> _deadCellsToRemove = new List<ICell>();
-        private readonly IDictionary<ICoordinates, Color> _updatedElements = new ConcurrentDictionary<ICoordinates, Color>();
-        private IList<Color> availableColors = new List<Color>();
+        private Map masterMap;
+        private IList<String> brains;
+        
+        /// <summary>
+        /// List of all the cells currently in game
+        /// </summary>
+        private IList<ICell> cells = new List<ICell>();
+
+        /// <summary>
+        /// List of all the cells created during the round
+        /// </summary>
+        private IList<ICell> newCellsToAdd = new List<ICell>();
+
+        /// <summary>
+        /// List of all the cells that died during the round
+        /// </summary>
+        private readonly List<ICell> deadCellsToRemove = new List<ICell>();
+
+        private readonly IDictionary<ICoordinates, Color> updatedElements = new ConcurrentDictionary<ICoordinates, Color>();
+        private readonly IList<Color> availableColors = new List<Color>();
+        private readonly IKernel worldKernel = new StandardKernel(new WorldModule());
+        private readonly IKernel brainKernel = new StandardKernel();
 
         /// <summary>
         /// Constructor
@@ -44,12 +60,12 @@ namespace Cells.GameCore
         /// </summary>
         public void Initialize(IList<String> availableBrains)
         {
-            this._brains = availableBrains;
+            this.brains = availableBrains;
 
             IKernel kernel = new StandardKernel(new CellModule());
 
-            _masterMap = new Map(Settings.Default.WorldWidth, Settings.Default.WorldHeight);
-            _cells = new List<ICell>();
+            masterMap = new Map(Settings.Default.WorldWidth, Settings.Default.WorldHeight);
+            cells = new List<ICell>();
             
             CreateInitialCellPopulation();
             CreatePlantMap();
@@ -62,7 +78,7 @@ namespace Cells.GameCore
         /// <returns></returns>
         public IEnumerable<ICell> GetCells()
         {
-            return _cells;
+            return cells;
         }
 
         /// <summary>
@@ -71,7 +87,7 @@ namespace Cells.GameCore
         /// <returns>A list of coordinates where elements were updated</returns>
         public IEnumerable<KeyValuePair<ICoordinates, Color>> GetUpdatedElements()
         {
-            return _updatedElements;
+            return updatedElements;
         }
 
         /// <summary>
@@ -83,18 +99,14 @@ namespace Cells.GameCore
         public void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
         {
             // Add the cell movements to the logs
-            if (!_updatedElements.ContainsKey(oldCoordinates))        
-                _updatedElements.Add(oldCoordinates, Color.Black);
+            if (!updatedElements.ContainsKey(oldCoordinates))        
+                updatedElements.Add(oldCoordinates, Color.Black);
 
-            //if (_updatedElements.ContainsKey(newCoordinates) && _updatedElements[newCoordinates] != Color.Black)
-            //{
-            //    throw new InvalidOperationException("Trying to move a cell to a position where a cell already resides");
-            //}
-            //else
-                _updatedElements.Add(newCoordinates, team);
+            if (!updatedElements.ContainsKey(newCoordinates) || updatedElements[newCoordinates] == Color.Black)
+                updatedElements.Add(newCoordinates, team);
 
             // Update the map
-            this._masterMap.MoveCell(oldCoordinates, newCoordinates);
+            this.masterMap.MoveCell(oldCoordinates, newCoordinates);
         }
 
         /// <summary>
@@ -102,7 +114,7 @@ namespace Cells.GameCore
         /// </summary>
         public void ResetMovementsList()
         {
-            _updatedElements.Clear();
+            updatedElements.Clear();
         }
 
         /// <summary>
@@ -113,7 +125,7 @@ namespace Cells.GameCore
         /// <returns>A SurroundingView of the location where the cell resides</returns>
         public SurroundingView GetSurroundingsView(ICell cell)
         {
-            MapTile[,] map = _masterMap.GetSubset(cell.Position, Settings.Default.SensoryViewSize, Settings.Default.SensoryViewSize);
+            MapTile[,] map = masterMap.GetSubset(cell.Position, Settings.Default.SensoryViewSize, Settings.Default.SensoryViewSize);
             return new SurroundingView(cell.Position, map);
         }
 
@@ -124,8 +136,8 @@ namespace Cells.GameCore
         /// <remarks>The function throws an InvalidOperationException in case the operation cannot be performed</remarks>
         public void RaiseLandscape(ICoordinates position)
         {
-            if (_masterMap.GetLandscapeHeight(position) >= Settings.Default.MaxAltitude)
-                _masterMap.RaiseLandscape(position);
+            if (masterMap.GetLandscapeHeight(position) >= Settings.Default.MaxAltitude)
+                masterMap.RaiseLandscape(position);
             else
                 throw new InvalidOperationException("Landscape is already at its maximum at this location");
         }
@@ -137,8 +149,8 @@ namespace Cells.GameCore
         /// <remarks>The function throws an InvalidOperationException in case the operation cannot be performed</remarks>
         public void LowerLandscape(ICoordinates position)
         {
-            if (_masterMap.GetLandscapeHeight(position) <= Settings.Default.MinAltitude)
-                _masterMap.LowerLandscape(position);
+            if (masterMap.GetLandscapeHeight(position) <= Settings.Default.MinAltitude)
+                masterMap.LowerLandscape(position);
             else
                 throw new InvalidOperationException("Landscape is already at its minimum at this location");
         }
@@ -150,7 +162,7 @@ namespace Cells.GameCore
         /// <param name="life">The amount of ressources to drop</param>
         public void DropRessources(ICoordinates position, Int16 life)
         {
-            _masterMap.IncreaseRessources(position, life);
+            masterMap.IncreaseRessources(position, life);
         }
 
         /// <summary>
@@ -163,7 +175,7 @@ namespace Cells.GameCore
         /// </remarks>
         public void UnregisterCell(ICell cell)
         {
-            _deadCellsToRemove.Add(cell);
+            deadCellsToRemove.Add(cell);
         }
 
         /// <summary>
@@ -171,19 +183,50 @@ namespace Cells.GameCore
         /// </summary>
         public void RemoveDeadCells()
         {
-            foreach (Cell deadCell in _deadCellsToRemove)
+            foreach (Cell deadCell in deadCellsToRemove)
             {
-                _cells.Remove(deadCell);
-                _masterMap.RemoveCell(deadCell);
-
-                if (_updatedElements.ContainsKey(deadCell.Position))
-                {
-                    _updatedElements.Remove(deadCell.Position);
-                }
-                _updatedElements.Add(deadCell.Position, Color.Black);
+                RejectCell(deadCell);
             }
 
-            _deadCellsToRemove.Clear();
+            deadCellsToRemove.Clear();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="deadCell"></param>
+        private void RejectCell(Cell deadCell)
+        {
+            this.cells.Remove(deadCell);
+            masterMap.RemoveCell(deadCell);
+
+            if (updatedElements.ContainsKey(deadCell.Position))
+            {
+                updatedElements.Remove(deadCell.Position);
+            }
+
+            updatedElements.Add(deadCell.Position, Color.Black);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void AddNewlyCreatedCells()
+        {
+            foreach (Cell newCell in this.newCellsToAdd)
+            {
+                this.InjectCell(newCell);
+
+                if (!updatedElements.ContainsKey(newCell.Position))
+                    updatedElements.Add(newCell.Position, newCell.GetTeamColor());
+                else
+                {
+                    if (updatedElements[newCell.Position] == Color.Black)
+                        updatedElements[newCell.Position] = newCell.GetTeamColor();
+                }                    
+            }
+
+            newCellsToAdd.Clear();
         }
 
         /// <summary>
@@ -191,7 +234,7 @@ namespace Cells.GameCore
         /// </summary>
         private void CreateInitialCellPopulation()
         {
-            foreach (String brainType in this._brains)
+            foreach (String brainType in this.brains)
             {
                 Color teamColor = availableColors[RandomGenerator.GetRandomInt16((Int16)availableColors.Count)];
                 availableColors.Remove(teamColor);
@@ -200,24 +243,41 @@ namespace Cells.GameCore
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brainType"></param>
+        /// <param name="numberOfCells"></param>
+        /// <param name="teamColor"></param>
         private void CreateCellPopulation(String brainType, short numberOfCells, Color teamColor)
         {
-            IKernel kernel = new StandardKernel(new WorldModule());
-            IKernel brainKernel = new StandardKernel();
-
             for (int i = 0; i < numberOfCells; i++)
             {
-                var cell = kernel.Get<ICell>();
-
-                var brain = brainKernel.Get(Type.GetType(brainType)) as IBrain;
-                cell.SetBrain(brain);
-
-                cell.Position = GetRandomCoordinates();
-                cell.SetLife((Int16)RandomGenerator.GetRandomInt32(Settings.Default.CellMaxInitialLife));
-                cell.SetTeam(teamColor);
-
-                InjectCell(cell);
+                CreateCell(brainType, teamColor);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="brainType"></param>
+        /// <param name="teamColor"></param>
+        /// <param name="spawnLife"></param>
+        /// <param name="position"></param>
+        private void CreateCell(String brainType, Color teamColor, Int16? spawnLife = null, ICoordinates position = null)
+        {
+            var cell = this.worldKernel.Get<ICell>();
+
+            var brain = this.brainKernel.Get(Type.GetType(brainType)) as IBrain;
+            cell.SetBrain(brain);
+
+            cell.Position = position ?? (cell.Position = GetRandomCoordinates());
+            spawnLife = spawnLife ?? Settings.Default.CellMaxInitialLife;
+
+            cell.SetLife(RandomGenerator.GetRandomInt16((Int16)spawnLife));
+            cell.SetTeam(teamColor);
+
+            RegisterNewCell(cell);
         }
 
         private ICoordinates GetRandomCoordinates()
@@ -230,50 +290,75 @@ namespace Cells.GameCore
         }
 
         /// <summary>
-        /// Injects the cell into the game
+        /// Register a new cell into the game
+        /// </summary>
+        /// <param name="newCell"></param>
+        private void RegisterNewCell(ICell newCell)
+        {
+            this.newCellsToAdd.Add(newCell);
+        }
+
+        /// <summary>
+        /// Injects the cell into the game 
+        /// (should only be done by the world itself just before the begining of the turn)
         /// </summary>
         /// <param name="newCell">The cell</param>
         private void InjectCell(ICell newCell)
         {
             // Add the cell to the cell list
-            _cells.Add(newCell);
+            this.cells.Add(newCell);
 
             // Implant the cell on the map
-            _masterMap.ImplantCell(newCell);
+            this.masterMap.ImplantCell(newCell);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void CreateRessourcesMap()
         {
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 100, 0);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 0);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 5, 0);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 100, 0);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 0);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 5, 0);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void CreatePlantMap()
         {
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            _masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
         }
 
-        //public void CreateSpawns(short spawnLife, Cell cell)
-        //{
-        //    this.InjectCell(new Cell(cell.Position.X, cell.Position.Y, spawnLife, this, cell.GetTeamColor()));
-        //    this.InjectCell(new Cell(cell.Position.X, cell.Position.Y, spawnLife, this, cell.GetTeamColor()));
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="spawnLife"></param>
+        /// <param name="cell"></param>
+        public void CreateSpawns(short spawnLife, Cell cell)
+        {
+            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, cell.Position);
+            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, cell.Position);
+        }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     internal class WorldModule : NinjectModule
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Load()
         {
             Bind<ICell>().To<Cell>();
-            //Bind<IBrain>().To<SwarmBrain>();
-            //Bind<IWorld>().To<World>().InSingletonScope();
         }
     }
 }

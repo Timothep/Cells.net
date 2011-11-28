@@ -29,5 +29,9 @@ namespace Cells.Interfaces
         void Initialize(IList<String> availableBrains);
 
         void ResetMovementsList();
+
+        void CreateSpawns(short spawnLife, Cell cell);
+
+        void AddNewlyCreatedCells();
     }
 }

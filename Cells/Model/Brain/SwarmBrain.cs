@@ -21,7 +21,6 @@ namespace Cells.Brain
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="theCell">The cell that the brain should control</param>
         public SwarmBrain()
         {
 
@@ -35,7 +34,7 @@ namespace Cells.Brain
         {
             CellAction action;
 
-            SurroundingView surroundings = _cell.Sense();
+            SurroundingView surroundings = this.cell.Sense();
             IList<ICell> neighbours = surroundings.GetAllCells();
 
             // In randomMovementChances % of the cases => it goes random
@@ -49,7 +48,7 @@ namespace Cells.Brain
                 if (closestNeighbour == null)
                     action = GetRandomAction();
                 else
-                    action = _cell.GetRelativeMovment(closestNeighbour.Position);
+                    action = this.cell.GetRelativeMovment(closestNeighbour.Position);
             }
 
             return action;
@@ -69,7 +68,7 @@ namespace Cells.Brain
             {
                 if (minDistance == null)
                     chosenOne = cell;
-                else if (Math.Abs((UInt16)(this._cell.Position.X - cell.Position.X)) + Math.Abs((UInt16)(this._cell.Position.Y - cell.Position.Y)) < minDistance)
+                else if (Math.Abs((UInt16)(this.cell.Position.X - cell.Position.X)) + Math.Abs((UInt16)(this.cell.Position.Y - cell.Position.Y)) < minDistance)
                     chosenOne = cell;
             }
 

@@ -20,27 +20,27 @@ namespace Cells.Controller
     {
         // Game loop stuff
         private const long GameLoopLength = 50;
-        readonly Cells.Controller.Timer _timer = new Cells.Controller.Timer();
+        readonly Cells.Controller.Timer timer = new Cells.Controller.Timer();
 
         // List of the length of each cycle (for stats and performance purpose)
-        readonly List<Double> _cycleLength = new List<Double>();
+        readonly List<Double> cycleLength = new List<Double>();
 
         // Brain broker gathering brains via MEF
         BrainDiscoveryManager bDM = new BrainDiscoveryManager();
 
         // The view
-        CellsCanvas _view;
+        CellsCanvas view;
 
         // The world where all is happening
-        IWorld _world;
+        IWorld world;
         private bool _running = true;
 
         private IEnumerable<String> selectedBrainList;
 
         public GameController()
         {
-            _view = new CellsCanvas(this);
-            _view.Show();
+            this.view = new CellsCanvas(this);
+            this.view.Show();
         }
 
         /// <summary>
@@ -58,11 +58,11 @@ namespace Cells.Controller
         {
             while (this._running)
             {
-                _timer.Reset();
+                this.timer.Reset();
                 Loop();
-                _view.RenderGame();
+                this.view.RenderGame();
                 Application.DoEvents();
-                while (_timer.GetTicks() < GameLoopLength) { }
+                while (this.timer.GetTicks() < GameLoopLength) { }
             }
         }
 
@@ -71,10 +71,10 @@ namespace Cells.Controller
         /// </summary>
         public void StartGame()
         {
-            this.selectedBrainList = this._view.GetSelectedBrains();
+            this.selectedBrainList = this.view.GetSelectedBrains();
 
-            _world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
-            _world.Initialize(this.selectedBrainList as IList<String>);
+            this.world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
+            this.world.Initialize(this.selectedBrainList as IList<String>);
         }
 
         /// <summary>
@@ -82,10 +82,10 @@ namespace Cells.Controller
         /// </summary>
         public void StopGame()
         {
-            if(_world != null)
-                Utils.NinjectGlobalKernel.GlobalKernel.Release(_world);
+            if(this.world != null)
+                NinjectGlobalKernel.GlobalKernel.Release(this.world);
 
-            _world = null;
+            this.world = null;
         }
 
         /// <summary>
@@ -104,19 +104,20 @@ namespace Cells.Controller
         /// </summary>
         private void Tick()
         {
-            if (null == _world)
+            if (null == this.world)
             {
                 return;
             }
 
-            _world.ResetMovementsList();
+            this.world.AddNewlyCreatedCells();
+            this.world.ResetMovementsList();
 
-            IEnumerable<ICell> allCells = _world.GetCells();
+            IEnumerable<ICell> allCells = this.world.GetCells();
             Debug.WriteLine("Number of alive cells: " + allCells.Count().ToString());
 
             if (null != allCells)
             {
-                foreach (ICell currentCell in _world.GetCells())
+                foreach (ICell currentCell in this.world.GetCells())
                 {
                     //// Death comes first
                     currentCell.DecreaseLife();
@@ -132,7 +133,7 @@ namespace Cells.Controller
                 }
             }
 
-            _world.RemoveDeadCells();
+            this.world.RemoveDeadCells();
         }
 
         /// <summary>
@@ -141,10 +142,10 @@ namespace Cells.Controller
         /// <returns>A list of coordinates and the team it belongs to</returns>
         public IEnumerable<KeyValuePair<ICoordinates, Color>> GetUpdatedElements()
         {
-            if (null == _world)
+            if (null == this.world)
                 return null;
             
-            return _world.GetUpdatedElements();
+            return this.world.GetUpdatedElements();
         }
 
         /// <summary>
@@ -164,18 +165,4 @@ namespace Cells.Controller
             this._running = false;
         }
     }
-
-    ///// <summary>
-    ///// Ninject module 
-    ///// </summary>
-    //internal class GameCoreEngineModule : NinjectModule
-    //{
-    //    public override void Load()
-    //    {
-    //        Bind<IWorld>().To<World>().InSingletonScope();
-    //    }
-
-        
-    //}
-
 }

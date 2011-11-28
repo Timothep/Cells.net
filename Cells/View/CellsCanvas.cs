@@ -12,10 +12,10 @@ namespace Cells.View
 {
     public partial class CellsCanvas : Form
     {
-        private readonly Color _defaultBackgroundColor = Color.Black;
-        private readonly short _pixelSize = Settings.Default.PixelSize;
-        private readonly GameController _controller;
-        readonly Graphics _canvas;
+        private readonly Color defaultBackgroundColor = Color.Black;
+        private readonly short pixelSize = Settings.Default.PixelSize;
+        private readonly GameController controller;
+        private readonly Graphics canvas;
 
         /// <summary>
         /// Constructor
@@ -24,9 +24,9 @@ namespace Cells.View
         {
             InitializeComponent();
 
-            _controller = controller;
-            _canvas = DrawBox.CreateGraphics();
-            _canvas.Clear(_defaultBackgroundColor);
+            this.controller = controller;
+            this.canvas = DrawBox.CreateGraphics();
+            this.canvas.Clear(defaultBackgroundColor);
 
             PopulateBrains();
         }
@@ -36,7 +36,7 @@ namespace Cells.View
         /// </summary>
         private void PopulateBrains()
         {
-            foreach (String brainType in this._controller.GetAvailableBrainTypes())
+            foreach (String brainType in this.controller.GetAvailableBrainTypes())
                 this.lBBrains.Items.Add(brainType);
 
             // Preselect the two first brains if present
@@ -54,9 +54,9 @@ namespace Cells.View
         /// <param name="color">The color in which to paint</param>
         private void PaintSinglePixel(ICoordinates coordvector, Color color)
         {
-            _canvas.FillRectangle(
+            this.canvas.FillRectangle(
                 new SolidBrush(color),
-                new Rectangle(coordvector.X * _pixelSize, coordvector.Y * _pixelSize, _pixelSize, _pixelSize));
+                new Rectangle(coordvector.X * this.pixelSize, coordvector.Y * this.pixelSize, this.pixelSize, this.pixelSize));
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Cells.View
         /// </summary>
         private void BStartEngineClick(object sender, EventArgs e)
         {
-            _controller.StartGame();
+            this.controller.StartGame();
         }
 
         /// <summary>
@@ -87,8 +87,8 @@ namespace Cells.View
         /// </summary>
         private void BStopEngineClick(object sender, EventArgs e)
         {
-            _controller.StopGame();
-            _canvas.Clear(_defaultBackgroundColor);
+            this.controller.StopGame();
+            this.canvas.Clear(this.defaultBackgroundColor);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Cells.View
         /// </summary>
         internal void RenderGame()
         {
-            PaintPixels(_controller.GetUpdatedElements());
+            PaintPixels(this.controller.GetUpdatedElements());
         }
 
         /// <summary>
@@ -162,8 +162,8 @@ namespace Cells.View
         /// </summary>
         private void CellsCanvas_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this._controller.StopGame();
-            this._controller.Close();
+            this.controller.StopGame();
+            this.controller.Close();
         }
 
         /// <summary>

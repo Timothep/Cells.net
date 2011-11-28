@@ -14,12 +14,12 @@ namespace Cells.Brain
     /// It moves either randomly (10% chances)
     /// </summary>
     [Export(typeof(IBrain))]
-    public class AnotherRandomMovingBrain : BaseBrain, IBrain
+    public class WildDuplicatingBrain : BaseBrain, IBrain
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public AnotherRandomMovingBrain()
+        public WildDuplicatingBrain()
         {
 
         }
@@ -30,7 +30,12 @@ namespace Cells.Brain
         /// <returns>Returns one Action</returns>
         public override CellAction ChooseNextAction()
         {
-            return GetRandomAction();
+            CellAction action = CellAction.SPLIT;
+
+            if (!this.cell.CanDivide())
+                action = GetRandomAction();
+
+            return action; 
         }
 
         /// <summary>

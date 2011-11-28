@@ -19,7 +19,6 @@ namespace Cells.Brain
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="theCell">The cell that the brain should control</param>
         public RandomMovingBrain()
         {
 

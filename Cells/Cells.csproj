@@ -57,6 +57,7 @@
     <Compile Include="Model\Brain\BaseBrain.cs" />
     <Compile Include="Model\Brain\BrainDiscoveryManager.cs" />
     <Compile Include="Model\Brain\AnotherRandomMovingBrain.cs" />
+    <Compile Include="Model\Brain\WildDuplicatingBrain.cs" />
     <Compile Include="Model\Brain\RandomMovingBrain.cs" />
     <Compile Include="Model\Brain\SwarmBrain.cs" />
     <Compile Include="Model\Cells\Cell.cs" />

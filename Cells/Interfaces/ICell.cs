@@ -34,5 +34,7 @@ namespace Cells.Interfaces
         void SetTeam(Color teamColor);
 
         void SetBrain(IBrain brain);
+
+        bool CanDivide();
     }
 }

@@ -15,30 +15,23 @@ namespace Cells.GameCore.Cells
     
     public class Cell: ICell
     {
-        private IWorld _world;
-        private IBrain _brain { get; set; }
+        private readonly IWorld world;
+        private IBrain Brain { get; set; }
         public ICoordinates Position { get; set; }
         public Int16 Life { get; set; }
         public Color Team { get; set; }
 
-        private CellAction _cellPreviousAction = CellAction.NONE;
-        private Boolean _carryingWeight = false;
+        private CellAction cellPreviousAction = CellAction.NONE;
+        private Boolean carryingWeight = false;
 
         /// <summary>
         /// Cell constructor
-        /// </summary>
-        /// <param name="x">The x position where the cell is spawned</param>
-        /// <param name="y">The y position where the cell is spawned</param>
-        /// <param name="initialLife">life the cell is going to spawn with</param>
-        /// <param name="thisWorld">A reference to the world the cell lives in</param>
-        /// <param name="teamColor">The color of the team this cell belongs to</param>        
+        /// </summary> 
         public Cell()
         {
-            _world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
-            
-            IKernel kernel2 = new StandardKernel(new CellModule());
-            
-            Position = kernel2.Get<ICoordinates>();
+            world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
+            IKernel cellKernel = new StandardKernel(new CellModule());
+            Position = cellKernel.Get<ICoordinates>();
         }
 
         /// <summary>
@@ -47,7 +40,7 @@ namespace Cells.GameCore.Cells
         /// <param name="life"></param>
         public void SetLife(Int16 life)
         {
-            Life = life;
+            this.Life = life;
         }
 
         /// <summary>
@@ -56,7 +49,7 @@ namespace Cells.GameCore.Cells
         /// <param name="teamColor"></param>
         public void SetTeam(Color teamColor)
         {
-            Team = teamColor;
+            this.Team = teamColor;
         }
 
         /// <summary>
@@ -65,7 +58,7 @@ namespace Cells.GameCore.Cells
         /// <returns>The chose action</returns>
         public CellAction Think()
         {
-            return _brain.ChooseNextAction();
+            return this.Brain.ChooseNextAction();
         }
 
         /// <summary>
@@ -75,7 +68,7 @@ namespace Cells.GameCore.Cells
         /// <param name="action">The action to apply</param>
         public void Do(CellAction action)
         {
-            _cellPreviousAction = action;
+            this.cellPreviousAction = action;
 
             switch (action)
             {
@@ -123,7 +116,7 @@ namespace Cells.GameCore.Cells
         /// <returns>The last CellAction the cell did</returns>
         public CellAction GetPreviousAction()
         {
-            return _cellPreviousAction;
+            return cellPreviousAction;
         }
 
         /// <summary>
@@ -133,7 +126,7 @@ namespace Cells.GameCore.Cells
         /// <returns>A MapView describing its immediate surroundings</returns>
         public SurroundingView Sense()
         {
-            return _world.GetSurroundingsView(this);
+            return world.GetSurroundingsView(this);
         }
 
         /// <summary>
@@ -218,7 +211,7 @@ namespace Cells.GameCore.Cells
             {
                 try
                 {
-                    _world.DropRessources(Position, Life);
+                    world.DropRessources(Position, Life);
                 }
                 catch (InvalidOperationException e)
                 {
@@ -233,7 +226,7 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void UnregisterCell()
         {
-            this._world.UnregisterCell(this);
+            this.world.UnregisterCell(this);
         }
 
         /// <summary>
@@ -241,17 +234,17 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void DropEarth()
         {
-            if (_carryingWeight)
+            if (carryingWeight)
             {
                 try
                 {
-                    _world.RaiseLandscape(Position);
+                    world.RaiseLandscape(Position);
                 }
                 catch (InvalidOperationException e)
                 {
                     return;
                 }
-                _carryingWeight = false;
+                carryingWeight = false;
             }
         }
 
@@ -260,17 +253,17 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void LiftEarth()
         {
-            if (_carryingWeight)
+            if (carryingWeight)
             {
                 try
                 {
-                    _world.LowerLandscape(Position);
+                    world.LowerLandscape(Position);
                 }
                 catch (InvalidOperationException e)
                 {
                     return;
                 }
-                _carryingWeight = true;
+                carryingWeight = true;
             }
         }
 
@@ -279,17 +272,15 @@ namespace Cells.GameCore.Cells
         /// </summary>
         private void Split()
         {
-            throw new Exception("NotImplemented");
+            // Compute the spawn life level after cell division
+            var spawnLife = (Int16)Math.Truncate((float)(Life - Settings.Default.CostOfCellDivision) / 2);
 
-            //if (Life > Settings.Default.CostOfCellDivision + 2 * Settings.Default.SpawnLifeThreshold)
-            //{
-            //    Int16 spawnLife = (Int16)Math.Truncate((float)(Life - Settings.Default.CostOfCellDivision) / 2);
-
-            //    // Create the first spawn
-            //    _world.CreateSpawns(spawnLife, this);
-
-            //    this.Die();
-            //}
+            if (spawnLife > Settings.Default.SpawnLifeThreshold)
+            {
+                // Create the spawns
+                this.world.CreateSpawns(spawnLife, this);
+                this.Die();
+            }
         }
 
         /// <summary>
@@ -374,25 +365,49 @@ namespace Cells.GameCore.Cells
         /// <param name="team">The color the team is on</param>
         private void NotifyMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
         {
-            _world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
+            world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
             return;
         }
 
-        public void SetBrain(IBrain brain)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newBrain"></param>
+        public void SetBrain(IBrain newBrain)
         {
-            this._brain = brain;
-            this._brain.SetCell(this);
+            this.Brain = newBrain;
+            this.Brain.SetCell(this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal String GetAttachedBrainType()
+        {
+            return this.Brain.GetType().ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool CanDivide()
+        {
+            if ((this.Life - Settings.Default.CostOfCellDivision) / 2 > 0)
+                return true;
+            else
+                return false;
         }
     }
 
     /// <summary>
-    /// 
+    /// Ninject module used to create brains, world and coordinates
     /// </summary>
     internal class CellModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IBrain>().To<SwarmBrain>();
             Bind<IWorld>().To<World>().InSingletonScope();
             Bind<ICoordinates>().To<Coordinates>();
         }
