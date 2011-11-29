@@ -20,6 +20,14 @@ namespace Cells.Utils
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public Coordinates(Int16 inX, Int16 inY)
+        {
+            this.SetCoordinates(inX, inY);
+        }
+
+        /// <summary>
         /// Sets the coordinates
         /// </summary>
         /// <param name="inX">The X position</param>

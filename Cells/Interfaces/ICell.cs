@@ -22,6 +22,8 @@ namespace Cells.Interfaces
 
         AvailableActions GetRelativeMovment(ICoordinates coordinates);
 
+        AvailableActions GetRelativeMovment(IOffsetVector coordinates);
+
         void DecreaseLife(Int16 malus = 1);
 
         Int16 GetLife();

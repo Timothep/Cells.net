@@ -95,7 +95,7 @@ namespace Cells.GameCore.Cells
                     Die();
                     break;
                 case AvailableActions.EAT:
-                    Eat(action.GetTargetMapTile());
+                    Eat(action.GetOffsetToTarget());
                     break;
                 case AvailableActions.ATTACK:
                     throw new NotImplementedException();
@@ -112,10 +112,14 @@ namespace Cells.GameCore.Cells
         /// Tries to eat ressources present at the given coordinates
         /// </summary>
         /// <param name="coordinates">The coordinates where something to eat should be present</param>
-        private void Eat(ICoordinates coordinates)
+        private void Eat(IOffsetVector offsetToTarget)
         {
-            if (coordinates == null)
+            if (offsetToTarget == null)
                 return;
+
+            ICoordinates coordinates = new Coordinates(this.Position.X, this.Position.Y);
+            coordinates.X += offsetToTarget.X;
+            coordinates.Y += offsetToTarget.Y;
 
             Int16 ressourcesLeft = this.world.GetAmountOfRessourcesLeft(coordinates);
             Int16 lifeBonus = ressourcesLeft < Settings.Default.MaxEatingPerRoundQuantity ? ressourcesLeft : Settings.Default.MaxEatingPerRoundQuantity;
@@ -167,6 +171,33 @@ namespace Cells.GameCore.Cells
             if (coordinates.X > this.Position.X)
                 actions.Add(AvailableActions.MOVERIGHT);
             
+            if (actions.Count > 0)
+                return actions[RandomGenerator.GetRandomInt32(actions.Count)];
+
+            return AvailableActions.NONE;
+        }
+
+        /// <summary>
+        /// Function returning a cell action indicating in which direction the cell should move to approach the given coordinates
+        /// </summary>
+        /// <param name="coordinates">The target coordinates</param>
+        /// <returns>A cell action indicating how the cell should move to get there</returns>
+        public AvailableActions GetRelativeMovment(IOffsetVector offsetVector)
+        {
+            var actions = new List<AvailableActions>();
+
+            if (offsetVector.Y > 0)
+                actions.Add(AvailableActions.MOVEDOWN);
+
+            if (offsetVector.Y < 0)
+                actions.Add(AvailableActions.MOVEUP);
+
+            if (offsetVector.X < 0)
+                actions.Add(AvailableActions.MOVELEFT);
+
+            if (offsetVector.X > 0)
+                actions.Add(AvailableActions.MOVERIGHT);
+
             if (actions.Count > 0)
                 return actions[RandomGenerator.GetRandomInt32(actions.Count)];
 

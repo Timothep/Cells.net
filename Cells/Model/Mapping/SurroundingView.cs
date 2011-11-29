@@ -8,6 +8,7 @@ using Cells.Utils;
 using Cells.Interfaces;
 using Cells.Model.Mapping;
 using Cells.Properties;
+using Cells.Model;
 
 namespace Cells.GameCore.Mapping
 {
@@ -16,13 +17,14 @@ namespace Cells.GameCore.Mapping
     /// </summary>
     public class SurroundingView : ISurroundingView
     {
-        private ICoordinates _centerOfView;
+        public ICoordinates CellPositionInWorld;
+        public ICoordinates CellPositionInView;
         
         // The view is a square centered on the cell
-        private short _ViewSizeX;
-        private short _ViewSizeY;
+        private readonly short viewSizeX;
+        private readonly short viewSizeY;
 
-        public Map _view;
+        public Map View;
 
         /// <summary>
         /// Constructor
@@ -31,11 +33,15 @@ namespace Cells.GameCore.Mapping
         public SurroundingView(ICoordinates coordinates, MapTile[,] view)
         {
             // Set the center coordinate
-            _centerOfView = coordinates;
-            _ViewSizeX = Convert.ToInt16(view.GetUpperBound(0));
-            _ViewSizeY = Convert.ToInt16(view.GetUpperBound(1));
-            _view = new Map(_ViewSizeX, _ViewSizeY);
-            _view.InitializeGrid(view);
+            CellPositionInWorld = coordinates;
+            
+            viewSizeX = Convert.ToInt16(view.GetUpperBound(0));
+            viewSizeY = Convert.ToInt16(view.GetUpperBound(1));
+
+            CellPositionInView = new Coordinates((Int16)(viewSizeX / 2), (Int16)(viewSizeY / 2));
+
+            View = new Map(viewSizeX, viewSizeY);
+            View.InitializeGrid(view);
         }
 
         /// <summary>
@@ -46,10 +52,10 @@ namespace Cells.GameCore.Mapping
         {
             IList<ICell> newList = new List<ICell>();
 
-            for (int i = 0; i < _ViewSizeX - 1; i++)
-                for (int j = 0; j < _ViewSizeY - 1; j++)
-                    if (_view.Grid[i,j].CellReference != null)
-                        newList.Add(_view.Grid[i, j].CellReference);
+            for (int i = 0; i < viewSizeX - 1; i++)
+                for (int j = 0; j < viewSizeY - 1; j++)
+                    if (View.Grid[i,j].CellReference != null)
+                        newList.Add(View.Grid[i, j].CellReference);
 
             return newList;
         }
@@ -60,7 +66,7 @@ namespace Cells.GameCore.Mapping
         /// <returns></returns>
         internal Int16 GetWidth()
         {
-            return this._view.GetMapWidth();
+            return this.View.GetMapWidth();
         }
 
         /// <summary>
@@ -69,7 +75,7 @@ namespace Cells.GameCore.Mapping
         /// <returns></returns>
         internal Int16 GetHeight()
         {
-            return this._view.GetMapHeight();
+            return this.View.GetMapHeight();
         }
 
         ///// <summary>
@@ -94,7 +100,6 @@ namespace Cells.GameCore.Mapping
         //            minDistance = this._centerOfView.DistanceTo(spot);
         //        }
         //    }
-            
         //    return null;
         //}
 
@@ -102,30 +107,30 @@ namespace Cells.GameCore.Mapping
         /// 
         /// </summary>
         /// <returns></returns>
-        internal ICoordinates GetClosestRessourcePool()
+        internal IOffsetVector GetClosestRessourcePool(ICoordinates coordinatesFrom, ICell cell)
         {
-            ICoordinates theOne = null;
-            Int16? minDistanceSofar = (Int16)this._view.Grid.GetLength(0);
+            ICoordinates coordinatesTo = null;
+            Int16? minDistanceSofar = (Int16)this.View.Grid.GetLength(0);
 
-            for (int i = 0; i < this._view.Grid.GetLength(0); i++)
+            for (int i = 0; i < this.View.Grid.GetLength(0); i++)
             {
-                for (int j = 0; j < this._view.Grid.GetLength(1); j++)
+                for (int j = 0; j < this.View.Grid.GetLength(1); j++)
                 {
-                    if (this._view.Grid[i, j].RessourceLevel > 0)
+                    if (this.View.Grid[i, j].RessourceLevel > 0)
                     {
                         var coord = new Coordinates();
                         coord.SetCoordinates((Int16)i, (Int16)j);
-                        Int16? distTo = this._centerOfView.DistanceTo(coord);
+                        Int16? distTo = this.CellPositionInView.DistanceTo(coord);
                         if (distTo < minDistanceSofar)
                         {
                             minDistanceSofar = distTo;
-                            theOne = coord;
+                            coordinatesTo = coord;
                         }
                     }
                 }
             }
 
-            return theOne;
+            return coordinatesTo == null ? null : new OffsetVector(coordinatesFrom, coordinatesTo);
         }
     }
 }

@@ -9,8 +9,14 @@ namespace Cells.Interfaces
 {
     public interface IDisplayController
     {
-        IEnumerable<KeyValuePair<ICoordinates, Color>> GetUpdatedElements();
+        IEnumerable<KeyValuePair<ICoordinates, Color>> GetPaintJobs();
 
-        IDictionary<ICoordinates, Color> updatedElements { get; set; }
+        IDictionary<ICoordinates, Color> UpdatedElements { get; set; }
+
+        void SetStaticElement(ICoordinates elementCoordinates, Color elementColor);
+
+        void SetDynamicElement(ICoordinates elementCoordinates, Color elementColor);
+
+        void PaintBackground(ICoordinates coordinates);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cells.GameCore.Cells;
 using Cells.GameCore.Mapping;
 using Cells.Utils;
 using Cells.Interfaces;
@@ -30,16 +31,23 @@ namespace Cells.Model.Brain.Brains
             AvailableActions action;
 
             SurroundingView surroundings = this.Cell.Sense();
-            ICoordinates coordinates = surroundings.GetClosestRessourcePool();
+
+            // Get the offset to the closest ressource pool
+            IOffsetVector offsetVector = surroundings.GetClosestRessourcePool(this.Cell.Position, this.Cell);
 
             // If no ressources found, go random
-            if (coordinates == null)
+            if (offsetVector == null)
                 action = GetRandomAction();
             else
+            {
                 // If the ressources are directly in contact, eat otherwise move toward it
-                action = this.Cell.Position.DistanceTo(coordinates) == 1 ? AvailableActions.EAT : this.Cell.GetRelativeMovment(coordinates);
+                if (Math.Abs(offsetVector.X) <= 1 && Math.Abs(offsetVector.Y) <= 1)
+                    action = AvailableActions.EAT;
+                else
+                    action = this.Cell.GetRelativeMovment(offsetVector);
+            }
 
-            return action == AvailableActions.EAT ? new CellAction(action, coordinates) : new CellAction(action);
+            return action == AvailableActions.EAT ? new CellAction(action, offsetVector) : new CellAction(action);
         }
 
         /// <summary>

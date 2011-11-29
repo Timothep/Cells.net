@@ -11,7 +11,7 @@ namespace CellsTest.TestClasses
         {
             GameController testEngine = new GameController();
             testEngine.StartGame();
-            Assert.IsNotNull(testEngine.GetUpdatedElements());
+            Assert.IsNotNull(testEngine.GetPixelsToPaint());
         }
     }
 }

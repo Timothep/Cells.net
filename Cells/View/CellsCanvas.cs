@@ -104,7 +104,7 @@ namespace Cells.View
         /// </summary>
         internal void RenderGame()
         {
-            PaintPixels(this.controller.GetUpdatedElements());
+            PaintPixels(this.controller.GetPixelsToPaint());
         }
 
         /// <summary>

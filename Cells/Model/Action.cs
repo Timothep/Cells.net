@@ -11,12 +11,16 @@ namespace Cells.Model
     public class CellAction
     {
         private AvailableActions Action { get; set; }
-        private ICoordinates TargetMapTile { get; set; }
+        private IOffsetVector OffsetToTarget { get; set; }
+        //private ICoordinates TargetMapTile { get; set; }
 
-        public CellAction(AvailableActions theAction, ICoordinates targetCell = null)
+        //public CellAction(AvailableActions theAction, ICoordinates targetCell = null)
+        public CellAction(AvailableActions theAction, IOffsetVector targetOffset = null)
         {
             this.Action = theAction;
-            this.TargetMapTile = targetCell;
+            this.OffsetToTarget = targetOffset;
+
+            //this.TargetMapTile = targetCell;
         }
 
         public AvailableActions GetAction()
@@ -24,10 +28,14 @@ namespace Cells.Model
             return this.Action;
         }
 
-        public ICoordinates GetTargetMapTile()
-        {
-            return this.TargetMapTile;
-        }
+        //public ICoordinates GetTargetMapTile()
+        //{
+        //    return this.TargetMapTile;
+        //}
 
+        public IOffsetVector GetOffsetToTarget()
+        {
+            return this.OffsetToTarget;
+        }
     }
 }

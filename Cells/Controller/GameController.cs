@@ -142,12 +142,12 @@ namespace Cells.Controller
         /// Gets a list of the coordinates where a cell shall be painted
         /// </summary>
         /// <returns>A list of coordinates and the team it belongs to</returns>
-        public IEnumerable<KeyValuePair<ICoordinates, Color>> GetUpdatedElements()
+        public IEnumerable<KeyValuePair<ICoordinates, Color>> GetPixelsToPaint()
         {
             if (null == this.world)
                 return null;
             
-            return this.displayController.GetUpdatedElements();
+            return this.displayController.GetPaintJobs();
         }
 
         /// <summary>

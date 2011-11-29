@@ -70,9 +70,11 @@
     <Compile Include="Interfaces\ICoordinates.cs" />
     <Compile Include="Interfaces\IMap.cs" />
     <Compile Include="Interfaces\ISurroundingView.cs" />
+    <Compile Include="Interfaces\IOffsetVector.cs" />
     <Compile Include="Model\Mapping\SurroundingView.cs" />
     <Compile Include="Model\Mapping\Map.cs" />
     <Compile Include="Model\Mapping\MapTile.cs" />
+    <Compile Include="Model\OffsetVector.cs" />
     <Compile Include="Model\World\World.cs" />
     <Compile Include="Interfaces\IDisplayController.cs" />
     <Compile Include="View\CellsCanvas.cs">
@@ -89,6 +91,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Model\Coordinates.cs" />
     <Compile Include="Utils\Utils.cs" />
+    <Compile Include="View\VisualTile.cs" />
     <EmbeddedResource Include="View\CellsCanvas.resx">
       <DependentUpon>CellsCanvas.cs</DependentUpon>
     </EmbeddedResource>

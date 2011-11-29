@@ -51,10 +51,8 @@ namespace Cells.GameCore
         /// </summary>
         public World()
         {
-            availableColors.Add(Color.Red);
-            availableColors.Add(Color.Blue);
             availableColors.Add(Color.Yellow);
-            availableColors.Add(Color.Green);
+            availableColors.Add(Color.Blue);
         }
 
         /// <summary>
@@ -72,6 +70,17 @@ namespace Cells.GameCore
             CreateInitialCellPopulation();
             CreatePlantMap();
             CreateRessourcesMap();
+            CreateGeometryMap();
+        }
+
+        /// <summary>
+        /// Fill up the world with crap
+        /// </summary>
+        private void CreateGeometryMap()
+        {
+            for (Int16 x = 0; x < Settings.Default.WorldWidth; x++ )
+                for (Int16 y = 0; y < Settings.Default.WorldHeight; y++)
+                    this.displayController.SetStaticElement(new Coordinates(x, y), Color.Brown);
         }
 
         /// <summary>
@@ -92,11 +101,11 @@ namespace Cells.GameCore
         public void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
         {
             // Add the cell movements to the logs
-            if (!this.displayController.updatedElements.ContainsKey(oldCoordinates))        
-                this.displayController.updatedElements.Add(oldCoordinates, Color.Black);
+            if (!this.displayController.UpdatedElements.ContainsKey(oldCoordinates))        
+                this.displayController.UpdatedElements.Add(oldCoordinates, Color.Black);
 
-            if (!this.displayController.updatedElements.ContainsKey(newCoordinates) || this.displayController.updatedElements[newCoordinates] == Color.Black)
-                this.displayController.updatedElements.Add(newCoordinates, team);
+            if (!this.displayController.UpdatedElements.ContainsKey(newCoordinates) || this.displayController.UpdatedElements[newCoordinates] == Color.Black)
+                this.displayController.UpdatedElements.Add(newCoordinates, team);
 
             // Update the map
             this.masterMap.MoveCell(oldCoordinates, newCoordinates);
@@ -107,7 +116,7 @@ namespace Cells.GameCore
         /// </summary>
         public void ResetMovementsList()
         {
-            this.displayController.updatedElements.Clear();
+            this.displayController.UpdatedElements.Clear();
         }
 
         /// <summary>
@@ -191,10 +200,10 @@ namespace Cells.GameCore
             this.cells.Remove(deadCell);
             this.masterMap.RemoveCell(deadCell);
 
-            if (this.displayController.updatedElements.ContainsKey(deadCell.Position))
-                this.displayController.updatedElements.Remove(deadCell.Position);
+            if (this.displayController.UpdatedElements.ContainsKey(deadCell.Position))
+                this.displayController.UpdatedElements.Remove(deadCell.Position);
 
-            this.displayController.updatedElements.Add(deadCell.Position, Color.Black);
+            this.displayController.UpdatedElements.Add(deadCell.Position, Color.Black);
         }
 
         /// <summary>
@@ -207,12 +216,12 @@ namespace Cells.GameCore
             {
                 this.InjectCell(newCell);
 
-                if (!this.displayController.updatedElements.ContainsKey(newCell.Position))
-                    this.displayController.updatedElements.Add(newCell.Position, newCell.GetTeamColor());
+                if (!this.displayController.UpdatedElements.ContainsKey(newCell.Position))
+                    this.displayController.UpdatedElements.Add(newCell.Position, newCell.GetTeamColor());
                 else
                 {
-                    if (this.displayController.updatedElements[newCell.Position] == Color.Black)
-                        this.displayController.updatedElements[newCell.Position] = newCell.GetTeamColor();
+                    if (this.displayController.UpdatedElements[newCell.Position] == Color.Black)
+                        this.displayController.UpdatedElements[newCell.Position] = newCell.GetTeamColor();
                 }                    
             }
 
@@ -314,11 +323,18 @@ namespace Cells.GameCore
         /// </summary>
         private void CreateRessourcesMap()
         {
-            masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 100, 0);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 0);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 5, 0);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
+            for (int i = 0; i < 20; i++)
+                masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
+
+            masterMap.ImplantRessources(new Coordinates(25, 25), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(50, 50), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(75, 75), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(25, 50), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(50, 25), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(25, 75), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(75, 25), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(75, 50), 5000, 0);
+            masterMap.ImplantRessources(new Coordinates(50, 75), 5000, 0);
         }
 
         /// <summary>
@@ -326,11 +342,18 @@ namespace Cells.GameCore
         /// </summary>
         private void CreatePlantMap()
         {
-            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
-            masterMap.ImplantRessources(GetRandomCoordinates(), 50, 5);
+            for (int i = 0; i < 20; i++)
+                masterMap.ImplantRessources(GetRandomCoordinates(), 100, 10);
+
+            masterMap.ImplantRessources(new Coordinates(26, 26), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(51, 51), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(76, 76), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(26, 51), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(51, 26), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(26, 76), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(76, 26), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(76, 51), 5100, 10);
+            masterMap.ImplantRessources(new Coordinates(51, 76), 5100, 10);
         }
 
         /// <summary>
