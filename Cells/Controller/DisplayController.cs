@@ -2,7 +2,9 @@
 using System.Drawing;
 using Cells.Interfaces;
 using Cells.Properties;
+using Cells.Utils;
 using Cells.View;
+using Ninject;
 
 namespace Cells.Controller
 {
@@ -29,6 +31,11 @@ namespace Cells.Controller
         public VisualTile[,] BackgroundGrid;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private IColorPanel colorPanel;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public DisplayController()
@@ -36,6 +43,7 @@ namespace Cells.Controller
             this.UpdatedElements = new Dictionary<ICoordinates, Color>();
             this.StaticElements = new Dictionary<ICoordinates, Color>();
             this.BackgroundGrid = new VisualTile[Settings.Default.WorldWidth,Settings.Default.WorldHeight];
+            this.colorPanel = NinjectGlobalKernel.GlobalKernel.Get<IColorPanel>();
         }
 
         /// <summary>
@@ -51,10 +59,10 @@ namespace Cells.Controller
         /// </summary>
         /// <param name="elementCoordinates"></param>
         /// <param name="elementColor"></param>
-        public void SetStaticElement(ICoordinates elementCoordinates, Color elementColor)
+        public void SetStaticElement(ICoordinates elementCoordinates, DisplayQualifier qualifier)
         {
-            StaticElements.Add(elementCoordinates, elementColor);
-            BackgroundGrid[elementCoordinates.X, elementCoordinates.Y] = new VisualTile(elementColor);
+            StaticElements.Add(elementCoordinates, this.colorPanel.GetCorrespondingColor(qualifier));
+            BackgroundGrid[elementCoordinates.X, elementCoordinates.Y] = new VisualTile(this.colorPanel.GetCorrespondingColor(qualifier));
         }
 
         /// <summary>
@@ -70,13 +78,13 @@ namespace Cells.Controller
         /// Adds the color at the given coordinates to be painted during the next loop
         /// </summary>
         /// <param name="elementCoordinates"></param>
-        /// <param name="elementColor"></param>
-        public void SetDynamicElement(ICoordinates elementCoordinates, Color elementColor)
+        /// <param name="qualifier"></param>
+        public void SetDynamicElement(ICoordinates elementCoordinates, DisplayQualifier qualifier)
         {
             if (!this.UpdatedElements.ContainsKey(elementCoordinates))
-                this.UpdatedElements.Add(elementCoordinates, elementColor);
+                this.UpdatedElements.Add(elementCoordinates, this.colorPanel.GetCorrespondingColor(qualifier));
             else if (this.UpdatedElements[elementCoordinates] == this.BackgroundGrid[elementCoordinates.X, elementCoordinates.Y].GetColor())
-                this.UpdatedElements[elementCoordinates] = elementColor;
+                this.UpdatedElements[elementCoordinates] = this.colorPanel.GetCorrespondingColor(qualifier);
         }
 
         /// <summary>

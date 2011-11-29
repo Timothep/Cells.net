@@ -32,18 +32,10 @@ namespace Cells.Interfaces
 
         void SetLife(Int16 life);
 
-        void SetTeam(Color teamColor);
+        void SetTeam(DisplayQualifier teamNumber);
 
         void SetBrain(IBrain brain);
 
         bool CanDivide();
-
-        //bool CanMoveRight();
-        
-        //bool CanMoveLeft();
-        
-        //bool CanMoveDown();
-        
-        //bool CanMoveUp();
     }
 }

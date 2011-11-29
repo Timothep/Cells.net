@@ -72,6 +72,8 @@
     <Compile Include="Interfaces\IMap.cs" />
     <Compile Include="Interfaces\ISurroundingView.cs" />
     <Compile Include="Interfaces\IOffsetVector.cs" />
+    <Compile Include="Interfaces\IColorPanel.cs" />
+    <Compile Include="Model\ColorPanel.cs" />
     <Compile Include="Model\Mapping\MapFactory.cs" />
     <Compile Include="Model\Mapping\SurroundingView.cs" />
     <Compile Include="Model\Mapping\Map.cs" />

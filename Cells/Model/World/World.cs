@@ -12,8 +12,6 @@ using System.Diagnostics;
 
 namespace Cells.Model.World
 {
-    public enum BackgroundColor {  }
-
     /// <summary>
     /// Class representing the world, holding the maps and all the cells together
     /// </summary>
@@ -39,7 +37,7 @@ namespace Cells.Model.World
         /// </summary>
         private readonly List<ICell> deadCellsToRemove = new List<ICell>();
 
-        private readonly IList<Color> availableColors = new List<Color>();
+        private readonly IList<DisplayQualifier> availableTeams = new List<DisplayQualifier>();
 
         private readonly IKernel localKernel = new StandardKernel(new localModule());
         private readonly IKernel globalKernel = new StandardKernel();
@@ -51,8 +49,10 @@ namespace Cells.Model.World
         /// </summary>
         public World()
         {
-            availableColors.Add(Color.Yellow);
-            availableColors.Add(Color.Blue);
+            availableTeams.Add(DisplayQualifier.Team1);
+            availableTeams.Add(DisplayQualifier.Team2);
+            availableTeams.Add(DisplayQualifier.Team3);
+            availableTeams.Add(DisplayQualifier.Team4);
         }
 
         /// <summary>
@@ -76,22 +76,20 @@ namespace Cells.Model.World
         }
 
         /// <summary>
-        /// Fill up the world with crap
+        /// Fill up the world with the loaded terrain
         /// </summary>
         private void CreateGeometryMap()
         {
             Int16[,] map = this.mapFactory.CreateMapFromFile();
 
             for (Int16 x = 0; x < map.GetLength(0); x++ )
+            {
                 for (Int16 y = 0; y < map.GetLength(1); y++)
                 {
                     this.masterMap.Grid[x, y].Altitude = map[x, y];
-
-                    if (map[x, y] == 9)
-                        this.displayController.SetStaticElement(new Coordinates(x, y), Color.Black);
-                    else
-                        this.displayController.SetStaticElement(new Coordinates(x, y), Color.SaddleBrown);
+                    this.displayController.SetStaticElement(new Coordinates(x, y), (DisplayQualifier)map[x, y]);
                 }
+            }
         }
 
         /// <summary>
@@ -109,7 +107,7 @@ namespace Cells.Model.World
         /// <param name="oldCoordinates">Coordinates where the cell was before it moved</param>
         /// <param name="newCoordinates">Coordinates where the cell is after it moved</param>
         /// <param name="team">Team Color of the cell</param>
-        public void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
+        public void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, DisplayQualifier team)
         {
             // Clear the previous position from the display
             this.displayController.SetBackgroundToBePaintAt(oldCoordinates);
@@ -221,7 +219,7 @@ namespace Cells.Model.World
             foreach (Cell newCell in this.newCellsToAdd)
             {
                 this.InjectCell(newCell);
-                this.displayController.SetDynamicElement(newCell.Position,newCell.GetTeamColor());
+                this.displayController.SetDynamicElement(newCell.Position,newCell.GetTeamQualifier());
             }
 
             newCellsToAdd.Clear();
@@ -234,10 +232,10 @@ namespace Cells.Model.World
         {
             foreach (String brainType in this.brains)
             {
-                Color teamColor = availableColors[RandomGenerator.GetRandomInt16((Int16)availableColors.Count)];
-                availableColors.Remove(teamColor);
+                DisplayQualifier team = availableTeams[0];
+                availableTeams.Remove(team);
 
-                CreateCellPopulation(brainType, Settings.Default.InitialPopulationPerBrain, teamColor);
+                CreateCellPopulation(brainType, Settings.Default.InitialPopulationPerBrain, team);
             }
         }
 
@@ -247,11 +245,11 @@ namespace Cells.Model.World
         /// <param name="brainType"></param>
         /// <param name="numberOfCells"></param>
         /// <param name="teamColor"></param>
-        private void CreateCellPopulation(String brainType, short numberOfCells, Color teamColor)
+        private void CreateCellPopulation(String brainType, short numberOfCells, DisplayQualifier team)
         {
             for (int i = 0; i < numberOfCells; i++)
             {
-                CreateCell(brainType, teamColor);
+                CreateCell(brainType, team);
             }
         }
 
@@ -259,10 +257,10 @@ namespace Cells.Model.World
         /// 
         /// </summary>
         /// <param name="brainType"></param>
-        /// <param name="teamColor"></param>
+        /// <param name="teamNumber"></param>
         /// <param name="spawnLife"></param>
         /// <param name="position"></param>
-        private void CreateCell(String brainType, Color teamColor, Int16? spawnLife = null, ICoordinates position = null)
+        private void CreateCell(String brainType, DisplayQualifier teamNumber, Int16? spawnLife = null, ICoordinates position = null)
         {
             var cell = this.localKernel.Get<ICell>();
 
@@ -273,7 +271,7 @@ namespace Cells.Model.World
             spawnLife = spawnLife ?? Settings.Default.CellMaxInitialLife;
 
             cell.SetLife(RandomGenerator.GetRandomInt16((Int16)spawnLife));
-            cell.SetTeam(teamColor);
+            cell.SetTeam(teamNumber);
 
             RegisterNewCell(cell);
         }
@@ -372,8 +370,8 @@ namespace Cells.Model.World
             else
                 positionSpawn.X += -1;
 
-            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, cell.Position);
-            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamColor(), spawnLife, positionSpawn);
+            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamQualifier(), spawnLife, cell.Position);
+            this.CreateCell(cell.GetAttachedBrainType(), cell.GetTeamQualifier(), spawnLife, positionSpawn);
         }
 
         /// <summary>

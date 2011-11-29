@@ -16,7 +16,7 @@ namespace Cells.Model.Cells
         private IBrain Brain { get; set; }
         public ICoordinates Position { get; set; }
         public Int16 Life { get; set; }
-        public Color Team { get; set; }
+        public DisplayQualifier Team { get; set; }
         private AvailableActions cellPreviousAction = AvailableActions.NONE;
         private Boolean carryingWeight = false;
 
@@ -42,10 +42,10 @@ namespace Cells.Model.Cells
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="teamColor"></param>
-        public void SetTeam(Color teamColor)
+        /// <param name="team"></param>
+        public void SetTeam(DisplayQualifier team)
         {
-            this.Team = teamColor;
+            this.Team = team;
         }
 
         /// <summary>
@@ -213,10 +213,10 @@ namespace Cells.Model.Cells
         }
 
         /// <summary>
-        /// Gets the color of the team the cell belongs to
+        /// Gets the qualifier of the team the cell belongs to
         /// </summary>
-        /// <returns>The color of the team</returns>
-        internal Color GetTeamColor()
+        /// <returns>The qualifier of the team</returns>
+        internal DisplayQualifier GetTeamQualifier()
         {
             return this.Team;
         }
@@ -338,14 +338,13 @@ namespace Cells.Model.Cells
             targetCoordinates.Y += offsetY;
 
             // Normalize coordinates to create a continuous map (surrounding views have to be modified as well)
-            //targetCoordinates.Normalize((Int16)(this.world.GetMap().GetMapWidth() - 1), (Int16)(this.world.GetMap().GetMapHeight() - 1));
-
-            // Check that the terrain permits the cell to move
-            // Check that the target tile is not already occupied
+            // --> targetCoordinates.Normalize((Int16)(this.world.GetMap().GetMapWidth() - 1), (Int16)(this.world.GetMap().GetMapHeight() - 1));
+            
             // Check that the coordinates are within the bounds of the map
             if (!CoordinatesAreWithinBounds(targetCoordinates))
                 return;
 
+            // Check that the terrain permits the cell to move and that the target tile is not already occupied
             if (!TerrainAllowsMovingTo(targetCoordinates) || TargetTileIsOccupied(targetCoordinates))
                 return;
 
@@ -418,8 +417,8 @@ namespace Cells.Model.Cells
         /// </summary>
         /// <param name="oldCoordinates">The old coordinates where the cell was</param>
         /// <param name="newCoordinates">The new coordinates where the cell is</param>
-        /// <param name="team">The color the team is on</param>
-        private void NotifyMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
+        /// <param name="team">The qualifier of the team</param>
+        private void NotifyMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, DisplayQualifier team)
         {
             world.RegisterCellMovement(oldCoordinates, newCoordinates, team);
             return;

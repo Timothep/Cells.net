@@ -1,6 +1,7 @@
 ﻿using System;
 using Cells.Controller;
 using Cells.Interfaces;
+using Cells.Model;
 using Cells.Model.World;
 using Cells.Properties;
 using Ninject;
@@ -67,6 +68,7 @@ namespace Cells.Utils
         {
             Bind<IWorld>().To<World>().InSingletonScope();
             Bind<IDisplayController>().To<DisplayController>().InSingletonScope();
+            Bind<IColorPanel>().To<ColorPanel>().InSingletonScope();
         }
     }
 

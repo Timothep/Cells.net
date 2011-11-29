@@ -16,7 +16,7 @@ namespace Cells.Interfaces
 
         void LowerLandscape(ICoordinates Position);
 
-        void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team);
+        void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, DisplayQualifier team);
 
         void RaiseLandscape(ICoordinates Position);
 
