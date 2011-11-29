@@ -15,7 +15,7 @@ namespace Cells.GameCore.Mapping.Tiles
         public ICell CellReference = null;
         public Int16 GrowthRate = 0;
         public Int16 RessourceLevel = 0;
-        public Int16 Height = 0;
+        public Int16 Altitude = 0;
 
         /// <summary>
         /// Constructor
@@ -44,6 +44,15 @@ namespace Cells.GameCore.Mapping.Tiles
         internal ICoordinates GetPosition()
         {
             return _position;
+        }
+
+        /// <summary>
+        /// Get altitude
+        /// </summary>
+        /// <returns></returns>
+        internal Int16 GetAltitude()
+        {
+            return this.Altitude;
         }
     }
 }

@@ -57,6 +57,17 @@ namespace Cells.GameCore.Mapping
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public MapTile GetTileAt(Int16 x, Int16 y)
+        {
+            return this.Grid[x, y];
+        }
+
+        /// <summary>
         /// Function extracting a rectangular section of the map
         /// </summary>
         /// <param name="centerPoint">The point on which the section shall be centered</param>
@@ -209,7 +220,7 @@ namespace Cells.GameCore.Mapping
         /// <param name="position"></param>
         internal void RaiseLandscape(ICoordinates position)
         {
-            Grid[position.X, position.Y].Height++;
+            Grid[position.X, position.Y].Altitude++;
         }
 
         /// <summary>
@@ -218,7 +229,7 @@ namespace Cells.GameCore.Mapping
         /// <param name="position"></param>
         internal void LowerLandscape(ICoordinates position)
         {
-            Grid[position.X, position.Y].Height--;
+            Grid[position.X, position.Y].Altitude--;
         }
 
         /// <summary>
@@ -228,7 +239,7 @@ namespace Cells.GameCore.Mapping
         /// <returns></returns>
         internal Int16 GetLandscapeHeight(ICoordinates position)
         {
-            return Grid[position.X, position.Y].Height;
+            return Grid[position.X, position.Y].Altitude;
         }
 
         /// <summary>

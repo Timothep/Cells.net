@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -79,6 +80,12 @@ namespace Cells.View
         /// </summary>
         private void BStartEngineClick(object sender, EventArgs e)
         {
+            try
+            {
+                this.controller.StopGame();
+            }
+            catch{}
+
             this.controller.StartGame();
         }
 
@@ -104,13 +111,13 @@ namespace Cells.View
         /// </summary>
         internal void RenderGame()
         {
-            PaintPixels(this.controller.GetPixelsToPaint());
+            this.PaintPixels(this.controller.GetPixelsToPaint());
         }
 
         /// <summary>
         /// Perform loading of the form
         /// </summary>
-        private void CellsCanvas_Load(object sender, EventArgs e)
+        private void CellsCanvasLoad(object sender, EventArgs e)
         {
             PopulateUIFromSettings();
         }

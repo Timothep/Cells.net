@@ -13,5 +13,6 @@ namespace Cells.Interfaces
         void InitializeGrid(MapTile[,] view);
         ICell GetCellAt(Int16 x, Int16 y);
         IList<ICoordinates> GetRessourcesList();
+        MapTile GetTileAt(Int16 x, Int16 y);
     }
 }

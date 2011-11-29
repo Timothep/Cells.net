@@ -76,9 +76,13 @@ namespace Cells.Controller
         public void StartGame()
         {
             this.selectedBrainList = this.view.GetSelectedBrains();
-
             this.world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
             this.world.Initialize(this.selectedBrainList as IList<String>);
+
+            // Render the background and paint it
+            this.displayController.PaintWholeBackground();
+            this.displayController.GetPaintJobs();
+            this.view.RenderGame();
         }
 
         /// <summary>

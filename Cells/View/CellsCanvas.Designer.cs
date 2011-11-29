@@ -356,7 +356,7 @@ namespace Cells.View
             this.Name = "CellsCanvas";
             this.Text = "CellEngine";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CellsCanvas_FormClosed);
-            this.Load += new System.EventHandler(this.CellsCanvas_Load);
+            this.Load += new System.EventHandler(this.CellsCanvasLoad);
             ((System.ComponentModel.ISupportInitialize)(this.DrawBox)).EndInit();
             this.ParametersGroupBox.ResumeLayout(false);
             this.ParametersGroupBox.PerformLayout();

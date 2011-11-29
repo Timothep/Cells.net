@@ -450,7 +450,19 @@ namespace Cells.GameCore.Cells
         /// <returns>True if the cell can move up</returns>
         public bool CanMoveUp()
         {
-            return (this.world.GetMap().GetCellAt(this.Position.X, (Int16)(this.Position.Y - 1)) == null);
+            bool canMove = true;
+            IMap thisMap = this.world.GetMap();
+
+            // If the cell below is occupied
+            if (thisMap.GetCellAt(this.Position.X, (Int16)(this.Position.Y - 1)) != null)
+                canMove = false;
+
+            // If the geometry does not allow it
+            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
+                - thisMap.GetTileAt(this.Position.X, (Int16)(this.Position.Y - 1)).GetAltitude()) > 1)
+                canMove = false;
+
+            return canMove;
         }
 
         /// <summary>
@@ -459,7 +471,19 @@ namespace Cells.GameCore.Cells
         /// <returns>True if the cell can move down</returns>
         public bool CanMoveDown()
         {
-            return (this.world.GetMap().GetCellAt(this.Position.X, (Int16)(this.Position.Y + 1)) == null);
+            bool canMove = true;
+            IMap thisMap = this.world.GetMap();
+            
+            // If the cell below is occupied
+            if (thisMap.GetCellAt(this.Position.X, (Int16)(this.Position.Y + 1)) != null)
+                canMove = false;
+
+            // If the geometry does not allow it
+            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
+                - thisMap.GetTileAt(this.Position.X, (Int16)(this.Position.Y + 1)).GetAltitude()) > 1)
+                canMove = false;
+
+            return canMove;
         }
 
         /// <summary>
@@ -468,7 +492,19 @@ namespace Cells.GameCore.Cells
         /// <returns>True if the cell can move left</returns>
         public bool CanMoveLeft()
         {
-            return (this.world.GetMap().GetCellAt((Int16)(this.Position.X - 1), this.Position.Y) == null);
+            bool canMove = true;
+            IMap thisMap = this.world.GetMap();
+
+            // If the cell below is occupied
+            if (thisMap.GetCellAt((Int16)(this.Position.X - 1), (Int16)(this.Position.Y)) != null)
+                canMove = false;
+
+            // If the geometry does not allow it
+            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
+                - thisMap.GetTileAt((Int16)(this.Position.X -1), (Int16)(this.Position.Y)).GetAltitude()) > 1)
+                canMove = false;
+
+            return canMove;
         }
 
         /// <summary>
@@ -477,7 +513,19 @@ namespace Cells.GameCore.Cells
         /// <returns>True if the cell can move right</returns>
         public bool CanMoveRight()
         {
-            return (this.world.GetMap().GetCellAt((Int16)(this.Position.X + 1), this.Position.Y) == null);
+            bool canMove = true;
+            IMap thisMap = this.world.GetMap();
+
+            // If the cell below is occupied
+            if (thisMap.GetCellAt((Int16)(this.Position.X + 1), (Int16)(this.Position.Y)) != null)
+                canMove = false;
+
+            // If the geometry does not allow it
+            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
+                - thisMap.GetTileAt((Int16)(this.Position.X + 1), (Int16)(this.Position.Y)).GetAltitude()) > 1)
+                canMove = false;
+
+            return canMove;
         }
     }
 

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DisplayController.cs" />
+    <Compile Include="Interfaces\IMapFactory.cs" />
     <Compile Include="Model\Action.cs" />
     <Compile Include="Model\Brain\BaseBrain.cs" />
     <Compile Include="Model\Brain\BrainDiscoveryManager.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Interfaces\IMap.cs" />
     <Compile Include="Interfaces\ISurroundingView.cs" />
     <Compile Include="Interfaces\IOffsetVector.cs" />
+    <Compile Include="Model\Mapping\MapFactory.cs" />
     <Compile Include="Model\Mapping\SurroundingView.cs" />
     <Compile Include="Model\Mapping\Map.cs" />
     <Compile Include="Model\Mapping\MapTile.cs" />

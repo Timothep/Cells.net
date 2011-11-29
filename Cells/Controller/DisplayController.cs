@@ -39,6 +39,14 @@ namespace Cells.Controller
         }
 
         /// <summary>
+        /// Adds the whole static element dictionary to the updated elements for painting
+        /// </summary>
+        public void PaintWholeBackground()
+        {
+            this.UpdatedElements = this.StaticElements;
+        }
+
+        /// <summary>
         /// Registers the given color at the given coordinates on the background
         /// </summary>
         /// <param name="elementCoordinates"></param>
@@ -53,7 +61,7 @@ namespace Cells.Controller
         /// Retrieves the list of updated elements
         /// </summary>
         /// <returns>A list of coordinates where elements were updated</returns>
-        public IEnumerable<KeyValuePair<ICoordinates, Color>> GetPaintJobs()
+        public IDictionary<ICoordinates, Color> GetPaintJobs()
         {
             return UpdatedElements;
         }
@@ -65,16 +73,28 @@ namespace Cells.Controller
         /// <param name="elementColor"></param>
         public void SetDynamicElement(ICoordinates elementCoordinates, Color elementColor)
         {
-            this.UpdatedElements.Add(elementCoordinates, elementColor);
+            if (!this.UpdatedElements.ContainsKey(elementCoordinates))
+                this.UpdatedElements.Add(elementCoordinates, elementColor);
+            else if (this.UpdatedElements[elementCoordinates] == this.BackgroundGrid[elementCoordinates.X, elementCoordinates.Y].GetColor())
+                this.UpdatedElements[elementCoordinates] = elementColor;
         }
 
         /// <summary>
         /// Signals the DisplayControler that the background has to be painted at the given coordinates again
         /// </summary>
         /// <param name="coordinates"></param>
-        public void PaintBackground(ICoordinates coordinates)
+        public void SetBackgroundToBePaintAt(ICoordinates coordinates)
         {
-            this.UpdatedElements.Add(coordinates, this.BackgroundGrid[coordinates.X,coordinates.Y].GetColor());
+            if (!this.UpdatedElements.ContainsKey(coordinates))
+                this.UpdatedElements.Add(coordinates, this.BackgroundGrid[coordinates.X,coordinates.Y].GetColor());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ResetDynamicDisplay()
+        {
+            this.UpdatedElements.Clear();
         }
     }
 }

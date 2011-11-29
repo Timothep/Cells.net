@@ -9,7 +9,7 @@ namespace Cells.Interfaces
 {
     public interface IDisplayController
     {
-        IEnumerable<KeyValuePair<ICoordinates, Color>> GetPaintJobs();
+        IDictionary<ICoordinates, Color> GetPaintJobs();
 
         IDictionary<ICoordinates, Color> UpdatedElements { get; set; }
 
@@ -17,6 +17,10 @@ namespace Cells.Interfaces
 
         void SetDynamicElement(ICoordinates elementCoordinates, Color elementColor);
 
-        void PaintBackground(ICoordinates coordinates);
+        void SetBackgroundToBePaintAt(ICoordinates coordinates);
+
+        void ResetDynamicDisplay();
+
+        void PaintWholeBackground();
     }
 }

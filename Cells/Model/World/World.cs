@@ -17,6 +17,8 @@ using System.Diagnostics;
 
 namespace Cells.GameCore
 {
+    public enum BackgroundColor {  }
+
     /// <summary>
     /// Class representing the world, holding the maps and all the cells together
     /// </summary>
@@ -35,14 +37,17 @@ namespace Cells.GameCore
         /// </summary>
         private readonly IList<ICell> newCellsToAdd = new List<ICell>();
 
+        private IMapFactory mapFactory;
+
         /// <summary>
         /// List of all the cells that died during the round
         /// </summary>
         private readonly List<ICell> deadCellsToRemove = new List<ICell>();
 
         private readonly IList<Color> availableColors = new List<Color>();
-        private readonly IKernel worldKernel = new StandardKernel(new WorldModule());
-        private readonly IKernel brainKernel = new StandardKernel();
+
+        private readonly IKernel localKernel = new StandardKernel(new localModule());
+        private readonly IKernel globalKernel = new StandardKernel();
 
         private IDisplayController displayController;
 
@@ -66,11 +71,13 @@ namespace Cells.GameCore
 
             masterMap = new Map(Settings.Default.WorldWidth, Settings.Default.WorldHeight);
             cells = new List<ICell>();
-            
+
+            this.mapFactory = this.localKernel.Get<IMapFactory>();
+            CreateGeometryMap();
+
             CreateInitialCellPopulation();
             CreatePlantMap();
             CreateRessourcesMap();
-            CreateGeometryMap();
         }
 
         /// <summary>
@@ -78,9 +85,18 @@ namespace Cells.GameCore
         /// </summary>
         private void CreateGeometryMap()
         {
-            for (Int16 x = 0; x < Settings.Default.WorldWidth; x++ )
-                for (Int16 y = 0; y < Settings.Default.WorldHeight; y++)
-                    this.displayController.SetStaticElement(new Coordinates(x, y), Color.Brown);
+            Int16[,] map = this.mapFactory.CreateMapFromFile();
+
+            for (Int16 x = 0; x < map.GetLength(0); x++ )
+                for (Int16 y = 0; y < map.GetLength(1); y++)
+                {
+                    this.masterMap.Grid[x, y].Altitude = map[x, y];
+
+                    if (map[x, y] == 9)
+                        this.displayController.SetStaticElement(new Coordinates(x, y), Color.Black);
+                    else
+                        this.displayController.SetStaticElement(new Coordinates(x, y), Color.SaddleBrown);
+                }
         }
 
         /// <summary>
@@ -100,13 +116,12 @@ namespace Cells.GameCore
         /// <param name="team">Team Color of the cell</param>
         public void RegisterCellMovement(ICoordinates oldCoordinates, ICoordinates newCoordinates, Color team)
         {
-            // Add the cell movements to the logs
-            if (!this.displayController.UpdatedElements.ContainsKey(oldCoordinates))        
-                this.displayController.UpdatedElements.Add(oldCoordinates, Color.Black);
+            // Clear the previous position from the display
+            this.displayController.SetBackgroundToBePaintAt(oldCoordinates);
 
-            if (!this.displayController.UpdatedElements.ContainsKey(newCoordinates) || this.displayController.UpdatedElements[newCoordinates] == Color.Black)
-                this.displayController.UpdatedElements.Add(newCoordinates, team);
-
+            // Signals the new position to display
+            this.displayController.SetDynamicElement(newCoordinates, team);
+            
             // Update the map
             this.masterMap.MoveCell(oldCoordinates, newCoordinates);
         }
@@ -199,11 +214,7 @@ namespace Cells.GameCore
         {
             this.cells.Remove(deadCell);
             this.masterMap.RemoveCell(deadCell);
-
-            if (this.displayController.UpdatedElements.ContainsKey(deadCell.Position))
-                this.displayController.UpdatedElements.Remove(deadCell.Position);
-
-            this.displayController.UpdatedElements.Add(deadCell.Position, Color.Black);
+            this.displayController.SetBackgroundToBePaintAt(deadCell.Position);
         }
 
         /// <summary>
@@ -215,14 +226,7 @@ namespace Cells.GameCore
             foreach (Cell newCell in this.newCellsToAdd)
             {
                 this.InjectCell(newCell);
-
-                if (!this.displayController.UpdatedElements.ContainsKey(newCell.Position))
-                    this.displayController.UpdatedElements.Add(newCell.Position, newCell.GetTeamColor());
-                else
-                {
-                    if (this.displayController.UpdatedElements[newCell.Position] == Color.Black)
-                        this.displayController.UpdatedElements[newCell.Position] = newCell.GetTeamColor();
-                }                    
+                this.displayController.SetDynamicElement(newCell.Position,newCell.GetTeamColor());
             }
 
             newCellsToAdd.Clear();
@@ -265,9 +269,9 @@ namespace Cells.GameCore
         /// <param name="position"></param>
         private void CreateCell(String brainType, Color teamColor, Int16? spawnLife = null, ICoordinates position = null)
         {
-            var cell = this.worldKernel.Get<ICell>();
+            var cell = this.localKernel.Get<ICell>();
 
-            var brain = this.brainKernel.Get(Type.GetType(brainType)) as IBrain;
+            var brain = this.globalKernel.Get(Type.GetType(brainType)) as IBrain;
             cell.SetBrain(brain);
 
             cell.Position = position ?? (cell.Position = GetRandomCoordinates());
@@ -410,7 +414,7 @@ namespace Cells.GameCore
     /// <summary>
     /// 
     /// </summary>
-    internal class WorldModule : NinjectModule
+    internal class localModule : NinjectModule
     {
         /// <summary>
         /// 
@@ -418,6 +422,7 @@ namespace Cells.GameCore
         public override void Load()
         {
             Bind<ICell>().To<Cell>();
+            Bind<IMapFactory>().To<MapFactory>();
         }
     }
 }
