@@ -7,7 +7,7 @@ namespace Cells.Controller
         [DllImport("kernel32.dll")]
         private static extern long GetTickCount();
 
-        private long StartTick = 0;
+        private long startTick = 0;
 
         public Timer()
         {
@@ -16,12 +16,12 @@ namespace Cells.Controller
 
         public void Reset()
         {
-            StartTick = GetTickCount();
+            startTick = GetTickCount();
         }
 
         public long GetTicks()
         {
-            return GetTickCount() - StartTick;
+            return GetTickCount() - startTick;
         }
 
     }

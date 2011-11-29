@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cells.GameCore.Cells;
-using Cells.GameCore.Mapping.Tiles;
 using Cells.Utils;
 using Cells.Interfaces;
-using Cells.Model.Mapping;
-using Cells.Properties;
-using Cells.Model;
 
-namespace Cells.GameCore.Mapping
+namespace Cells.Model.Mapping
 {
     /// <summary>
     /// Class representing what the cell can "see"

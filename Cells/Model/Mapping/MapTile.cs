@@ -1,11 +1,9 @@
 ﻿using System;
-using Cells.GameCore.Cells;
 using Cells.Interfaces;
 using Cells.Utils;
 using Ninject;
-using Ninject.Modules;
 
-namespace Cells.GameCore.Mapping.Tiles
+namespace Cells.Model.Mapping
 {
     public class MapTile
     {

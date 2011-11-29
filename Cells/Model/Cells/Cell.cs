@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Cells.Model;
+using Cells.Model.Mapping;
 using Cells.Properties;
 using Cells.Utils;
-using Cells.GameCore.Mapping;
 using Cells.Interfaces;
 using Ninject;
 using Ninject.Modules;
 
-namespace Cells.GameCore.Cells
+namespace Cells.Model.Cells
 {
     public class Cell: ICell
     {
@@ -18,7 +17,6 @@ namespace Cells.GameCore.Cells
         public ICoordinates Position { get; set; }
         public Int16 Life { get; set; }
         public Color Team { get; set; }
-
         private AvailableActions cellPreviousAction = AvailableActions.NONE;
         private Boolean carryingWeight = false;
 
@@ -71,16 +69,16 @@ namespace Cells.GameCore.Cells
             switch (action.GetAction())
             {
                 case AvailableActions.MOVELEFT:
-                    MoveLeft();
+                    Move(-1,0);
                     break;
                 case AvailableActions.MOVERIGHT:
-                    MoveRight();
+                    Move(1, 0);
                     break;
                 case AvailableActions.MOVEUP:
-                    MoveUp();
+                    Move(0, -1);
                     break;
                 case AvailableActions.MOVEDOWN:
-                    MoveDown();
+                    Move(0, 1);
                     break;
                 case AvailableActions.DROP:
                     DropEarth();
@@ -111,7 +109,7 @@ namespace Cells.GameCore.Cells
         /// <summary>
         /// Tries to eat ressources present at the given coordinates
         /// </summary>
-        /// <param name="coordinates">The coordinates where something to eat should be present</param>
+        /// <param name="offsetToTarget"></param>
         private void Eat(IOffsetVector offsetToTarget)
         {
             if (offsetToTarget == null)
@@ -331,60 +329,66 @@ namespace Cells.GameCore.Cells
             }
         }
 
-        /// <summary>
-        /// Move the cell left and save its old position
-        /// </summary>
-        private void MoveLeft()
+        private void Move(Int16 offsetX, Int16 offsetY)
         {
-            // Check the potentially new coordinate
-            if (!CoordinatesAreValid((Int16)(Position.X - 1), Position.Y) || !CanMoveLeft())
+            ICoordinates currentCoordinates = this.Position.Clone();
+            ICoordinates targetCoordinates = this.Position.Clone();
+
+            targetCoordinates.X += offsetX;
+            targetCoordinates.Y += offsetY;
+
+            // Normalize coordinates to create a continuous map (surrounding views have to be modified as well)
+            //targetCoordinates.Normalize((Int16)(this.world.GetMap().GetMapWidth() - 1), (Int16)(this.world.GetMap().GetMapHeight() - 1));
+
+            // Check that the terrain permits the cell to move
+            // Check that the target tile is not already occupied
+            // Check that the coordinates are within the bounds of the map
+            if (!CoordinatesAreWithinBounds(targetCoordinates))
                 return;
 
-            ICoordinates oldPosition = Position.Clone();
-            Position.X--;
-            NotifyMovement(oldPosition, Position, Team);
+            if (!TerrainAllowsMovingTo(targetCoordinates) || TargetTileIsOccupied(targetCoordinates))
+                return;
+
+            if (this.world.GetMap().GetCellAt(targetCoordinates) == null)
+            {
+                this.Position = targetCoordinates;
+                NotifyMovement(currentCoordinates, targetCoordinates, Team);
+            }
         }
 
         /// <summary>
-        /// Move the cell right and save its old position
+        /// 
         /// </summary>
-        private void MoveRight()
+        /// <param name="targetCoordinates"></param>
+        /// <returns></returns>
+        private bool TargetTileIsOccupied(ICoordinates targetCoordinates)
         {
-            // Check the potentially new coordinate
-            if (!CoordinatesAreValid((Int16)(Position.X + 1), Position.Y) || !CanMoveRight())
-                return;
+            bool canMove = false;
+            IMap thisMap = this.world.GetMap();
 
-            ICoordinates oldPosition = Position.Clone();
-            Position.X++;
-            NotifyMovement(oldPosition, Position, Team);
+            // If the target cell is occupied
+            if ((thisMap.GetCellAt(targetCoordinates.X, targetCoordinates.Y)) != null)
+                canMove = true;
+
+            return canMove;
         }
 
         /// <summary>
-        /// Move the cell up and save its old position
+        /// 
         /// </summary>
-        private void MoveUp()
+        /// <param name="targetCoordinates"></param>
+        /// <returns></returns>
+        private bool TerrainAllowsMovingTo(ICoordinates targetCoordinates)
         {
-            // Check the potentially new coordinate
-            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y - 1)) || !CanMoveUp())
-                return;
+            bool canMove = true;
+            IMap thisMap = this.world.GetMap();
 
-            ICoordinates oldPosition = Position.Clone();
-            Position.Y--;
-            NotifyMovement(oldPosition, Position, Team);
-        }
+            // If the geometry does not allow to move
+            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
+                - thisMap.GetTileAt(targetCoordinates.X, targetCoordinates.Y).GetAltitude()) > 1)
+                canMove = false;
 
-        /// <summary>
-        /// Move the cell down and save its old position
-        /// </summary>
-        private void MoveDown()
-        {
-            // Check the potentially new coordinate
-            if (!CoordinatesAreValid(Position.X, (Int16)(Position.Y + 1)) || !CanMoveDown())
-                return;
-
-            ICoordinates oldPosition = Position.Clone();
-            Position.Y++;
-            NotifyMovement(oldPosition, Position, Team);
+            return canMove;
         }
 
         /// <summary>
@@ -393,15 +397,20 @@ namespace Cells.GameCore.Cells
         /// <param name="X">The x coordinate</param>
         /// <param name="Y">The y coordinate</param>
         /// <returns>True if they can be used, false otherwise</returns>
-        private Boolean CoordinatesAreValid(Int16 X, Int16 Y)
+        private Boolean CoordinatesAreWithinBounds(Int16 X, Int16 Y)
         {
             if (X < 0
                 || Y < 0
-                || X >= Settings.Default.WorldWidth
-                || Y >= Settings.Default.WorldHeight)
+                || X > this.world.GetMap().GetMapWidth()
+                || Y > this.world.GetMap().GetMapHeight())
                 return false;
 
             return true;
+        }
+
+        private Boolean CoordinatesAreWithinBounds(ICoordinates coord)
+        {
+            return this.CoordinatesAreWithinBounds(coord.X, coord.Y);
         }
 
         /// <summary>
@@ -443,90 +452,6 @@ namespace Cells.GameCore.Cells
         {
             return (this.Life - Settings.Default.CostOfCellDivision) / 2 > 0;
         }
-
-        /// <summary>
-        /// Checks if the up position is free to move to
-        /// </summary>
-        /// <returns>True if the cell can move up</returns>
-        public bool CanMoveUp()
-        {
-            bool canMove = true;
-            IMap thisMap = this.world.GetMap();
-
-            // If the cell below is occupied
-            if (thisMap.GetCellAt(this.Position.X, (Int16)(this.Position.Y - 1)) != null)
-                canMove = false;
-
-            // If the geometry does not allow it
-            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
-                - thisMap.GetTileAt(this.Position.X, (Int16)(this.Position.Y - 1)).GetAltitude()) > 1)
-                canMove = false;
-
-            return canMove;
-        }
-
-        /// <summary>
-        /// Checks if the down position is free to move to
-        /// </summary>
-        /// <returns>True if the cell can move down</returns>
-        public bool CanMoveDown()
-        {
-            bool canMove = true;
-            IMap thisMap = this.world.GetMap();
-            
-            // If the cell below is occupied
-            if (thisMap.GetCellAt(this.Position.X, (Int16)(this.Position.Y + 1)) != null)
-                canMove = false;
-
-            // If the geometry does not allow it
-            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
-                - thisMap.GetTileAt(this.Position.X, (Int16)(this.Position.Y + 1)).GetAltitude()) > 1)
-                canMove = false;
-
-            return canMove;
-        }
-
-        /// <summary>
-        /// Checks if the left position is free to move to
-        /// </summary>
-        /// <returns>True if the cell can move left</returns>
-        public bool CanMoveLeft()
-        {
-            bool canMove = true;
-            IMap thisMap = this.world.GetMap();
-
-            // If the cell below is occupied
-            if (thisMap.GetCellAt((Int16)(this.Position.X - 1), (Int16)(this.Position.Y)) != null)
-                canMove = false;
-
-            // If the geometry does not allow it
-            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
-                - thisMap.GetTileAt((Int16)(this.Position.X -1), (Int16)(this.Position.Y)).GetAltitude()) > 1)
-                canMove = false;
-
-            return canMove;
-        }
-
-        /// <summary>
-        /// Checks if the right position is free to move to
-        /// </summary>
-        /// <returns>True if the cell can move right</returns>
-        public bool CanMoveRight()
-        {
-            bool canMove = true;
-            IMap thisMap = this.world.GetMap();
-
-            // If the cell below is occupied
-            if (thisMap.GetCellAt((Int16)(this.Position.X + 1), (Int16)(this.Position.Y)) != null)
-                canMove = false;
-
-            // If the geometry does not allow it
-            if (Math.Abs(thisMap.GetTileAt(this.Position.X, this.Position.Y).GetAltitude()
-                - thisMap.GetTileAt((Int16)(this.Position.X + 1), (Int16)(this.Position.Y)).GetAltitude()) > 1)
-                canMove = false;
-
-            return canMove;
-        }
     }
 
     /// <summary>
@@ -536,7 +461,7 @@ namespace Cells.GameCore.Cells
     {
         public override void Load()
         {
-            Bind<IWorld>().To<World>().InSingletonScope();
+            Bind<IWorld>().To<World.World>().InSingletonScope();
             Bind<ICoordinates>().To<Coordinates>();
         }
     }

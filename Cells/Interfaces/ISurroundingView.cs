@@ -2,7 +2,7 @@
 using Cells.Interfaces;
 using System.Collections.Generic;
 
-namespace Cells.Model.Mapping
+namespace Cells.Interfaces
 {
     public interface ISurroundingView
     {

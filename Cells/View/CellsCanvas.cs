@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Cells.GameCore;
 using Cells.Utils;
 using Cells.Properties;
 using Cells.Controller;

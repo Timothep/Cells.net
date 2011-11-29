@@ -1,6 +1,4 @@
 ﻿using System.Drawing;
-using Cells.GameCore;
-using Cells.GameCore.Cells;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Cells.Utils;
 

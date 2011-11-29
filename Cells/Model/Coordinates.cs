@@ -1,8 +1,7 @@
 ﻿using System;
-using Cells.Properties;
 using Cells.Interfaces;
 
-namespace Cells.Utils
+namespace Cells.Model
 {
     /// <summary>
     /// Class representing a vector of coordinates X and Y
@@ -62,6 +61,19 @@ namespace Cells.Utils
 
             return (Int16)(Math.Abs((UInt16)(this.X - position.X)) +
                    Math.Abs((UInt16)(this.Y - position.Y)));
+        }
+
+        public void Normalize(Int16 maxX, Int16 maxY)
+        {
+            if (this.X > maxX)
+                this.X = 0;
+            if (this.X < 0)
+                this.X = maxX;
+
+            if (this.Y > maxY)
+                this.Y = 0;
+            if (this.Y < 0)
+                this.Y = maxY;
         }
     }
 }

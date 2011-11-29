@@ -9,14 +9,9 @@ namespace Cells.Model.Mapping
 {
     class MapFactory : IMapFactory
     {
-        public MapFactory()
-        {
-
-        }
-
         public Int16[,] CreateMapFromFile()
         {
-            Int16[,] map = new Int16[100, 100];
+            var map = new Int16[100, 100];
 
             if (File.Exists("map1.map"))
             {

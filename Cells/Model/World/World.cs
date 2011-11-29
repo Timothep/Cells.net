@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
-using Cells.Controller;
-using Cells.GameCore.Cells;
-using Cells.GameCore.Mapping;
-using Cells.GameCore.Mapping.Tiles;
 using Cells.Interfaces;
+using Cells.Model.Cells;
 using Cells.Properties;
 using Cells.Utils;
 using Ninject;
 using Ninject.Modules;
 using Cells.Model.Mapping;
-using Cells.Brain;
 using System.Diagnostics;
 
-namespace Cells.GameCore
+namespace Cells.Model.World
 {
     public enum BackgroundColor {  }
 

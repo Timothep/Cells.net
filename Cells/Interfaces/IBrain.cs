@@ -1,5 +1,4 @@
-﻿using Cells.GameCore.Cells;
-using Cells.Model;
+﻿using Cells.Model;
 
 namespace Cells.Interfaces
 {

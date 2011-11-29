@@ -1,5 +1,5 @@
-﻿using Cells.GameCore.Mapping;
-using Cells.GameCore.Mapping.Tiles;
+﻿using Cells.Model;
+using Cells.Model.Mapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Cells.Utils;
 using System.Collections.Generic;

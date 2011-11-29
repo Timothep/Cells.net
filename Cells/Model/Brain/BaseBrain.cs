@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cells.Interfaces;
-using Cells.GameCore.Cells;
+﻿using Cells.Interfaces;
 
 namespace Cells.Model.Brain
 {

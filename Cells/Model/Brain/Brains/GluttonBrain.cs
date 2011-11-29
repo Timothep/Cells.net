@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using Cells.GameCore.Cells;
-using Cells.GameCore.Mapping;
+using Cells.Model.Mapping;
 using Cells.Utils;
 using Cells.Interfaces;
 using System.ComponentModel.Composition;

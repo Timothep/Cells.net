@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cells.Brain;
 using Cells.Controller;
-using Cells.GameCore;
-using Cells.GameCore.Cells;
 using Cells.Interfaces;
+using Cells.Model.World;
 using Cells.Properties;
 using Ninject;
 using Ninject.Modules;

@@ -1,8 +1,8 @@
-using Cells.GameCore.Cells;
-using Cells.GameCore.Mapping;
 using System.Drawing;
 using System;
 using System.Collections.Generic;
+using Cells.Model.Cells;
+using Cells.Model.Mapping;
 
 namespace Cells.Interfaces
 {

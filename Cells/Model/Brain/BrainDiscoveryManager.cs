@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cells.Interfaces;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition;
 using System.Reflection;
 
-namespace Cells.Brain
+namespace Cells.Model.Brain
 {
     class BrainDiscoveryManager
     {

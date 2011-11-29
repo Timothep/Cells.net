@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Cells.View;
-using Cells.Controller;
 
-namespace Cells.GameEngine
+namespace Cells.Controller
 {
     static class Program
     {
@@ -15,9 +13,9 @@ namespace Cells.GameEngine
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            GameController _gameController = new GameController();
+            GameController gameController = new GameController();
 
-            _gameController.Run();
+            gameController.Run();
         }
     }
 }

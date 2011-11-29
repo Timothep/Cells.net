@@ -9,5 +9,7 @@ namespace Cells.Interfaces
         short X { get; set; }
         short Y { get; set; }
         Int16? DistanceTo(ICoordinates position);
+
+        void Normalize(Int16 maxX, Int16 maxY);
     }
 }

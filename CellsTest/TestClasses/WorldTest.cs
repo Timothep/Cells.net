@@ -1,6 +1,4 @@
-﻿using Cells.GameCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cells.GameCore.Cells;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CellsTest.TestClasses
 {

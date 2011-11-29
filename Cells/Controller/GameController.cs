@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using Cells.Interfaces;
 using Cells.Model;
+using Cells.Model.Brain;
 using Cells.Utils;
-using Cells.GameCore.Cells;
 using Ninject;
-using Ninject.Modules;
-using Cells.Brain;
-using Cells.GameCore;
 using Cells.View;
 using System.Windows.Forms;
-using System.Collections;
 
 namespace Cells.Controller
 {

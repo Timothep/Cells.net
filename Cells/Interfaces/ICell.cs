@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Cells.GameCore.Cells;
-using Cells.GameCore.Mapping;
-using Cells.GameCore.Mapping.Tiles;
 using System.Drawing;
 using Cells.Model;
+using Cells.Model.Mapping;
 
 namespace Cells.Interfaces
 {
@@ -40,12 +38,12 @@ namespace Cells.Interfaces
 
         bool CanDivide();
 
-        bool CanMoveRight();
+        //bool CanMoveRight();
         
-        bool CanMoveLeft();
+        //bool CanMoveLeft();
         
-        bool CanMoveDown();
+        //bool CanMoveDown();
         
-        bool CanMoveUp();
+        //bool CanMoveUp();
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cells.GameCore.Cells;
-using Cells.GameCore.Mapping.Tiles;
 using Cells.Interfaces;
 using Cells.Utils;
-using Cells.Properties;
 
-namespace Cells.GameCore.Mapping
+namespace Cells.Model.Mapping
 {
     public class Map : IMap
     {
@@ -139,6 +136,16 @@ namespace Cells.GameCore.Mapping
         public ICell GetCellAt(Int16 x, Int16 y)
         {
             return this.Grid[x, y].CellReference;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetCoordinates"></param>
+        /// <returns></returns>
+        public ICell GetCellAt(ICoordinates targetCoordinates)
+        {
+            return this.Grid[targetCoordinates.X, targetCoordinates.Y].CellReference;
         }
 
         /// <summary>
