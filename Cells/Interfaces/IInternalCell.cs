@@ -8,35 +8,35 @@ using Cells.Model.Mapping;
 
 namespace Cells.Interfaces
 {
-    public interface ICell
+    public interface IInternalCell: ICell
     {
-        //CellAction Think();
+        CellAction Think();
 
-        //void Do(CellAction action);
+        void Do(CellAction action);
 
         SurroundingView Sense();
 
-        //CellAction GetPreviousAction();
+        CellAction GetPreviousAction();
 
         AvailableActions GetRelativeMovment(ICoordinates coordinates);
-        
+
         AvailableActions GetRelativeMovment(IOffsetVector coordinates);
 
-        //void DecreaseLife(Int16 malus = 1);
+        void DecreaseLife(Int16 malus = 1);
 
-        //Int16 GetLife();
+        Int16 GetLife();
 
-        //void Die();
-
-        //void SetLife(Int16 life);
-
-        //void SetTeam(DisplayQualifier teamNumber);
-
-        //void SetBrain(IBrain brain);
-
-        bool CanDivide();
+        void Die();
 
         ICoordinates Position { get; set; }
+
+        void SetLife(Int16 life);
+
+        void SetTeam(DisplayQualifier teamNumber);
+
+        void SetBrain(IBrain brain);
+
+        bool CanDivide();
 
         DisplayQualifier GetTeam();
     }

@@ -20,8 +20,11 @@ namespace Cells.Model
         /// </summary>
         public OffsetVector(ICoordinates coordinatesFrom, ICoordinates coordinatesTo)
         {
-            this.X = Convert.ToInt16(coordinatesFrom.X - coordinatesTo.X);
-            this.Y = Convert.ToInt16(coordinatesFrom.Y - coordinatesTo.Y);
+            //this.X = Convert.ToInt16(coordinatesFrom.X - coordinatesTo.X);
+            //this.Y = Convert.ToInt16(coordinatesFrom.Y - coordinatesTo.Y);
+
+            this.X = Convert.ToInt16(coordinatesTo.X - coordinatesFrom.X);
+            this.Y = Convert.ToInt16(coordinatesTo.Y - coordinatesFrom.Y);
         } 
 
         /// <summary>

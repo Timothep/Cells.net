@@ -169,25 +169,13 @@ namespace Cells.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public short DamageOnAggressiveOpponent {
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public short DamageOnOpponent {
             get {
-                return ((short)(this["DamageOnAggressiveOpponent"]));
+                return ((short)(this["DamageOnOpponent"]));
             }
             set {
-                this["DamageOnAggressiveOpponent"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public short DamageOnPassiveOpponent {
-            get {
-                return ((short)(this["DamageOnPassiveOpponent"]));
-            }
-            set {
-                this["DamageOnPassiveOpponent"] = value;
+                this["DamageOnOpponent"] = value;
             }
         }
         

@@ -39,8 +39,7 @@ namespace Cells.View
             this.tBNumberOfTeams = new System.Windows.Forms.TextBox();
             this.lNumberOfTeams = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.lDamageOnAggrOpponent = new System.Windows.Forms.Label();
-            this.lDamageOnDefOpponent = new System.Windows.Forms.Label();
+            this.lDamageOnOpponent = new System.Windows.Forms.Label();
             this.lCellDivCost = new System.Windows.Forms.Label();
             this.lMaxNumberOfCells = new System.Windows.Forms.Label();
             this.lInitialPopPerBrain = new System.Windows.Forms.Label();
@@ -48,8 +47,7 @@ namespace Cells.View
             this.tBMinAltitude = new System.Windows.Forms.TextBox();
             this.tBCellSensoryViewSize = new System.Windows.Forms.TextBox();
             this.tBSpawnLifeThreshold = new System.Windows.Forms.TextBox();
-            this.tBDamageOnAggressiveOpponent = new System.Windows.Forms.TextBox();
-            this.tBDamageOnPassiveOpponent = new System.Windows.Forms.TextBox();
+            this.tBDamageOnOpponent = new System.Windows.Forms.TextBox();
             this.tBCellDivisionCost = new System.Windows.Forms.TextBox();
             this.lCellInitialLife = new System.Windows.Forms.Label();
             this.bSaveSettings = new System.Windows.Forms.Button();
@@ -60,6 +58,9 @@ namespace Cells.View
             this.tBIntialPopPerBrain = new System.Windows.Forms.TextBox();
             this.lSubViewSize = new System.Windows.Forms.Label();
             this.lBBrains = new System.Windows.Forms.ListBox();
+            this.lbMaps = new System.Windows.Forms.ListBox();
+            this.lBrainsTitle = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DrawBox)).BeginInit();
             this.ParametersGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +68,7 @@ namespace Cells.View
             // DrawBox
             // 
             this.DrawBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.DrawBox.Location = new System.Drawing.Point(13, 13);
+            this.DrawBox.Location = new System.Drawing.Point(6, 8);
             this.DrawBox.Name = "DrawBox";
             this.DrawBox.Size = new System.Drawing.Size(500, 500);
             this.DrawBox.TabIndex = 0;
@@ -77,9 +78,9 @@ namespace Cells.View
             // 
             this.bStartEngine.BackColor = System.Drawing.SystemColors.Control;
             this.bStartEngine.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bStartEngine.Location = new System.Drawing.Point(519, 13);
+            this.bStartEngine.Location = new System.Drawing.Point(512, 8);
             this.bStartEngine.Name = "bStartEngine";
-            this.bStartEngine.Size = new System.Drawing.Size(111, 23);
+            this.bStartEngine.Size = new System.Drawing.Size(77, 23);
             this.bStartEngine.TabIndex = 1;
             this.bStartEngine.Text = "Start Engine";
             this.bStartEngine.UseVisualStyleBackColor = true;
@@ -89,9 +90,9 @@ namespace Cells.View
             // 
             this.bStopEngine.BackColor = System.Drawing.SystemColors.Menu;
             this.bStopEngine.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bStopEngine.Location = new System.Drawing.Point(645, 13);
+            this.bStopEngine.Location = new System.Drawing.Point(595, 8);
             this.bStopEngine.Name = "bStopEngine";
-            this.bStopEngine.Size = new System.Drawing.Size(111, 23);
+            this.bStopEngine.Size = new System.Drawing.Size(80, 23);
             this.bStopEngine.TabIndex = 2;
             this.bStopEngine.Text = "Stop Engine";
             this.bStopEngine.UseVisualStyleBackColor = true;
@@ -104,8 +105,7 @@ namespace Cells.View
             this.ParametersGroupBox.Controls.Add(this.tBNumberOfTeams);
             this.ParametersGroupBox.Controls.Add(this.lNumberOfTeams);
             this.ParametersGroupBox.Controls.Add(this.label4);
-            this.ParametersGroupBox.Controls.Add(this.lDamageOnAggrOpponent);
-            this.ParametersGroupBox.Controls.Add(this.lDamageOnDefOpponent);
+            this.ParametersGroupBox.Controls.Add(this.lDamageOnOpponent);
             this.ParametersGroupBox.Controls.Add(this.lCellDivCost);
             this.ParametersGroupBox.Controls.Add(this.lMaxNumberOfCells);
             this.ParametersGroupBox.Controls.Add(this.lInitialPopPerBrain);
@@ -113,8 +113,7 @@ namespace Cells.View
             this.ParametersGroupBox.Controls.Add(this.tBMinAltitude);
             this.ParametersGroupBox.Controls.Add(this.tBCellSensoryViewSize);
             this.ParametersGroupBox.Controls.Add(this.tBSpawnLifeThreshold);
-            this.ParametersGroupBox.Controls.Add(this.tBDamageOnAggressiveOpponent);
-            this.ParametersGroupBox.Controls.Add(this.tBDamageOnPassiveOpponent);
+            this.ParametersGroupBox.Controls.Add(this.tBDamageOnOpponent);
             this.ParametersGroupBox.Controls.Add(this.tBCellDivisionCost);
             this.ParametersGroupBox.Controls.Add(this.lCellInitialLife);
             this.ParametersGroupBox.Controls.Add(this.bSaveSettings);
@@ -124,16 +123,16 @@ namespace Cells.View
             this.ParametersGroupBox.Controls.Add(this.lMinAltitude);
             this.ParametersGroupBox.Controls.Add(this.tBIntialPopPerBrain);
             this.ParametersGroupBox.Controls.Add(this.lSubViewSize);
-            this.ParametersGroupBox.Location = new System.Drawing.Point(519, 151);
+            this.ParametersGroupBox.Location = new System.Drawing.Point(755, 8);
             this.ParametersGroupBox.Name = "ParametersGroupBox";
-            this.ParametersGroupBox.Size = new System.Drawing.Size(237, 362);
+            this.ParametersGroupBox.Size = new System.Drawing.Size(236, 500);
             this.ParametersGroupBox.TabIndex = 3;
             this.ParametersGroupBox.TabStop = false;
             this.ParametersGroupBox.Text = "Parameters";
             // 
             // tBCellSize
             // 
-            this.tBCellSize.Location = new System.Drawing.Point(175, 303);
+            this.tBCellSize.Location = new System.Drawing.Point(175, 277);
             this.tBCellSize.Name = "tBCellSize";
             this.tBCellSize.Size = new System.Drawing.Size(56, 20);
             this.tBCellSize.TabIndex = 27;
@@ -141,7 +140,7 @@ namespace Cells.View
             // lCellSize
             // 
             this.lCellSize.AutoSize = true;
-            this.lCellSize.Location = new System.Drawing.Point(6, 306);
+            this.lCellSize.Location = new System.Drawing.Point(6, 280);
             this.lCellSize.Name = "lCellSize";
             this.lCellSize.Size = new System.Drawing.Size(115, 13);
             this.lCellSize.TabIndex = 26;
@@ -149,7 +148,7 @@ namespace Cells.View
             // 
             // tBNumberOfTeams
             // 
-            this.tBNumberOfTeams.Location = new System.Drawing.Point(175, 277);
+            this.tBNumberOfTeams.Location = new System.Drawing.Point(175, 251);
             this.tBNumberOfTeams.Name = "tBNumberOfTeams";
             this.tBNumberOfTeams.Size = new System.Drawing.Size(56, 20);
             this.tBNumberOfTeams.TabIndex = 25;
@@ -157,7 +156,7 @@ namespace Cells.View
             // lNumberOfTeams
             // 
             this.lNumberOfTeams.AutoSize = true;
-            this.lNumberOfTeams.Location = new System.Drawing.Point(6, 280);
+            this.lNumberOfTeams.Location = new System.Drawing.Point(6, 254);
             this.lNumberOfTeams.Name = "lNumberOfTeams";
             this.lNumberOfTeams.Size = new System.Drawing.Size(91, 13);
             this.lNumberOfTeams.TabIndex = 24;
@@ -166,29 +165,20 @@ namespace Cells.View
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 176);
+            this.label4.Location = new System.Drawing.Point(6, 150);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 13);
             this.label4.TabIndex = 23;
             this.label4.Text = "Spawn life threshold";
             // 
-            // lDamageOnAggrOpponent
+            // lDamageOnOpponent
             // 
-            this.lDamageOnAggrOpponent.AutoSize = true;
-            this.lDamageOnAggrOpponent.Location = new System.Drawing.Point(6, 150);
-            this.lDamageOnAggrOpponent.Name = "lDamageOnAggrOpponent";
-            this.lDamageOnAggrOpponent.Size = new System.Drawing.Size(164, 13);
-            this.lDamageOnAggrOpponent.TabIndex = 22;
-            this.lDamageOnAggrOpponent.Text = "Damage on aggressive opponent";
-            // 
-            // lDamageOnDefOpponent
-            // 
-            this.lDamageOnDefOpponent.AutoSize = true;
-            this.lDamageOnDefOpponent.Location = new System.Drawing.Point(6, 124);
-            this.lDamageOnDefOpponent.Name = "lDamageOnDefOpponent";
-            this.lDamageOnDefOpponent.Size = new System.Drawing.Size(149, 13);
-            this.lDamageOnDefOpponent.TabIndex = 21;
-            this.lDamageOnDefOpponent.Text = "Damage on passive opponent";
+            this.lDamageOnOpponent.AutoSize = true;
+            this.lDamageOnOpponent.Location = new System.Drawing.Point(6, 124);
+            this.lDamageOnOpponent.Name = "lDamageOnOpponent";
+            this.lDamageOnOpponent.Size = new System.Drawing.Size(112, 13);
+            this.lDamageOnOpponent.TabIndex = 21;
+            this.lDamageOnOpponent.Text = "Damage on Opponent";
             // 
             // lCellDivCost
             // 
@@ -219,45 +209,38 @@ namespace Cells.View
             // 
             // tBMaxAltitude
             // 
-            this.tBMaxAltitude.Location = new System.Drawing.Point(175, 251);
+            this.tBMaxAltitude.Location = new System.Drawing.Point(175, 225);
             this.tBMaxAltitude.Name = "tBMaxAltitude";
             this.tBMaxAltitude.Size = new System.Drawing.Size(56, 20);
             this.tBMaxAltitude.TabIndex = 15;
             // 
             // tBMinAltitude
             // 
-            this.tBMinAltitude.Location = new System.Drawing.Point(175, 225);
+            this.tBMinAltitude.Location = new System.Drawing.Point(175, 199);
             this.tBMinAltitude.Name = "tBMinAltitude";
             this.tBMinAltitude.Size = new System.Drawing.Size(56, 20);
             this.tBMinAltitude.TabIndex = 14;
             // 
             // tBCellSensoryViewSize
             // 
-            this.tBCellSensoryViewSize.Location = new System.Drawing.Point(175, 199);
+            this.tBCellSensoryViewSize.Location = new System.Drawing.Point(175, 173);
             this.tBCellSensoryViewSize.Name = "tBCellSensoryViewSize";
             this.tBCellSensoryViewSize.Size = new System.Drawing.Size(56, 20);
             this.tBCellSensoryViewSize.TabIndex = 13;
             // 
             // tBSpawnLifeThreshold
             // 
-            this.tBSpawnLifeThreshold.Location = new System.Drawing.Point(175, 173);
+            this.tBSpawnLifeThreshold.Location = new System.Drawing.Point(175, 147);
             this.tBSpawnLifeThreshold.Name = "tBSpawnLifeThreshold";
             this.tBSpawnLifeThreshold.Size = new System.Drawing.Size(56, 20);
             this.tBSpawnLifeThreshold.TabIndex = 12;
             // 
-            // tBDamageOnAggressiveOpponent
+            // tBDamageOnOpponent
             // 
-            this.tBDamageOnAggressiveOpponent.Location = new System.Drawing.Point(175, 147);
-            this.tBDamageOnAggressiveOpponent.Name = "tBDamageOnAggressiveOpponent";
-            this.tBDamageOnAggressiveOpponent.Size = new System.Drawing.Size(56, 20);
-            this.tBDamageOnAggressiveOpponent.TabIndex = 11;
-            // 
-            // tBDamageOnPassiveOpponent
-            // 
-            this.tBDamageOnPassiveOpponent.Location = new System.Drawing.Point(175, 121);
-            this.tBDamageOnPassiveOpponent.Name = "tBDamageOnPassiveOpponent";
-            this.tBDamageOnPassiveOpponent.Size = new System.Drawing.Size(56, 20);
-            this.tBDamageOnPassiveOpponent.TabIndex = 10;
+            this.tBDamageOnOpponent.Location = new System.Drawing.Point(175, 121);
+            this.tBDamageOnOpponent.Name = "tBDamageOnOpponent";
+            this.tBDamageOnOpponent.Size = new System.Drawing.Size(56, 20);
+            this.tBDamageOnOpponent.TabIndex = 10;
             // 
             // tBCellDivisionCost
             // 
@@ -277,7 +260,7 @@ namespace Cells.View
             // 
             // bSaveSettings
             // 
-            this.bSaveSettings.Location = new System.Drawing.Point(144, 329);
+            this.bSaveSettings.Location = new System.Drawing.Point(143, 471);
             this.bSaveSettings.Name = "bSaveSettings";
             this.bSaveSettings.Size = new System.Drawing.Size(87, 23);
             this.bSaveSettings.TabIndex = 7;
@@ -302,7 +285,7 @@ namespace Cells.View
             // lMaxAltitude
             // 
             this.lMaxAltitude.AutoSize = true;
-            this.lMaxAltitude.Location = new System.Drawing.Point(6, 254);
+            this.lMaxAltitude.Location = new System.Drawing.Point(6, 228);
             this.lMaxAltitude.Name = "lMaxAltitude";
             this.lMaxAltitude.Size = new System.Drawing.Size(64, 13);
             this.lMaxAltitude.TabIndex = 3;
@@ -311,7 +294,7 @@ namespace Cells.View
             // lMinAltitude
             // 
             this.lMinAltitude.AutoSize = true;
-            this.lMinAltitude.Location = new System.Drawing.Point(6, 228);
+            this.lMinAltitude.Location = new System.Drawing.Point(6, 202);
             this.lMinAltitude.Name = "lMinAltitude";
             this.lMinAltitude.Size = new System.Drawing.Size(61, 13);
             this.lMinAltitude.TabIndex = 2;
@@ -327,7 +310,7 @@ namespace Cells.View
             // lSubViewSize
             // 
             this.lSubViewSize.AutoSize = true;
-            this.lSubViewSize.Location = new System.Drawing.Point(6, 202);
+            this.lSubViewSize.Location = new System.Drawing.Point(6, 176);
             this.lSubViewSize.Name = "lSubViewSize";
             this.lSubViewSize.Size = new System.Drawing.Size(114, 13);
             this.lSubViewSize.TabIndex = 0;
@@ -336,18 +319,49 @@ namespace Cells.View
             // lBBrains
             // 
             this.lBBrains.FormattingEnabled = true;
-            this.lBBrains.Location = new System.Drawing.Point(520, 46);
+            this.lBBrains.Location = new System.Drawing.Point(512, 52);
             this.lBBrains.Name = "lBBrains";
             this.lBBrains.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lBBrains.Size = new System.Drawing.Size(236, 95);
+            this.lBBrains.Size = new System.Drawing.Size(237, 303);
             this.lBBrains.TabIndex = 4;
+            // 
+            // lbMaps
+            // 
+            this.lbMaps.FormattingEnabled = true;
+            this.lbMaps.Location = new System.Drawing.Point(512, 374);
+            this.lbMaps.Name = "lbMaps";
+            this.lbMaps.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbMaps.Size = new System.Drawing.Size(236, 134);
+            this.lbMaps.TabIndex = 5;
+            this.lbMaps.SelectedIndexChanged += new System.EventHandler(this.lbMaps_SelectedIndexChanged);
+            // 
+            // lBrainsTitle
+            // 
+            this.lBrainsTitle.AutoSize = true;
+            this.lBrainsTitle.Location = new System.Drawing.Point(509, 34);
+            this.lBrainsTitle.Name = "lBrainsTitle";
+            this.lBrainsTitle.Size = new System.Drawing.Size(131, 13);
+            this.lBrainsTitle.TabIndex = 6;
+            this.lBrainsTitle.Text = "Brain Selection (choose 2)";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(509, 358);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(128, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Map Selection (choose 1)";
             // 
             // CellsCanvas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(764, 520);
+            this.ClientSize = new System.Drawing.Size(997, 514);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lBrainsTitle);
+            this.Controls.Add(this.lbMaps);
             this.Controls.Add(this.lBBrains);
             this.Controls.Add(this.bStopEngine);
             this.Controls.Add(this.ParametersGroupBox);
@@ -361,6 +375,7 @@ namespace Cells.View
             this.ParametersGroupBox.ResumeLayout(false);
             this.ParametersGroupBox.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -381,21 +396,22 @@ namespace Cells.View
         private System.Windows.Forms.TextBox tBMinAltitude;
         private System.Windows.Forms.TextBox tBCellSensoryViewSize;
         private System.Windows.Forms.TextBox tBSpawnLifeThreshold;
-        private System.Windows.Forms.TextBox tBDamageOnAggressiveOpponent;
-        private System.Windows.Forms.TextBox tBDamageOnPassiveOpponent;
+        private System.Windows.Forms.TextBox tBDamageOnOpponent;
         private System.Windows.Forms.TextBox tBCellDivisionCost;
         private System.Windows.Forms.Label lCellInitialLife;
         private System.Windows.Forms.Label lMaxNumberOfCells;
         private System.Windows.Forms.Label lInitialPopPerBrain;
         private System.Windows.Forms.Label lCellDivCost;
-        private System.Windows.Forms.Label lDamageOnAggrOpponent;
-        private System.Windows.Forms.Label lDamageOnDefOpponent;
+        private System.Windows.Forms.Label lDamageOnOpponent;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tBNumberOfTeams;
         private System.Windows.Forms.Label lNumberOfTeams;
         private System.Windows.Forms.TextBox tBCellSize;
         private System.Windows.Forms.Label lCellSize;
         private System.Windows.Forms.ListBox lBBrains;
+        private System.Windows.Forms.ListBox lbMaps;
+        private System.Windows.Forms.Label lBrainsTitle;
+        private System.Windows.Forms.Label label1;
     }
 }
 

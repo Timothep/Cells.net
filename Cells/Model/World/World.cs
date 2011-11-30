@@ -23,19 +23,19 @@ namespace Cells.Model.World
         /// <summary>
         /// List of all the cells currently in game
         /// </summary>
-        private IList<ICell> cells = new List<ICell>();
+        private IList<IInternalCell> cells = new List<IInternalCell>();
 
         /// <summary>
         /// List of all the cells created during the round
         /// </summary>
-        private readonly IList<ICell> newCellsToAdd = new List<ICell>();
+        private readonly IList<IInternalCell> newCellsToAdd = new List<IInternalCell>();
 
         private IMapFactory mapFactory;
 
         /// <summary>
         /// List of all the cells that died during the round
         /// </summary>
-        private readonly List<ICell> deadCellsToRemove = new List<ICell>();
+        private readonly List<IInternalCell> deadCellsToRemove = new List<IInternalCell>();
 
         private readonly IList<DisplayQualifier> availableTeams = new List<DisplayQualifier>();
 
@@ -49,10 +49,11 @@ namespace Cells.Model.World
         /// </summary>
         public World()
         {
-            availableTeams.Add(DisplayQualifier.Team1);
-            availableTeams.Add(DisplayQualifier.Team2);
-            availableTeams.Add(DisplayQualifier.Team3);
-            availableTeams.Add(DisplayQualifier.Team4);
+            this.displayController  = NinjectGlobalKernel.GlobalKernel.Get<IDisplayController>();
+            this.mapFactory = this.localKernel.Get<IMapFactory>();
+
+            this.masterMap          = new Map(Settings.Default.WorldWidth, Settings.Default.WorldHeight);
+            this.cells              = new List<IInternalCell>();
         }
 
         /// <summary>
@@ -62,17 +63,26 @@ namespace Cells.Model.World
         {
             this.brains = availableBrains;
 
-            this.displayController = NinjectGlobalKernel.GlobalKernel.Get<IDisplayController>();
+            //this.masterMap = this.mapFactory.GetMap();
 
-            masterMap = new Map(Settings.Default.WorldWidth, Settings.Default.WorldHeight);
-            cells = new List<ICell>();
-
-            this.mapFactory = this.localKernel.Get<IMapFactory>();
             CreateGeometryMap();
-
             CreateInitialCellPopulation();
             CreatePlantMap();
             CreateRessourcesMap();
+        }
+
+        /// <summary>
+        /// Tabula Rasa
+        /// </summary>
+        public void Reset()
+        {
+            if (this.brains != null)
+                this.brains.Clear();
+    
+            if (this.cells != null)
+                this.cells.Clear();
+
+            PopulateAvailableTeams();
         }
 
         /// <summary>
@@ -96,7 +106,7 @@ namespace Cells.Model.World
         /// Returns a list of all the cells present in the game
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ICell> GetCells()
+        public IEnumerable<IInternalCell> GetCells()
         {
             return this.cells;
         }
@@ -133,7 +143,7 @@ namespace Cells.Model.World
         /// </summary>
         /// <param name="cell">The cell asking</param>
         /// <returns>A SurroundingView of the location where the cell resides</returns>
-        public SurroundingView GetSurroundingsView(ICell cell)
+        public SurroundingView GetSurroundingsView(IInternalCell cell)
         {
             MapTile[,] map = masterMap.GetSubset(cell.Position, Settings.Default.SensoryViewSize, Settings.Default.SensoryViewSize);
             return new SurroundingView(cell.Position, map);
@@ -183,7 +193,7 @@ namespace Cells.Model.World
         /// We do not remove the cell right away
         /// The cells are effectively removed at the end of the game loop
         /// </remarks>
-        public void UnregisterCell(ICell cell)
+        public void UnregisterCell(IInternalCell cell)
         {
             deadCellsToRemove.Add(cell);
         }
@@ -262,7 +272,7 @@ namespace Cells.Model.World
         /// <param name="position"></param>
         private void CreateCell(String brainType, DisplayQualifier teamNumber, Int16? spawnLife = null, ICoordinates position = null)
         {
-            var cell = this.localKernel.Get<ICell>();
+            var cell = this.localKernel.Get<IInternalCell>();
 
             var brain = this.globalKernel.Get(Type.GetType(brainType)) as IBrain;
             cell.SetBrain(brain);
@@ -293,7 +303,7 @@ namespace Cells.Model.World
         /// Register a new cell into the game
         /// </summary>
         /// <param name="newCell"></param>
-        private void RegisterNewCell(ICell newCell)
+        private void RegisterNewCell(IInternalCell newCell)
         {
             if (newCell.Position.X == 100)
             {}
@@ -306,7 +316,7 @@ namespace Cells.Model.World
         /// (should only be done by the world itself just before the begining of the turn)
         /// </summary>
         /// <param name="newCell">The cell</param>
-        private void InjectCell(ICell newCell)
+        private void InjectCell(IInternalCell newCell)
         {
             // Add the cell to the cell list
             this.cells.Add(newCell);
@@ -402,6 +412,15 @@ namespace Cells.Model.World
         {
             return this.masterMap.GetAmountOfRessourcesLeft(coordinates);
         }
+
+        private void PopulateAvailableTeams()
+        {
+            this.availableTeams.Clear();
+            this.availableTeams.Add(DisplayQualifier.Team1);
+            this.availableTeams.Add(DisplayQualifier.Team2);
+            this.availableTeams.Add(DisplayQualifier.Team3);
+            this.availableTeams.Add(DisplayQualifier.Team4);
+        }
     }
 
     /// <summary>
@@ -414,7 +433,7 @@ namespace Cells.Model.World
         /// </summary>
         public override void Load()
         {
-            Bind<ICell>().To<Cell>();
+            Bind<IInternalCell>().To<Cell>();
             Bind<IMapFactory>().To<MapFactory>();
         }
     }

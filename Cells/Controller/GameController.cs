@@ -38,7 +38,8 @@ namespace Cells.Controller
         {
             this.view = new CellsCanvas(this);
             this.view.Show();
-            this.displayController = NinjectGlobalKernel.GlobalKernel.Get<IDisplayController>();
+            this.displayController  =   NinjectGlobalKernel.GlobalKernel.Get<IDisplayController>();
+            this.world              =   NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
         }
 
         /// <summary>
@@ -70,7 +71,6 @@ namespace Cells.Controller
         public void StartGame()
         {
             this.selectedBrainList = this.view.GetSelectedBrains();
-            this.world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>();
             this.world.Initialize(this.selectedBrainList as IList<String>);
 
             // Render the background and paint it
@@ -87,7 +87,7 @@ namespace Cells.Controller
             if(this.world != null)
                 NinjectGlobalKernel.GlobalKernel.Release(this.world);
 
-            this.world = null;
+            this.world = NinjectGlobalKernel.GlobalKernel.Get<IWorld>(); ;
         }
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace Cells.Controller
             this.world.AddNewlyCreatedCellsToTheGame();
             this.world.ResetMovementsList();
 
-            IEnumerable<ICell> allCells = this.world.GetCells();
+            IEnumerable<IInternalCell> allCells = this.world.GetCells();
 
             if (null != allCells)
             {
-                foreach (ICell currentCell in this.world.GetCells())
+                foreach (IInternalCell currentCell in this.world.GetCells())
                 {
                     // Death comes first
                     currentCell.DecreaseLife();
@@ -163,6 +163,11 @@ namespace Cells.Controller
         internal void Close()
         {
             this._running = false;
+        }
+
+        internal void ResetGame()
+        {
+            this.world.Reset();
         }
     }
 }

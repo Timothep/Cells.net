@@ -184,7 +184,7 @@
       </nodes>
     </associationConnector>
     <interfaceShape Id="df28afd6-64cb-4d50-99bf-20ba0122e1d1" absoluteBounds="1.375, 6.75, 1.5, 1.7031249602635707" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
-      <interfaceMoniker Id="fec36caa-e893-4855-a8b9-6dfba75e71da" LastKnownName="ICell" />
+      <interfaceMoniker Id="fec36caa-e893-4855-a8b9-6dfba75e71da" LastKnownName="IInternalCell" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="73cb1040-0c62-4418-8557-ee8c0d469f81" absoluteBounds="1.3900000000000001, 7.14, 1.4700000000000002, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
         <OperationElementListCompartment Id="b7acda76-b006-484c-9a69-a5de116c4047" absoluteBounds="1.3900000000000001, 7.35117186754942, 1.4700000000000002, 1.0019530927141507" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />

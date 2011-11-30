@@ -8,11 +8,11 @@ namespace Cells.Interfaces
 {
     public interface IWorld
     {
-        SurroundingView GetSurroundingsView(ICell cell);
+        SurroundingView GetSurroundingsView(IInternalCell cell);
 
         void DropRessources(ICoordinates Position, short _life);
 
-        void UnregisterCell(ICell cell);
+        void UnregisterCell(IInternalCell cell);
 
         void LowerLandscape(ICoordinates Position);
 
@@ -22,7 +22,7 @@ namespace Cells.Interfaces
 
         void RemoveDeadCells();
 
-        IEnumerable<ICell> GetCells();
+        IEnumerable<IInternalCell> GetCells();
 
         void Initialize(IList<String> availableBrains);
 
@@ -37,5 +37,7 @@ namespace Cells.Interfaces
         Int16 GetAmountOfRessourcesLeft(ICoordinates coordinates);
 
         IMap GetMap();
+
+        void Reset();
     }
 }

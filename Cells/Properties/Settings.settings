@@ -38,11 +38,8 @@
     <Setting Name="PixelSize" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="DamageOnAggressiveOpponent" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
-    <Setting Name="DamageOnPassiveOpponent" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">5</Value>
+    <Setting Name="DamageOnOpponent" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="MaxEatingPerRoundQuantity" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">20</Value>

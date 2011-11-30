@@ -57,10 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DisplayController.cs" />
+    <Compile Include="Interfaces\IInternalCell.cs" />
     <Compile Include="Interfaces\IMapFactory.cs" />
     <Compile Include="Model\Action.cs" />
     <Compile Include="Model\Brain\BaseBrain.cs" />
     <Compile Include="Model\Brain\BrainDiscoveryManager.cs" />
+    <Compile Include="Model\Brain\Brains\UltraAggressiveBrain.cs" />
     <Compile Include="Model\Brain\Brains\GluttonBrain.cs" />
     <Compile Include="Model\Brain\Brains\WildDuplicatingBrain.cs" />
     <Compile Include="Model\Brain\Brains\RandomMovingBrain.cs" />

@@ -40,7 +40,7 @@ namespace Cells.Model.Mapping
         /// <summary>
         /// Function returning a list of all the cells present on the view
         /// </summary>
-        /// <returns>An IList of ICell</returns>
+        /// <returns>An IList of IInternalCell</returns>
         public IList<ICell> GetAllCells()
         {
             IList<ICell> newList = new List<ICell>();
@@ -48,7 +48,7 @@ namespace Cells.Model.Mapping
             for (int i = 0; i < viewSizeX - 1; i++)
                 for (int j = 0; j < viewSizeY - 1; j++)
                     if (View.Grid[i,j].CellReference != null)
-                        newList.Add(View.Grid[i, j].CellReference);
+                        newList.Add(View.Grid[i, j].CellReference as ICell);
 
             return newList;
         }

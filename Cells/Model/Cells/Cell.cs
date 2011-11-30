@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Cells.Model.Brain;
 using Cells.Model.Mapping;
 using Cells.Properties;
 using Cells.Utils;
@@ -10,7 +11,7 @@ using Ninject.Modules;
 
 namespace Cells.Model.Cells
 {
-    public class Cell: ICell
+    public class Cell: IInternalCell, ICell
     {
         private readonly IWorld world;
         private IBrain Brain { get; set; }
@@ -58,12 +59,27 @@ namespace Cells.Model.Cells
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DisplayQualifier GetTeam()
+        {
+            return this.Team;
+        }
+
+        /// <summary>
         /// This function executes the action passed on by the brain
         /// (For gameplay perspective the brain should not be able to control the cell himself ;)
         /// </summary>
         /// <param name="action">The action to apply</param>
         public void Do(CellAction action)
         {
+            if (this.GetLife() <= 0)
+            {
+                this.Die();
+                return;
+            }
+
             this.cellPreviousAction = action.GetAction();
 
             switch (action.GetAction())
@@ -96,7 +112,7 @@ namespace Cells.Model.Cells
                     Eat(action.GetOffsetToTarget());
                     break;
                 case AvailableActions.ATTACK:
-                    throw new NotImplementedException();
+                    Attack(action.GetOffsetToTarget());
                     break;
                 case AvailableActions.NONE:
                     break;
@@ -104,6 +120,27 @@ namespace Cells.Model.Cells
                     throw new NotImplementedException();
             }
             return;
+        }
+
+        /// <summary>
+        /// Tries to attack a cell in its direct proximity
+        /// </summary>
+        /// <param name="offsetToTarget"></param>
+        private void Attack(IOffsetVector offsetToTarget)
+        {
+            if (offsetToTarget == null)
+                return;
+
+            ICoordinates coordinates = new Coordinates(this.Position.X, this.Position.Y);
+            coordinates.X += offsetToTarget.X;
+            coordinates.Y += offsetToTarget.Y;
+
+            IInternalCell target = this.world.GetMap().GetCellAt(coordinates);
+
+            if (target != null && target.GetLife() > 0)
+            {
+                target.DecreaseLife(Settings.Default.DamageOnOpponent);
+            }
         }
 
         /// <summary>
@@ -431,7 +468,7 @@ namespace Cells.Model.Cells
         public void SetBrain(IBrain newBrain)
         {
             this.Brain = newBrain;
-            this.Brain.SetCell(this);
+            (this.Brain as BaseBrain).SetCell(this);
         }
 
         /// <summary>

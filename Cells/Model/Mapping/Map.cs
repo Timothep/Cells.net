@@ -133,7 +133,7 @@ namespace Cells.Model.Mapping
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public ICell GetCellAt(Int16 x, Int16 y)
+        public IInternalCell GetCellAt(Int16 x, Int16 y)
         {
             return this.Grid[x, y].CellReference;
         }
@@ -143,7 +143,7 @@ namespace Cells.Model.Mapping
         /// </summary>
         /// <param name="targetCoordinates"></param>
         /// <returns></returns>
-        public ICell GetCellAt(ICoordinates targetCoordinates)
+        public IInternalCell GetCellAt(ICoordinates targetCoordinates)
         {
             return this.Grid[targetCoordinates.X, targetCoordinates.Y].CellReference;
         }
@@ -170,7 +170,7 @@ namespace Cells.Model.Mapping
         /// Function registering a cell on the map
         /// </summary>
         /// <param name="newCell">The cell</param>
-        internal void ImplantCell(ICell newCell)
+        internal void ImplantCell(IInternalCell newCell)
         {
             if (newCell != null)
                 Grid[newCell.Position.X, newCell.Position.Y].CellReference = newCell;
@@ -282,7 +282,7 @@ namespace Cells.Model.Mapping
         /// Removes a cell from the grid
         /// </summary>
         /// <param name="cellToRemove"></param>
-        internal void RemoveCell(ICell cellToRemove)
+        internal void RemoveCell(IInternalCell cellToRemove)
         {
             if (cellToRemove != null)
                 Grid[cellToRemove.Position.X, cellToRemove.Position.Y].CellReference = null;

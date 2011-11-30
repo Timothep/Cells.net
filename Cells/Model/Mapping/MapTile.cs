@@ -10,7 +10,7 @@ namespace Cells.Model.Mapping
         [Inject]
         private ICoordinates _position;
 
-        public ICell CellReference = null;
+        public IInternalCell CellReference = null;
         public Int16 GrowthRate = 0;
         public Int16 RessourceLevel = 0;
         public Int16 Altitude = 0;

@@ -30,7 +30,7 @@
             Id="ca7c0b71-8575-45ac-adc4-57b3b07070e1">
             <interfaceMoniker
               Id="7cfaf67b-3145-4693-ab57-d49da852f171"
-              LastKnownName="ICell"
+              LastKnownName="IInternalCell"
               LastKnownLocation="CellsModel.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -617,7 +617,7 @@
             Id="f02961fa-5ec0-42a4-a40e-2f3e223c1729">
             <interfaceMoniker
               Id="48e247f3-5176-4b01-93cf-0bbfd6a2bfc6"
-              LastKnownName="ICellTile"
+              LastKnownName="IInternalCellTile"
               LastKnownLocation="CellsModel.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -978,7 +978,7 @@
     <packageHasNamedElement>
       <class
         Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3"
-        name="ICellTile"
+        name="IInternalCellTile"
         isAbstract="true"
         isLeaf="false"
         isActiveClass="false">
@@ -1513,7 +1513,7 @@
             <type_NamedElement>
               <classMoniker
                 Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3"
-                LastKnownName="ICellTile"
+                LastKnownName="IInternalCellTile"
                 LastKnownLocation="CellsModel.uml" />
             </type_NamedElement>
           </property>
@@ -1600,7 +1600,7 @@
     <packageHasNamedElement>
       <Interface
         Id="48e247f3-5176-4b01-93cf-0bbfd6a2bfc6"
-        name="ICellTile"
+        name="IInternalCellTile"
         isAbstract="false"
         isLeaf="false">
         <ownedOperations>
@@ -1662,7 +1662,7 @@
     <packageHasNamedElement>
       <Interface
         Id="7cfaf67b-3145-4693-ab57-d49da852f171"
-        name="ICell"
+        name="IInternalCell"
         isAbstract="false"
         isLeaf="false">
         <ownedOperations>

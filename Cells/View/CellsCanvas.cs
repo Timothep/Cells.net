@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Cells.Utils;
 using Cells.Properties;
 using Cells.Controller;
 using Cells.Interfaces;
+using Ninject;
 
 namespace Cells.View
 {
@@ -15,6 +16,7 @@ namespace Cells.View
         private readonly Color defaultBackgroundColor = Color.Black;
         private readonly short pixelSize = Settings.Default.PixelSize;
         private readonly GameController controller;
+        private readonly IDisplayController displayController;
         private readonly Graphics canvas;
 
         /// <summary>
@@ -24,11 +26,29 @@ namespace Cells.View
         {
             InitializeComponent();
 
+            this.displayController = NinjectGlobalKernel.GlobalKernel.Get<IDisplayController>();
+
             this.controller = controller;
             this.canvas = DrawBox.CreateGraphics();
             this.canvas.Clear(defaultBackgroundColor);
 
             PopulateBrains();
+            PopulateMaps();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void PopulateMaps()
+        {
+            string[] maps = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.map");
+
+            foreach (String map in maps)
+                this.lbMaps.Items.Add(Path.GetFileNameWithoutExtension(map));
+
+            // Preselect the first brain
+            if (this.lbMaps.Items.Count > 0)
+                this.lbMaps.SetSelected(0, true);
         }
 
         /// <summary>
@@ -79,12 +99,7 @@ namespace Cells.View
         /// </summary>
         private void BStartEngineClick(object sender, EventArgs e)
         {
-            try
-            {
-                this.controller.StopGame();
-            }
-            catch{}
-
+            this.controller.ResetGame();
             this.controller.StartGame();
         }
 
@@ -136,8 +151,7 @@ namespace Cells.View
             this.tBNumberOfTeams.Text = Settings.Default.NumberOfTeams.ToString();
             this.tBSpawnLifeThreshold.Text = Settings.Default.SpawnLifeThreshold.ToString();
             this.tBIntialPopPerBrain.Text = Settings.Default.InitialPopulationPerBrain.ToString();
-            this.tBDamageOnAggressiveOpponent.Text = Settings.Default.DamageOnAggressiveOpponent.ToString();
-            this.tBDamageOnPassiveOpponent.Text = Settings.Default.DamageOnPassiveOpponent.ToString();
+            this.tBDamageOnOpponent.Text = Settings.Default.DamageOnOpponent.ToString();
         }
 
         /// <summary>
@@ -145,18 +159,17 @@ namespace Cells.View
         /// </summary>
         private void SaveSettingChanges()
         {
-            Settings.Default.PixelSize = Convert.ToInt16(tBCellSize.Text);
-            Settings.Default.CostOfCellDivision = Convert.ToInt16(tBCellDivisionCost.Text);
-            Settings.Default.CellMaxInitialLife = Convert.ToInt16(tBCellInitialLife.Text);
-            Settings.Default.SensoryViewSize = Convert.ToInt16(tBCellSensoryViewSize.Text);
-            Settings.Default.MaxAltitude = Convert.ToInt16(tBMaxAltitude.Text);
-            Settings.Default.MaxNumberOfCells = Convert.ToInt16(tBMaxNumberCells.Text);
-            Settings.Default.MinAltitude = Convert.ToInt16(tBMinAltitude.Text);
-            Settings.Default.NumberOfTeams = Convert.ToInt16(tBNumberOfTeams.Text);
-            Settings.Default.SpawnLifeThreshold = Convert.ToInt16(tBSpawnLifeThreshold.Text);
-            Settings.Default.InitialPopulationPerBrain = Convert.ToInt16(tBIntialPopPerBrain.Text);
-            Settings.Default.DamageOnAggressiveOpponent = Convert.ToInt16(tBDamageOnAggressiveOpponent.Text);
-            Settings.Default.DamageOnPassiveOpponent = Convert.ToInt16(tBDamageOnPassiveOpponent.Text);
+            Settings.Default.PixelSize = Convert.ToInt16(this.tBCellSize.Text);
+            Settings.Default.CostOfCellDivision = Convert.ToInt16(this.tBCellDivisionCost.Text);
+            Settings.Default.CellMaxInitialLife = Convert.ToInt16(this.tBCellInitialLife.Text);
+            Settings.Default.SensoryViewSize = Convert.ToInt16(this.tBCellSensoryViewSize.Text);
+            Settings.Default.MaxAltitude = Convert.ToInt16(this.tBMaxAltitude.Text);
+            Settings.Default.MaxNumberOfCells = Convert.ToInt16(this.tBMaxNumberCells.Text);
+            Settings.Default.MinAltitude = Convert.ToInt16(this.tBMinAltitude.Text);
+            Settings.Default.NumberOfTeams = Convert.ToInt16(this.tBNumberOfTeams.Text);
+            Settings.Default.SpawnLifeThreshold = Convert.ToInt16(this.tBSpawnLifeThreshold.Text);
+            Settings.Default.InitialPopulationPerBrain = Convert.ToInt16(this.tBIntialPopPerBrain.Text);
+            Settings.Default.DamageOnOpponent = Convert.ToInt16(this.tBDamageOnOpponent.Text);
             Settings.Default.Save();
 
             if (Settings.Default.SensoryViewSize % 2 == 0)
@@ -183,6 +196,16 @@ namespace Cells.View
                 list.Add(selectedItem.ToString());
 
             return list;
+        }
+
+        /// <summary>
+        /// Display the map in the game area
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lbMaps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

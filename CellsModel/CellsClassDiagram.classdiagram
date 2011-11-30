@@ -6,7 +6,7 @@
         <elementDefinition Id="c28d5842-41ad-400e-8312-0eae688ddf1e" />
         <suppliersInternal>
           <interfaceRealization Id="906a6bb4-5e2d-4d03-9743-c18294938608">
-            <interfaceMoniker Id="fec36caa-e893-4855-a8b9-6dfba75e71da" LastKnownName="ICell" />
+            <interfaceMoniker Id="fec36caa-e893-4855-a8b9-6dfba75e71da" LastKnownName="IInternalCell" />
             <elementDefinition Id="ca7c0b71-8575-45ac-adc4-57b3b07070e1" />
           </interfaceRealization>
         </suppliersInternal>
@@ -697,7 +697,7 @@
           <property Id="5b0cae5c-b6c4-499d-a1bb-36770be6e92e" name="_cellMap" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="51063b0f-5656-46b6-b66e-a0772cbe8b34" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="6ed7929e-50b5-4977-b51a-5f51672585b7" LastKnownName="ICellTile" />
+              <referencedTypeMoniker Id="6ed7929e-50b5-4977-b51a-5f51672585b7" LastKnownName="IInternalCellTile" />
             </type_NamedElement>
           </property>
           <property Id="988748d2-0568-4d3e-baa0-1c6af039da6a" name="_plantMap" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -720,7 +720,7 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="6ed7929e-50b5-4977-b51a-5f51672585b7" name="ICellTile" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::ICellTile">
+      <referencedType Id="6ed7929e-50b5-4977-b51a-5f51672585b7" name="IInternalCellTile" isAbstract="false" isLeaf="false" cachedFullName="CellsModel::IInternalCellTile">
         <elementDefinition Id="9fbbdec1-586f-42be-8305-2b3ea2e52ba3" />
       </referencedType>
     </packageHasNamedElement>
@@ -750,7 +750,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="fec36caa-e893-4855-a8b9-6dfba75e71da" name="ICell" isAbstract="false" isLeaf="false">
+      <Interface Id="fec36caa-e893-4855-a8b9-6dfba75e71da" name="IInternalCell" isAbstract="false" isLeaf="false">
         <elementDefinition Id="7cfaf67b-3145-4693-ab57-d49da852f171" />
         <ownedOperations>
           <operation Id="0ccc0a8c-2345-4f41-8756-180017a177ea" name="Do" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
