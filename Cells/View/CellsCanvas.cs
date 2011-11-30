@@ -41,7 +41,7 @@ namespace Cells.View
         /// </summary>
         private void PopulateMaps()
         {
-            string[] maps = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.map");
+            string[] maps = Directory.GetFiles(Directory.GetCurrentDirectory(), "Maps\\*.map");
 
             foreach (String map in maps)
                 this.lbMaps.Items.Add(Path.GetFileNameWithoutExtension(map));
