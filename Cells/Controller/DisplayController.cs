@@ -104,5 +104,13 @@ namespace Cells.Controller
         {
             this.UpdatedElements.Clear();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ResetStaticElements()
+        {
+            this.StaticElements.Clear();
+        }
     }
 }

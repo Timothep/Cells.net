@@ -54,6 +54,22 @@ namespace Cells.Model.Mapping
         }
 
         /// <summary>
+        /// Function returning a list of all the ressources present on the view
+        /// </summary>
+        /// <returns>An IList of IInternalCell</returns>
+        public IList<IOffsetVector> GetOffsetToAllRessourcesLocations()
+        {
+            IList<IOffsetVector> newList = new List<IOffsetVector>();
+
+            for (int i = 0; i < viewSizeX - 1; i++)
+                for (int j = 0; j < viewSizeY - 1; j++)
+                    if (View.Grid[i, j].RessourceLevel > 0)
+                        newList.Add(new OffsetVector(this.CellPositionInView, View.Grid[i, j].GetPosition()));
+
+            return newList;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>

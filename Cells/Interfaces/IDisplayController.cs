@@ -37,5 +37,7 @@ namespace Cells.Interfaces
         void ResetDynamicDisplay();
 
         void PaintWholeBackground();
+
+        void ResetStaticElements();
     }
 }

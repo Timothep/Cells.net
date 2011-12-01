@@ -59,13 +59,13 @@ namespace Cells.Model.World
         /// <summary>
         /// Initializes the world as we know it
         /// </summary>
-        public void Initialize(IList<String> availableBrains)
+        public void Initialize(IList<String> availableBrains, String mapName)
         {
             this.brains = availableBrains;
 
             //this.masterMap = this.mapFactory.GetMap();
 
-            CreateGeometryMap();
+            CreateLandMap(mapName);
             CreateInitialCellPopulation();
             CreatePlantMap();
             CreateRessourcesMap();
@@ -88,9 +88,9 @@ namespace Cells.Model.World
         /// <summary>
         /// Fill up the world with the loaded terrain
         /// </summary>
-        private void CreateGeometryMap()
+        public void CreateLandMap(String mapPath)
         {
-            Int16[,] map = this.mapFactory.CreateMapFromFile();
+            Int16[,] map = this.mapFactory.CreateMapFromFile(mapPath);
 
             for (Int16 x = 0; x < map.GetLength(0); x++ )
             {
@@ -331,17 +331,11 @@ namespace Cells.Model.World
         private void CreateRessourcesMap()
         {
             for (int i = 0; i < 20; i++)
-                masterMap.ImplantRessources(GetRandomCoordinates(), 500, 0);
-
-            masterMap.ImplantRessources(new Coordinates(25, 25), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(50, 50), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(75, 75), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(25, 50), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(50, 25), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(25, 75), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(75, 25), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(75, 50), 5000, 0);
-            masterMap.ImplantRessources(new Coordinates(50, 75), 5000, 0);
+            {
+                ICoordinates coord = GetRandomCoordinates();
+                masterMap.ImplantRessources(coord, 500, 0);
+                this.displayController.SetStaticElement(new Coordinates(coord.X, coord.Y), DisplayQualifier.RessourcesAvailable);
+            }
         }
 
         /// <summary>
@@ -350,17 +344,11 @@ namespace Cells.Model.World
         private void CreatePlantMap()
         {
             for (int i = 0; i < 20; i++)
-                masterMap.ImplantRessources(GetRandomCoordinates(), 100, 10);
-
-            masterMap.ImplantRessources(new Coordinates(26, 26), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(51, 51), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(76, 76), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(26, 51), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(51, 26), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(26, 76), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(76, 26), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(76, 51), 5100, 10);
-            masterMap.ImplantRessources(new Coordinates(51, 76), 5100, 10);
+            {
+                ICoordinates coord = GetRandomCoordinates();
+                masterMap.ImplantRessources(coord, 5000, 10);
+                this.displayController.SetStaticElement(new Coordinates(coord.X, coord.Y), DisplayQualifier.RessourcesPlant);
+            }
         }
 
         /// <summary>

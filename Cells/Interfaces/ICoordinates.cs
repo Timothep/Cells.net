@@ -11,5 +11,7 @@ namespace Cells.Interfaces
         Int16? DistanceTo(ICoordinates position);
 
         void Normalize(Int16 maxX, Int16 maxY);
+
+        short? DistanceTo(IOffsetVector currentVector);
     }
 }

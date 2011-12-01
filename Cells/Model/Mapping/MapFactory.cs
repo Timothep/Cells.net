@@ -9,13 +9,14 @@ namespace Cells.Model.Mapping
 {
     class MapFactory : IMapFactory
     {
-        public Int16[,] CreateMapFromFile()
+        public Int16[,] CreateMapFromFile(String mapFileName)
         {
+            String mapPath = "Maps\\" + mapFileName + ".map";
             var map = new Int16[100, 100];
 
-            if (File.Exists("map1.map"))
+            if (File.Exists(mapPath))
             {
-                var allLines = File.ReadAllLines("map1.map");
+                var allLines = File.ReadAllLines(mapPath);
 
                 for (Int16 x = 0; x < 100; x++ )
                     for (Int16 y = 0; y < 100; y++)

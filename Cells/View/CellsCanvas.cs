@@ -99,8 +99,10 @@ namespace Cells.View
         /// </summary>
         private void BStartEngineClick(object sender, EventArgs e)
         {
+            String mapName = Path.GetFileName(this.lbMaps.SelectedItem.ToString());
+
             this.controller.ResetGame();
-            this.controller.StartGame();
+            this.controller.StartGame(mapName);
         }
 
         /// <summary>
@@ -205,7 +207,12 @@ namespace Cells.View
         /// <param name="e"></param>
         private void lbMaps_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            this.displayController.ResetStaticElements();
+            this.controller.RenderWorld(this.lbMaps.SelectedItem.ToString());
+
+            this.displayController.PaintWholeBackground();
+
+            this.RenderGame();
         }
     }
 }

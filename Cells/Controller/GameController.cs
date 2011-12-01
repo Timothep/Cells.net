@@ -68,10 +68,10 @@ namespace Cells.Controller
         /// <summary>
         /// Start the CoreEngine (this will create the initial population)
         /// </summary>
-        public void StartGame()
+        public void StartGame(String mapName)
         {
             this.selectedBrainList = this.view.GetSelectedBrains();
-            this.world.Initialize(this.selectedBrainList as IList<String>);
+            this.world.Initialize(this.selectedBrainList as IList<String>, mapName);
 
             // Render the background and paint it
             this.displayController.PaintWholeBackground();
@@ -165,9 +165,21 @@ namespace Cells.Controller
             this._running = false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal void ResetGame()
         {
             this.world.Reset();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal void RenderWorld(String mapPath)
+        {
+            if (this.world != null)
+                this.world.CreateLandMap(mapPath);
         }
     }
 }

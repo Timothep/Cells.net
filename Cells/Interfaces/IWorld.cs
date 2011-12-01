@@ -24,7 +24,7 @@ namespace Cells.Interfaces
 
         IEnumerable<IInternalCell> GetCells();
 
-        void Initialize(IList<String> availableBrains);
+        void Initialize(IList<String> availableBrains, String mapName);
 
         void ResetMovementsList();
 
@@ -39,5 +39,7 @@ namespace Cells.Interfaces
         IMap GetMap();
 
         void Reset();
+
+        void CreateLandMap(String mapPath);
     }
 }

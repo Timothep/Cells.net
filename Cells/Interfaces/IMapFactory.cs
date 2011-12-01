@@ -7,6 +7,6 @@ namespace Cells.Interfaces
 {
     public interface IMapFactory
     {
-        Int16[,] CreateMapFromFile();
+        Int16[,] CreateMapFromFile(String mapPath);
     }
 }

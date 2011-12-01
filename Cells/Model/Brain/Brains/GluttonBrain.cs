@@ -3,6 +3,7 @@ using Cells.Model.Mapping;
 using Cells.Utils;
 using Cells.Interfaces;
 using System.ComponentModel.Composition;
+using System.Collections.Generic;
 
 namespace Cells.Model.Brain.Brains
 {
@@ -26,26 +27,60 @@ namespace Cells.Model.Brain.Brains
         /// <returns>Returns one Action</returns>
         public override CellAction ChooseNextAction()
         {
-            AvailableActions action;
-
+            CellAction cellAction;
+            
             SurroundingView surroundings = this.Cell.Sense();
 
             // Get the offset to the closest ressource pool
-            IOffsetVector offsetVector = surroundings.GetClosestRessourcePool(this.Cell.Position, this.Cell);
+            IList<IOffsetVector> allOffsetsToRessources = surroundings.GetOffsetToAllRessourcesLocations();
 
-            // If no ressources found, go random
-            if (offsetVector == null)
-                action = GetRandomAction();
+            IOffsetVector closestRessourcePool = this.GetClosestMapTile(allOffsetsToRessources);
+
+            if (closestRessourcePool == null)
+                cellAction = new CellAction(GetRandomAction());
             else
             {
-                // If the ressources are directly in contact, eat otherwise move toward it
-                if (Math.Abs(offsetVector.X) <= 1 && Math.Abs(offsetVector.Y) <= 1)
+                AvailableActions action;
+
+                if (Math.Abs(closestRessourcePool.X) <= 1 && Math.Abs(closestRessourcePool.Y) <= 1)
                     action = AvailableActions.EAT;
                 else
-                    action = this.Cell.GetRelativeMovment(offsetVector);
+                    action = this.Cell.GetRelativeMovment(closestRessourcePool);
+
+                cellAction = new CellAction(action, closestRessourcePool);
             }
 
-            return action == AvailableActions.EAT ? new CellAction(action, offsetVector) : new CellAction(action);
+            return cellAction;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="allCells"></param>
+        /// <returns></returns>
+        private IOffsetVector GetClosestMapTile(IList<IOffsetVector> allOffsetVectors)
+        {
+            IOffsetVector chosenOne = null;
+            Int16? minDistance = null;
+
+            foreach (IOffsetVector currentVector in allOffsetVectors)
+            {
+                // First vector
+                if (minDistance == null)
+                {
+                    minDistance = this.Cell.Position.DistanceTo(currentVector);
+                    chosenOne = currentVector;
+                }
+
+                // If the current cell is closer than the closest one
+                if (this.Cell.Position.DistanceTo(currentVector) < minDistance)
+                {
+                    chosenOne = currentVector;
+                    minDistance = this.Cell.Position.DistanceTo(currentVector);
+                }
+            }
+
+            return chosenOne;
         }
 
         /// <summary>

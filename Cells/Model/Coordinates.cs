@@ -63,6 +63,20 @@ namespace Cells.Model
                    Math.Abs((UInt16)(this.Y - position.Y)));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
+        public Int16? DistanceTo(IOffsetVector offsetVector)
+        {
+            if (offsetVector == null)
+                return null;
+
+            return (Int16)(Math.Abs(offsetVector.X) + Math.Abs(offsetVector.Y));
+        }
+
         public void Normalize(Int16 maxX, Int16 maxY)
         {
             if (this.X > maxX)

@@ -87,7 +87,10 @@ namespace Cells.Model.Brain.Brains
             {
                 // First cell
                 if (minDistance == null)
+                {
                     minDistance = this.Cell.Position.DistanceTo(currentCell.Position);
+                    chosenOne = currentCell;
+                }
 
                 // If the current cell is closer than the closest one
                 if (this.Cell.Position.DistanceTo(currentCell.Position) < minDistance)

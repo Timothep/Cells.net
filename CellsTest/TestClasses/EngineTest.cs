@@ -1,5 +1,6 @@
 ﻿using Cells.Controller;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace CellsTest.TestClasses
 {
@@ -10,7 +11,7 @@ namespace CellsTest.TestClasses
         public void TestGetCellsToPaintNotNull()
         {
             GameController testEngine = new GameController();
-            testEngine.StartGame();
+            testEngine.StartGame(String.Empty);
             Assert.IsNotNull(testEngine.GetPixelsToPaint());
         }
     }
