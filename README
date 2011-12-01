@@ -1,3 +1,7 @@
+﻿STILL HEAVILY WORK IN PROGRESS, NO API IS FIXED YET
+
+###################################################
+
 Cells.net is a programming game based on the "Cells" game programmed in Python by phreeza (https://github.com/phreeza/cells) and ported to C#.
 
 Just imagine a flat world, ok 'hilly' world, but flat at its borders - like a giant pizza with mount olive, cheese hills and the anchovi reefs in the middle - where a small population of cellular automatons live in peace. Well, the world they live in is not really flat... but you know... like most very ancient cultures (cells culture... mwarf!), those cells did not really get the big picture yet.
